@@ -6,6 +6,7 @@
 #include "boolean.h"
 #include "point.h"
 
+/* Definisi elemen dan koleksi objek */
 typedef struct {
     int Kepemilikan;    // Pemain yang memiliki bangunan, 0 jika tidak dimiliki siapapun
     int N;              // Jumlah pasukan
@@ -34,7 +35,7 @@ typedef struct {
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-Bangunan MakeBangunan (char T, Point L);
+Bangunan MakeBangunan (char Tipe, Point Lokasi);
 /* Membentuk sebuah Bangunan dari komponen-komponennya */
 /* Bangunan yang terbentuk memiliki level 1 */
 

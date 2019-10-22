@@ -5,6 +5,7 @@
 
 #include "boolean.h"
 
+/* Definisi elemen dan koleksi objek */
 typedef struct {
 		int X;		// Absis
 		int Y;		// Ordinat
