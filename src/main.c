@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "header/point.h"
 #include "header/bangunan.h"
+#include "header/queue.h"
 
 int main() {
   printf("Hello world\n");

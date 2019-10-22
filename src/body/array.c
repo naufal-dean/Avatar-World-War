@@ -12,7 +12,7 @@ void MakeEmpty(TabBangunan *T, int maxel) {
     IdxType i;
     // Algoritma
     // Alokasi memori
-    TI(*T) = (ElType*) malloc ((maxel + 1) * sizeof(ElType));
+    TI(*T) = (ElTypeTab*) malloc ((maxel + 1) * sizeof(ElTypeTab));
     if (TI(*T) == NULL) {
         MaxEl(*T) = 0;
     } else { // alokasi berhasil
@@ -147,7 +147,7 @@ Baris terakhir tidak diakhiri enter atau karakter apapun
 }
 
 /*** Kelompok Add dan Del elemen ***/
-void AddElTab(TabBangunan *T, ElType B) {
+void AddElTab(TabBangunan *T, ElTypeTab B) {
 /* Menambahkan B sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. B adalah elemen terakhir T yang baru
@@ -155,7 +155,7 @@ Banyak elemen tabel bertambah satu */
     // Algoritma
     Elmt(*T, (GetLastIdx(*T) + 1)) = B;
 }
-void DelElTab(TabBangunan *T, ElType *B, IdxType idxDel) {
+void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
 /* Menghapus elemen tabel indeks ke-i */
 /* I.S. Tabel tidak kosong, i adalah indeks efektif */
 /* F.S. B adalah nilai elemen terakhir T sebelum penghapusan,

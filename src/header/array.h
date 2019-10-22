@@ -18,9 +18,9 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;      // type indeks
-typedef Bangunan ElType;  // type elemen tabel
+typedef Bangunan ElTypeTab;  // type elemen tabel
 typedef struct {
-    ElType *TI;           // container elemen
+    ElTypeTab *TI;           // container elemen
     int MaxEl;            // maksimum elemen
 } TabBangunan;
 /* Indeks yang digunakan [IdxMin..MaxEl] */
@@ -100,12 +100,12 @@ void TulisIsiTab(TabBangunan T);
 */
 
 /*** Kelompok Add dan Del elemen ***/
-void AddElTab(TabBangunan *T, ElType B);
+void AddElTab(TabBangunan *T, ElTypeTab B);
 /* Menambahkan B sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. B adalah elemen terakhir T yang baru
         Banyak elemen tabel bertambah satu */
-void DelElTab(TabBangunan *T, ElType *B, IdxType idxDel);
+void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel);
 /* Menghapus elemen tabel indeks ke-i */
 /* I.S. Tabel tidak kosong, i adalah indeks efektif */
 /* F.S. B adalah nilai elemen terakhir T sebelum penghapusan,
