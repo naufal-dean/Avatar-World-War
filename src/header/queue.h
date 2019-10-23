@@ -6,18 +6,19 @@
 #define QUEUE_H
 
 #include "boolean.h"
+#include "kata.h"
 
 /* Kamus Umum */
-#define NilQ 0     // alamat tidak terdefinisi
+#define NilQueue 0     // alamat tidak terdefinisi
 
 /* Definisi elemen dan koleksi objek */
-typedef int ElTypeQ;
-typedef int AddressQ;
+typedef Kata ElTypeQueue;
+typedef int AddressQueue;
 typedef struct {
-    ElTypeQ * T;        // container elemen
-    AddressQ Head;      // alamat penghapusan
-    AddressQ Tail;      // alamat penambahan
-    int MaxEl;          // elemen maksimum yang bisa ditampung
+    ElTypeQueue * T;        // container elemen
+    AddressQueue Head;      // alamat penghapusan
+    AddressQueue Tail;      // alamat penambahan
+    int MaxEl;              // elemen maksimum yang bisa ditampung
 } Queue;
 /* Definisi:
    Queue kosong: Head = Nil; Tail = Nil */
@@ -28,7 +29,7 @@ typedef struct {
 #define Tail(Q) (Q).Tail
 #define InfoHead(Q) (Q).T[(Q).Head]
 #define InfoTail(Q) (Q).T[(Q).Tail]
-#define MaxElQ(Q) (Q).MaxEl
+#define MaxElQueue(Q) (Q).MaxEl
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
@@ -45,7 +46,7 @@ void DealokasiQueue(Queue * Q);
 /* Proses: Memori Q dikembalikan ke system */
 
 /*** Selektor Tambahan ***/
-int NBElmt (Queue Q);
+int NBElmtQueue (Queue Q);
 /* Mengembalikan jumlah elemen efektif Q, 0 jika Q kosong */
 
 /*** Kelompok tes queue kosong / penuh ***/
@@ -55,16 +56,23 @@ boolean IsQueueFull (Queue Q);
 /* Mengembalikan true jika Q penuh, mengirimkan false jika tidak */
 
 /*** Kelompok Add dan Del elemen ***/
-void AddElQueue (Queue * Q, ElTypeQ X);
+void AddElQueue (Queue * Q, ElTypeQueue X);
 /* Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q boleh kosong, tetapi tidak penuh */
 /* F.S. X menjadi elemen di Tail yang baru,
         Tail "maju" dengan mekanisme circular buffer */
-void DelElQueue (Queue * Q, ElTypeQ * X);
+void DelElQueue (Queue * Q, ElTypeQueue * X);
 /* Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak kosong */
 /* F.S. X adalah nilai elemen Head Q sebelum penghapusan,
         Head "maju" dengan mekanisme circular buffer.
         Q mungkin menjadi kosong */
+
+/*** Kelompok operasi lain ***/
+void CopyQueue(Queue * Qout, Queue Qin);
+/* Melakukan penyalinan Qin ke Qout */
+/* I.S. Qin terdefinisi, Qout sembarang */
+/* F.S. Semua elemen yang terdefinisi Qout sama dengan Qin,
+        Head dan Tail boleh berbeda */
 
 #endif // QUEUE_H

@@ -1,7 +1,15 @@
 #include <stdio.h>
-#include "header/point.h"
+#include "header/array.h"
 #include "header/bangunan.h"
+#include "header/boolean.h"
+#include "header/kata.h"
+#include "header/matriks.h"
+#include "header/mesinkar.h"
+#include "header/mesinkata.h"
+#include "header/point.h"
 #include "header/queue.h"
+#include "header/stack.h"
+#include "header/status.h"
 
 int main() {
   printf("Hello world\n");

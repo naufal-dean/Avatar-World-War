@@ -17,13 +17,13 @@
 // Nilai elemen tak terdefinisi
 
 /* Definisi elemen dan koleksi objek */
-typedef int IdxType;      // type indeks
+typedef int IdxType;         // type indeks
 typedef Bangunan ElTypeTab;  // type elemen tabel
 typedef struct {
     ElTypeTab *TI;           // container elemen
-    int MaxEl;            // maksimum elemen
+    int MaxEl;               // maksimum elemen
 } TabBangunan;
-/* Indeks yang digunakan [IdxMin..MaxEl] */
+/* Indeks yang digunakan [IdxMin..MaxElTab(T)] */
 /* Definisi (misal type T TabBangunan):
    Tabel kosong: semua elemen bernilai ValUndef
    Definisi elemen pertama: T.TI[i] dengan i=1
@@ -32,8 +32,8 @@ typedef struct {
 
 /*** Selektor ***/
 #define TI(T) (T).TI
-#define Elmt(T, i) (T).TI[(i)]
-#define MaxEl(T) (T).MaxEl
+#define ElmtTab(T, i) (T).TI[(i)]
+#define MaxElTab(T) (T).MaxEl
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
@@ -43,14 +43,14 @@ void MakeEmptyTab(TabBangunan *T, int maxel);
         Jika gagal, maxel = 0 */
 /* Proses: Inisialisasi semua elemen tabel T dengan ValUndef */
 
-void Dealokasi(TabBangunan *T);
+void DealokasiTab(TabBangunan *T);
 /* I.S. T terdefinisi; */
-/* F.S. TI(T) dikembalikan ke system, MaxEl(T) = 0; Neff(T) = 0 */
+/* F.S. TI(T) dikembalikan ke system, MaxElTab(T) = 0; Neff(T) = 0 */
 
 /*** Selektor Tambahan ***/
-int NbElmt(TabBangunan T);
+int NbElmtTab(TabBangunan T);
 /* Mengembalikan nilai elemen efektif tabel, 0 jika tabel kosong */
-int MaxElement(TabBangunan T);
+int MaxElementTab(TabBangunan T);
 /* Mengembalikan jumlah maksimum elemen yang bisa ditampung tabel */
 IdxType GetFirstIdxTab(TabBangunan T);
 /* Prekondisi: Tabel T tidak kosong */
