@@ -3,7 +3,7 @@
 
 /*  DEFINISI PROTOTIPE PRIMITIF  */
 /*** Konstruktor ***/
-void MakePeta (int NB, int NK, MATRIKS *M) {
+void MakeMATRIKS (int NB, int NK, MATRIKS *M) {
 /* I.S. NB dan NK adalah valid untuk memori peta yang dibuat */
 /* F.S. Peta M sesuai dengan definisi di atas terbentuk */
     // Kamus lokal
