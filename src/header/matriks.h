@@ -6,26 +6,26 @@
 #include "boolean.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
-#define BrsMin 10
-#define BrsMax 20
-#define KolMin 10
-#define KolMax 30
+#define IdxBrsMin 1
+#define IdxBrsMax 20
+#define IdxKolMin 1
+#define IdxKolMax 30
 
 typedef int indeks; /* indeks baris, kolom */
 typedef int ElType;
 typedef struct {
-    ElType Mem[BrsMax+1][KolMax+1];
+    ElType Mem[IdxBrsMax+1][IdxKolMax+1];
     int NBrsEff; /* Jumlah baris yang terisi */
     int NKolEff; /* Jumlah kolom yang terisi */
 } Matriks;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
-/* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
+/* Indeks matriks yang digunakan: [IdxBrsMin..IdxBrsMax][IdxKolMin..IdxKolMax] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
 
 /*** Selektor ***/
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
+#define ElmtMatriks(M,i,j) (M).Mem[(i)][(j)]
 
 /*  DEFINISI PROTOTIPE PRIMITIF  */
 /*** Konstruktor ***/
@@ -34,7 +34,7 @@ void MakeMatriks (int NB, int NK, Matriks *M);
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
 
 /*** Selektor ***/
-boolean IsIdxValid (int i, int j);
+boolean IsIdxMatriksValid (int i, int j);
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
 indeks GetFirstIdxBrs (Matriks M);
 /* Mengirimkan indeks baris terkecil M */
@@ -44,7 +44,7 @@ indeks GetLastIdxBrs (Matriks M);
 /* Mengirimkan indeks baris terbesar M */
 indeks GetLastIdxKol (Matriks M);
 /* Mengirimkan indeks kolom terbesar M */
-boolean IsIdxEff (Matriks M, indeks i, indeks j);
+boolean IsIdxMatriksEff (Matriks M, indeks i, indeks j);
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
 
 /* KELOMPOK BACA/TULIS */
@@ -65,4 +65,4 @@ void TulisMatriks (Matriks M);
     * * * * * * *
 */
 
-#endif
+#endif // MATRIKS_H

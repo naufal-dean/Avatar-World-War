@@ -54,6 +54,9 @@ atau di antaranya. */
       case 'V':
           printf("Village ");
           break;
+      default:
+          printf("Undefined ");
+          break;
     }
     TulisPoint(Lokasi(B));
 }
@@ -158,6 +161,10 @@ void AssignProperti(Bangunan * B) {
                 AssignPropertiHelper(B, 20, 50, false);
                 break;
           }
+          break;
+      default:
+          AssignPropertiHelper(B, 0, 0, false);
+          Pasukan(*B) = 0;
           break;
     }
 }

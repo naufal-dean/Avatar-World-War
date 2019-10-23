@@ -6,25 +6,23 @@
 void MakeMatriks (int NB, int NK, Matriks *M) {
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
-    // Kamus lokal
-
     //Algoritma
     NBrsEff(*M)=NB;
     NKolEff(*M)=NK;
 }
 
 /*** Selektor ***/
-boolean IsIdxValid (int i, int j) {
+boolean IsIdxMatriksValid (int i, int j) {
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
-    return(i>=BrsMin && i<=BrsMax && j>=KolMin && j<=KolMax);
+    return(i>=IdxBrsMin && i<=IdxBrsMax && j>=IdxKolMin && j<=IdxKolMax);
 }
 indeks GetFirstIdxBrs (Matriks M) {
 /* Mengirimkan indeks baris terkecil M */
-    return BrsMin;
+    return IdxBrsMin;
 }
 indeks GetFirstIdxKol (Matriks M) {
 /* Mengirimkan indeks kolom terkecil M */
-    return KolMin;
+    return IdxKolMin;
 }
 indeks GetLastIdxBrs (Matriks M) {
 /* Mengirimkan indeks baris terbesar M */
@@ -34,7 +32,7 @@ indeks GetLastIdxKol (Matriks M) {
 /* Mengirimkan indeks kolom terbesar M */
     return(NKolEff(M));
 }
-boolean IsIdxEff (Matriks M, indeks i, indeks j) {
+boolean IsIdxMatriksEff (Matriks M, indeks i, indeks j) {
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
     return(i>=GetFirstIdxBrs(M) && j>=GetFirstIdxKol(M) && i<=GetLastIdxBrs(M) && j<=GetLastIdxKol(M));
 }
@@ -49,7 +47,7 @@ void BacaUkuranMatriks (Matriks * M) {
     // Algoritma
     printf("Masukkan ukuran matriks (baris x kolom)\n");
     scanf("%d %d",&NB,&NK);
-    while(!IsIdxValid(NB,NK)){
+    while(!IsIdxMatriksValid(NB,NK)){
         scanf("%d %d",NB,NK);
     }
     MakeMatriks(NB, NK, M);

@@ -14,43 +14,43 @@ void MakeEmptyTab(TabBangunan *T, int maxel) {
     // Alokasi memori
     TI(*T) = (ElTypeTab*) malloc ((maxel + 1) * sizeof(ElTypeTab));
     if (TI(*T) == NULL) {
-        MaxEl(*T) = 0;
+        MaxElTab(*T) = 0;
     } else { // alokasi berhasil
-        MaxEl(*T) = maxel;
+        MaxElTab(*T) = maxel;
     }
     // Inisialisasi elemen dengan ValUndefTab
-    for (i = IdxMin; i <= MaxEl(*T); i++) {
-        CopyBangunan(&Elmt((*T), i), ValUndefTab);
+    for (i = IdxMin; i <= MaxElTab(*T); i++) {
+        CopyBangunan(&ElmtTab((*T), i), ValUndefTab);
     }
 }
 
-void Dealokasi(TabBangunan *T) {
+void DealokasiTab(TabBangunan *T) {
 /* I.S. T terdefinisi; */
-/* F.S. TI(T) dikembalikan ke system, MaxEl(T) = 0; Neff(T) = 0 */
+/* F.S. TI(T) dikembalikan ke system, MaxElTab(T) = 0; Neff(T) = 0 */
     // Algoritma
     free(TI(*T));
-    MaxEl(*T) = 0;
+    MaxElTab(*T) = 0;
 }
 
 /*** Selektor Tambahan ***/
-int NbElmt(TabBangunan T) {
+int NbElmtTab(TabBangunan T) {
 /* Mengembalikan nilai elemen efektif tabel, 0 jika tabel kosong */
     // Kamus lokal
     IdxType i;
     int count = 0;
     // Algoritma
-    if (!EQBangunan(Elmt(T, GetFirstIdxTab(T)), ValUndefTab)) {
-        for (i = GetFirstIdxTab(T); i <= MaxEl(T); i++) {
-            if (!EQBangunan(Elmt(T, i), ValUndefTab)) {
+    if (!EQBangunan(ElmtTab(T, GetFirstIdxTab(T)), ValUndefTab)) {
+        for (i = GetFirstIdxTab(T); i <= MaxElTab(T); i++) {
+            if (!EQBangunan(ElmtTab(T, i), ValUndefTab)) {
                 count++;
             }
         }
     }
     return (count);
 }
-int MaxElement(TabBangunan T) {
+int MaxElementTab(TabBangunan T) {
 /* Mengembalikan jumlah maksimum elemen yang bisa ditampung tabel */
-	  return (MaxEl(T));
+	  return (MaxElTab(T));
 }
 IdxType GetFirstIdxTab(TabBangunan T) {
 /* Prekondisi: Tabel T tidak kosong */
@@ -60,14 +60,14 @@ IdxType GetFirstIdxTab(TabBangunan T) {
 IdxType GetLastIdxTab(TabBangunan T) {
 /* Prekondisi: Tabel T tidak kosong */
 /* Mengembalikan indeks elemen T terakhir */
-    return (IdxMin + NbElmt(T) - 1);
+    return (IdxMin + NbElmtTab(T) - 1);
 }
 
 /*** Kelompok tes indeks valid ***/
 boolean IsIdxTabValid(TabBangunan T, IdxType i) {
 /* Mengembalikan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara FirstIdx(T)..maxel*/
-    return ((i >= GetFirstIdxTab(T)) && (i <= MaxElement(T)));
+    return ((i >= GetFirstIdxTab(T)) && (i <= MaxElementTab(T)));
 }
 boolean IsIdxTabEff(TabBangunan T, IdxType i) {
 /* Mengembalikan true jika i adalah indeks yang terdefinisi utk tabel */
@@ -78,11 +78,11 @@ boolean IsIdxTabEff(TabBangunan T, IdxType i) {
 /*** Kelompok tes tabel kosong / penuh ***/
 boolean IsTabEmpty(TabBangunan T) {
 /* Mengembalikan true jika tabel T kosong, mengirimkan false jika tidak */
-    return (NbElmt(T) == 0);
+    return (NbElmtTab(T) == 0);
 }
 boolean IsTabFull(TabBangunan T) {
 /* Mengembalikan true jika tabel T penuh, mengirimkan false jika tidak */
-    return (NbElmt(T) == MaxElement(T));
+    return (NbElmtTab(T) == MaxElementTab(T));
 }
 
 /*** Kelompok interaksi dengan I/O device, BACA / TULIS ***/
@@ -103,16 +103,16 @@ void BacaIsiTab(TabBangunan *T) {
     // Algoritma
     do {
       scanf("%d", &N);
-    } while(!(N >= 0 && N <= MaxElement(*T)));
+    } while(!(N >= 0 && N <= MaxElementTab(*T)));
     // Inisialisasi nilai
-    for (i = GetFirstIdxTab(*T); i <= MaxElement(*T); i++) {
-        CopyBangunan(&Elmt((*T), i), ValUndefTab);
+    for (i = GetFirstIdxTab(*T); i <= MaxElementTab(*T); i++) {
+        CopyBangunan(&ElmtTab((*T), i), ValUndefTab);
     }
     // Baca nilai elemen jika N > 0
     if (N > 0) {
         for (i = GetFirstIdxTab(*T); i <= N; i++) {
             scanf("%c %d %d", &Tipe, &X, &Y);
-            Elmt(*T, i) = MakeBangunan(Tipe, MakePoint(X, Y));
+            ElmtTab(*T, i) = MakeBangunan(Tipe, MakePoint(X, Y));
         }
     }
 }
@@ -138,11 +138,11 @@ Baris terakhir tidak diakhiri enter atau karakter apapun
     } else { // Tabel tidak kosong
         for (i = GetFirstIdxTab(T); i < (GetLastIdxTab(T)); i++) {
             printf("%d. ", i);
-            TulisBangunan(Elmt(T,i));
+            TulisBangunan(ElmtTab(T,i));
             printf("\n");
         }
         printf("%d. ", i);
-        TulisBangunan(Elmt(T,i));
+        TulisBangunan(ElmtTab(T,i));
     }
 }
 
@@ -153,7 +153,7 @@ void AddElTab(TabBangunan *T, ElTypeTab B) {
 /* F.S. B adalah elemen terakhir T yang baru
 Banyak elemen tabel bertambah satu */
     // Algoritma
-    CopyBangunan(&Elmt((*T), (GetLastIdxTab(*T) + 1)), B);
+    CopyBangunan(&ElmtTab((*T), (GetLastIdxTab(*T) + 1)), B);
 }
 void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
 /* Menghapus elemen tabel indeks ke-i */
@@ -166,10 +166,10 @@ void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
     // Kamus lokal
     IdxType i;
     // Algoritma
-    CopyBangunan(B, Elmt((*T), idxDel));
+    CopyBangunan(B, ElmtTab((*T), idxDel));
     // Jika yang dihapus bukan elemen terakhir, geser elemen berikutnya di loop
     for (i = idxDel; i < GetLastIdxTab(*T); i++) {
-        CopyBangunan(&Elmt((*T), i), Elmt((*T), i + 1));
+        CopyBangunan(&ElmtTab((*T), i), ElmtTab((*T), i + 1));
     }
-    CopyBangunan(&Elmt((*T), i), ValUndefTab);
+    CopyBangunan(&ElmtTab((*T), i), ValUndefTab);
 }
