@@ -2,7 +2,7 @@
 #include "../header/stack.h"
 
 /*** Konstruktor ***/
-void MakeEmptyStack (Stack *S); {
+void MakeEmptyStack (Stack *S) {
 /* I.S. S sembarang; */
 /* F.S. Terbentuk Stack S kosong (Top bernilai NilStack) dengan kapasitas MaxElStack */
     Top(*S) = NilStack;

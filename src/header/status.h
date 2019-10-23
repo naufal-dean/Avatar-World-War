@@ -8,45 +8,31 @@
 #include "matriks.h"
 #include "stack.h"
 
-/* Kamus umum */
-#define LengthMax 50
-
+/* Definisi elemen dan koleksi objek */
 typedef struct {
-    Matriks Peta;
-    Array ListBangunan;
-    Stack StatusBangunan;
-    int ActivePlayer;
+    Matriks Peta;               // Peta game
+    TabBangunan ListBangunan;   // List Bangunan awal
+    Stack StatusPemain;         // Status Pemain turn ini
+    int ActivePlayer;           // Player aktif turn ini, 1 atau 2
+    int Turn;                   // Urutan turn saat ini
 } Status;
 
+/* Kamus umum */
+extern Status GameStatus;
+
 /*** Selektor ***/
-#define Char(K, i) (K).TabKata[i]
-#define Length(K) (K).Length
+#define Peta(S) (S).Peta
+#define ListBangunan(S) (S).ListBangunan
+#define StatusPemain(S) (S).StatusPemain
+#define ActivePlayer(S) (S).ActivePlayer
+#define Turn(S) (S).Turn
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-void MakeEmptyKata (Kata * K);
-/* Membentuk sebuah Kata kosong */
-/* I.S. K sembarang */
-/* F.S. K kosong, Length(K) = 0 */
-
-/*** Kelompok fungsi TULIS ***/
-void TulisKata (Kata K);
-/* Nilai elemen K ditulis ke layar, format "e1e2...en",
-   jika Length(K) = 0 tidak ditulis apapun tanpa spasi, enter,
-   atau karakter lain di depan, belakang, atau di antaranya. */
-/* I.S. K terdefinisi */
-/* F.S. K tertulis di layar dengan format "e1e2...en",
-        jika Length(K) = 0 tidak ditulis apapun */
-
-/*** Kelompok operasi relasional terhadap Kata ***/
-boolean EQKata (Kata K1, Kata K2);
-/* Mengirimkan true jika Length(K1) = Length(K2) dan semua elemen yang terdefinisi sama */
-
-/*** Kelompok operasi lain ***/
-void CopyKata(Kata * Kout, Kata Kin);
-/* Melakukan penyalinan Kin ke Kout */
-/* I.S. Kin terdefinisi, Kout sembarang */
-/* F.S. Length(Kout) = Length(Kin) dan semua elemen yang terdefinisi
-   di Kout sama dengan Kin. Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab);
+/* I.S. GameStatus sembarang */
+/* F.S. Status GameStatus terdefinisi */
+/* Proses: Melakukan alokasi, memanfaatkan konstruktor tiap komponen Status.
+           ActivePlayer = 1. Turn = 1. */
 
 #endif // STATUS_H

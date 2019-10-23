@@ -6,8 +6,8 @@
 #define STACK_H
 
 #include "boolean.h"
-#include "bangunan.h"
 #include "listlinier.h"
+#include "queue.h"
 
 /* Kamus umum */
 #define NilStack 0            // Indeks top stack kosong
@@ -22,7 +22,7 @@ typedef struct {
     Queue Skill2;
 } ElTypeStack;
 typedef struct {
-    ElTypeStack T[MaxEl + 1]; // tabel penyimpan elemen
+    ElTypeStack T[MaxElStack + 1]; // tabel penyimpan elemen
     AddressStack Top;         // alamat Top: elemen puncak
 } Stack;
 // Definisi stack S kosong : S.Top = Nil
