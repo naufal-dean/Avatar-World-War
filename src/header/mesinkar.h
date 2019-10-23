@@ -1,7 +1,7 @@
 /*** ADT Mesin Karakter ***/
 
-#ifndef __MESIN_KAR_H_
-#define __MESIN_KAR_H_
+#ifndef MESINKAR_H
+#define MESINKAR_H
 
 #include "boolean.h"
 
@@ -25,4 +25,4 @@ void ADV();
           CC mungkin = MARK
           Jika  CC = MARK maka EOP akan menyala (true) */
 
-#endif
+#endif // MESINKAR_H

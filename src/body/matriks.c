@@ -65,7 +65,7 @@ void TulisPeta (MATRIKS M){
     *           *
     *           *
     * * * * * * *
-*/ 
+*/
 
     // Kamus lokal
     indeks i,j;
@@ -94,4 +94,3 @@ void TulisPeta (MATRIKS M){
         }
     }
 }
-

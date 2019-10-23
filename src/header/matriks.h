@@ -63,6 +63,6 @@ void TulisMATRIKS (MATRIKS M);
     *           *
     *           *
     * * * * * * *
-*/ 
+*/
 
 #endif

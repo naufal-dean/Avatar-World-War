@@ -37,7 +37,7 @@ typedef struct {
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-void MakeEmpty(TabBangunan *T, int maxel);
+void MakeEmptyTab(TabBangunan *T, int maxel);
 /* I.S. T sembarang dan maxel > 0 */
 /* F.S. Jika alokasi berhasil, terbentuk tabel T kosong dengan kapasitas maxel + 1
         Jika gagal, maxel = 0 */
@@ -52,18 +52,18 @@ int NbElmt(TabBangunan T);
 /* Mengembalikan nilai elemen efektif tabel, 0 jika tabel kosong */
 int MaxElement(TabBangunan T);
 /* Mengembalikan jumlah maksimum elemen yang bisa ditampung tabel */
-IdxType GetFirstIdx(TabBangunan T);
+IdxType GetFirstIdxTab(TabBangunan T);
 /* Prekondisi: Tabel T tidak kosong */
 /* Mengembalikan indeks elemen T pertama */
-IdxType GetLastIdx(TabBangunan T);
+IdxType GetLastIdxTab(TabBangunan T);
 /* Prekondisi: Tabel T tidak kosong */
 /* Mengembalikan indeks elemen T terakhir */
 
 /*** Kelompok tes indeks valid ***/
-boolean IsIdxValid(TabBangunan T, IdxType i);
+boolean IsIdxTabValid(TabBangunan T, IdxType i);
 /* Mengembalikan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara FirstIdx(T)..maxel*/
-boolean IsIdxEff(TabBangunan T, IdxType i);
+boolean IsIdxTabEff(TabBangunan T, IdxType i);
 /* Mengembalikan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 

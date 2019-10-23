@@ -3,7 +3,7 @@
 #include "../header/array.h"
 
 /*** Konstruktor ***/
-void MakeEmpty(TabBangunan *T, int maxel) {
+void MakeEmptyTab(TabBangunan *T, int maxel) {
 /* I.S. T sembarang dan maxel > 0 */
 /* F.S. Jika alokasi berhasil, terbentuk tabel T kosong dengan kapasitas maxel + 1
         Jika gagal, maxel = 0 */
@@ -20,7 +20,7 @@ void MakeEmpty(TabBangunan *T, int maxel) {
     }
     // Inisialisasi elemen dengan ValUndefTab
     for (i = IdxMin; i <= MaxEl(*T); i++) {
-        Elmt(*T, i) = ValUndefTab;
+        CopyBangunan(&Elmt((*T), i), ValUndefTab);
     }
 }
 
@@ -39,8 +39,8 @@ int NbElmt(TabBangunan T) {
     IdxType i;
     int count = 0;
     // Algoritma
-    if (!EQBangunan(Elmt(T, GetFirstIdx(T)), ValUndefTab)) {
-        for (i = GetFirstIdx(T); i <= MaxEl(T); i++) {
+    if (!EQBangunan(Elmt(T, GetFirstIdxTab(T)), ValUndefTab)) {
+        for (i = GetFirstIdxTab(T); i <= MaxEl(T); i++) {
             if (!EQBangunan(Elmt(T, i), ValUndefTab)) {
                 count++;
             }
@@ -52,27 +52,27 @@ int MaxElement(TabBangunan T) {
 /* Mengembalikan jumlah maksimum elemen yang bisa ditampung tabel */
 	  return (MaxEl(T));
 }
-IdxType GetFirstIdx(TabBangunan T) {
+IdxType GetFirstIdxTab(TabBangunan T) {
 /* Prekondisi: Tabel T tidak kosong */
 /* Mengembalikan indeks elemen T pertama */
     return (IdxMin);
 }
-IdxType GetLastIdx(TabBangunan T) {
+IdxType GetLastIdxTab(TabBangunan T) {
 /* Prekondisi: Tabel T tidak kosong */
 /* Mengembalikan indeks elemen T terakhir */
     return (IdxMin + NbElmt(T) - 1);
 }
 
 /*** Kelompok tes indeks valid ***/
-boolean IsIdxValid(TabBangunan T, IdxType i) {
+boolean IsIdxTabValid(TabBangunan T, IdxType i) {
 /* Mengembalikan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara FirstIdx(T)..maxel*/
-    return ((i >= GetFirstIdx(T)) && (i <= MaxElement(T)));
+    return ((i >= GetFirstIdxTab(T)) && (i <= MaxElement(T)));
 }
-boolean IsIdxEff(TabBangunan T, IdxType i) {
+boolean IsIdxTabEff(TabBangunan T, IdxType i) {
 /* Mengembalikan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
-    return ((i >= GetFirstIdx(T)) && (i <= GetLastIdx(T)));
+    return ((i >= GetFirstIdxTab(T)) && (i <= GetLastIdxTab(T)));
 }
 
 /*** Kelompok tes tabel kosong / penuh ***/
@@ -105,12 +105,12 @@ void BacaIsiTab(TabBangunan *T) {
       scanf("%d", &N);
     } while(!(N >= 0 && N <= MaxElement(*T)));
     // Inisialisasi nilai
-    for (i = GetFirstIdx(*T); i <= MaxElement(*T); i++) {
-        Elmt(*T, i) = ValUndefTab;
+    for (i = GetFirstIdxTab(*T); i <= MaxElement(*T); i++) {
+        CopyBangunan(&Elmt((*T), i), ValUndefTab);
     }
     // Baca nilai elemen jika N > 0
     if (N > 0) {
-        for (i = GetFirstIdx(*T); i <= N; i++) {
+        for (i = GetFirstIdxTab(*T); i <= N; i++) {
             scanf("%c %d %d", &Tipe, &X, &Y);
             Elmt(*T, i) = MakeBangunan(Tipe, MakePoint(X, Y));
         }
@@ -136,7 +136,7 @@ Baris terakhir tidak diakhiri enter atau karakter apapun
     if (IsTabEmpty(T)) {
         printf("Tidak terdapat bangunan apapun.");
     } else { // Tabel tidak kosong
-        for (i = GetFirstIdx(T); i < (GetLastIdx(T)); i++) {
+        for (i = GetFirstIdxTab(T); i < (GetLastIdxTab(T)); i++) {
             printf("%d. ", i);
             TulisBangunan(Elmt(T,i));
             printf("\n");
@@ -153,7 +153,7 @@ void AddElTab(TabBangunan *T, ElTypeTab B) {
 /* F.S. B adalah elemen terakhir T yang baru
 Banyak elemen tabel bertambah satu */
     // Algoritma
-    Elmt(*T, (GetLastIdx(*T) + 1)) = B;
+    CopyBangunan(&Elmt((*T), (GetLastIdxTab(*T) + 1)), B);
 }
 void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
 /* Menghapus elemen tabel indeks ke-i */
@@ -166,10 +166,10 @@ void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
     // Kamus lokal
     IdxType i;
     // Algoritma
-    (*B) = Elmt((*T), idxDel);
+    CopyBangunan(B, Elmt((*T), idxDel));
     // Jika yang dihapus bukan elemen terakhir, geser elemen berikutnya di loop
-    for (i = idxDel; i < GetLastIdx(*T); i++) {
-        Elmt((*T), i) = Elmt((*T), i + 1);
+    for (i = idxDel; i < GetLastIdxTab(*T); i++) {
+        CopyBangunan(&Elmt((*T), i), Elmt((*T), i + 1));
     }
-    Elmt((*T), i) = ValUndefTab;
+    CopyBangunan(&Elmt((*T), i), ValUndefTab);
 }

@@ -5,10 +5,16 @@
 
 int main() {
   printf("Hello world\n");
-  Point P;
-  Absis(P) = 1;
-  Ordinat(P) = 2;
-  TulisPoint(P);
-
+  Bangunan B1, B2;
+  B1 = MakeBangunan('C', MakePoint(1,1));
+  CopyBangunan(&B2, B1);
+  printf("%d\n", Maksimum(B1));
+  printf("%d\n", Maksimum(B2));
+  UpgradeLevel(&B2);
+  AssignProperti(&B2);
+  printf("%d\n", Maksimum(B1));
+  printf("%d\n", Maksimum(B2));
+  TulisBangunan(B1);
+  TulisBangunan(B2);
   return 0;
 }
