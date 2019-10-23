@@ -76,4 +76,10 @@ void AssignPropertiHelper(Bangunan * B, int A, int M, boolean P);
 /* I.S. B terdefinisi */
 /* F.S. Properti A, M, P diassign ke B */
 
+/*** Kelompok operasi lain ***/
+void CopyBangunan(Bangunan * Bout, Bangunan Bin);
+/* Melakukan penyalinan Bin ke Bout */
+/* I.S. Bin terdefinisi, Bout sembarang */
+/* F.S. Bout memiliki properti yang sama dengan Bin */
+
 #endif // BANGUNAN_H

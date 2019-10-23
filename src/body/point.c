@@ -43,3 +43,13 @@ boolean EQPoint (Point P1, Point P2) {
     // Algoritma
     return ((Absis(P1) == Absis(P2)) && (Ordinat(P1) == Ordinat(P2)));
 }
+
+/*** Kelompok operasi lain ***/
+void CopyPoint(Point * Pout, Point Pin) {
+/* Melakukan penyalinan Pin ke Pout */
+/* I.S. Pin terdefinisi, Pout sembarang */
+/* F.S. Pout sama dengan Pin */
+    // Algoritma
+    Absis(*Pout) = Absis(Pin);
+    Ordinat(*Pout) = Ordinat(Pin);
+}

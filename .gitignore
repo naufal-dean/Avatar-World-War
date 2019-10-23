@@ -3,3 +3,4 @@ compile.sh
 run.bat
 run.sh
 bin/
+.vscode/
