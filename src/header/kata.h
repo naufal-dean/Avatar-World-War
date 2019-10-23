@@ -6,7 +6,7 @@
 #include "boolean.h"
 
 /* Kamus umum */
-#define LengthMax 100
+#define LengthMax 50
 
 typedef struct {
     char TabKata[LengthMax + 1];   // container char, indeks yang dipakai [1..NMax]
@@ -42,6 +42,6 @@ void CopyKata(Kata * Kout, Kata Kin);
 /* Melakukan penyalinan Kin ke Kout */
 /* I.S. Kin terdefinisi, Kout sembarang */
 /* F.S. Length(Kout) = Length(Kin) dan semua elemen yang terdefinisi
-   di Kout sama dengan Kin */
+   di Kout sama dengan Kin. Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 #endif // KATA_H

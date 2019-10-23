@@ -1,18 +1,14 @@
 /*** ADT Mesin Kata ***/
 
-#ifndef __MESINKATA_H__
-#define __MESINKATA_H__
+#ifndef MESINKATA_H
+#define MESINKATA_H
 
 #include "boolean.h"
 #include "mesinkar.h"
+#include "kata.h"
 
 #define NMax 50
 #define BLANK ' '
-
-typedef struct {
-  char TabKata[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
-    int Length;
-} Kata;
 
 /* State Mesin Kata */
 extern boolean EndKata;
@@ -44,4 +40,4 @@ void SalinKata();
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-#endif
+#endif // MESINKATA_H

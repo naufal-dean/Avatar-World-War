@@ -49,13 +49,14 @@ boolean EQKata (Kata K1, Kata K2) {
 void CopyKata(Kata * Kout, Kata Kin) {
 /* Melakukan penyalinan Kin ke Kout */
 /* I.S. Kin terdefinisi, Kout sembarang */
-/* F.S. Length(Kout) = Length(Kin) dan semua elemen yang terdefinisi 
-   di Kout sama dengan Kin */
+/* F.S. Length(Kout) = Length(Kin) dan semua elemen yang terdefinisi
+   di Kout sama dengan Kin. Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
     // Kamus lokal
-    int i;
+    int i, imax;
     // Algoritma
-    Length(*Kout) = Length(Kin);
-    for (i = 1; i <= Length(Kin); i++) {
+    imax = (Length(Kin) > LengthMax) ? (LengthMax) : (Length(Kin));
+    Length(*Kout) = imax;
+    for (i = 1; i <= imax; i++) {
         Char(*Kout, i) = Char(Kin, i);
     }
 }
