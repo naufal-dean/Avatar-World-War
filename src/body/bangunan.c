@@ -10,8 +10,7 @@ Bangunan MakeBangunan (char Tipe, Point Lokasi) {
     // Algoritma
     // Properti masukan
     Tipe(B) = Tipe;
-    Absis(Lokasi(B)) = Absis(Lokasi);
-    Ordinat(Lokasi(B)) = Ordinat(Lokasi);
+    CopyPoint(&Lokasi(B), Lokasi);
     // Properti default
     Pemilik(B) = 0;
     Level(B) = 1;
@@ -170,4 +169,18 @@ void AssignPropertiHelper(Bangunan * B, int A, int M, boolean P) {
     Penambahan(*B) = A;
     Maksimum(*B) = M;
     Pertahanan(*B) = P;
+}
+
+/*** Kelompok operasi lain ***/
+void CopyBangunan(Bangunan * Bout, Bangunan Bin) {
+/* Melakukan penyalinan Bin ke Bout */
+/* I.S. Bin terdefinisi, Bout sembarang */
+/* F.S. Bout memiliki properti yang sama dengan Bin */
+    // Algoritma
+    Tipe(*Bout) = Tipe(Bin);
+    CopyPoint(&Lokasi(*Bout), Lokasi(Bin));
+    Pemilik(*Bout) = Pemilik(Bin);
+    Pasukan(*Bout) = Pasukan(Bin);
+    Level(*Bout) = Level(Bin);
+    AssignProperti(Bout);
 }

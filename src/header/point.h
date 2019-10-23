@@ -40,4 +40,10 @@ void TulisPoint (Point P);
 boolean EQPoint (Point P1, Point P2);
 /* Mengirimkan true jika Absis dan Ordinat P1 sama dengan P2 */
 
+/*** Kelompok operasi lain ***/
+void CopyPoint(Point * Pout, Point Pin);
+/* Melakukan penyalinan Pin ke Pout */
+/* I.S. Pin terdefinisi, Pout sembarang */
+/* F.S. Pout sama dengan Pin */
+
 #endif // POINT_H
