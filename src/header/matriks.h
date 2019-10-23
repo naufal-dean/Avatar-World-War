@@ -1,4 +1,4 @@
-/*** ADT PETA ***/
+/*** ADT Matriks ***/
 
 #ifndef MATRIKS_H
 #define MATRIKS_H
@@ -17,10 +17,10 @@ typedef struct {
     ElType Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* Jumlah baris yang terisi */
     int NKolEff; /* Jumlah kolom yang terisi */
-} MATRIKS;
+} Matriks;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
-/* Indeks peta yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
-/* Memori peta yang dipakai selalu di "ujung kiri atas" */
+/* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
+/* Memori matriks yang dipakai selalu di "ujung kiri atas" */
 
 /*** Selektor ***/
 #define NBrsEff(M) (M).NBrsEff
@@ -29,33 +29,33 @@ typedef struct {
 
 /*  DEFINISI PROTOTIPE PRIMITIF  */
 /*** Konstruktor ***/
-void MakeMATRIKS (int NB, int NK, MATRIKS *M);
+void MakeMatriks (int NB, int NK, Matriks *M);
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
-/* F.S. Peta M sesuai dengan definisi di atas terbentuk */
+/* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
 
 /*** Selektor ***/
 boolean IsIdxValid (int i, int j);
-/* Mengirimkan true jika i, j adalah indeks yang valid untuk peta apa pun */
-indeks GetFirstIdxBrs (MATRIKS M);
+/* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
+indeks GetFirstIdxBrs (Matriks M);
 /* Mengirimkan indeks baris terkecil M */
-indeks GetFirstIdxKol (MATRIKS M);
+indeks GetFirstIdxKol (Matriks M);
 /* Mengirimkan indeks kolom terkecil M */
-indeks GetLastIdxBrs (MATRIKS M);
+indeks GetLastIdxBrs (Matriks M);
 /* Mengirimkan indeks baris terbesar M */
-indeks GetLastIdxKol (MATRIKS M);
+indeks GetLastIdxKol (Matriks M);
 /* Mengirimkan indeks kolom terbesar M */
-boolean IsIdxEff (MATRIKS M, indeks i, indeks j);
+boolean IsIdxEff (Matriks M, indeks i, indeks j);
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
 
 /* KELOMPOK BACA/TULIS */
-void BacaUkuranMATRIKS (MATRIKS * M);
-/* I.S. Matriks Peta belum memiliki ukuran */
-/* F.S. Ukuran matriks peta terdefinisi dan valid */
-/* Peta yang valid berukuran 10<=NB<=20 dan 10<=NK<=30 */
-void TulisMATRIKS (MATRIKS M);
+void BacaUkuranMatriks (Matriks * M);
+/* I.S. Matriks belum memiliki ukuran */
+/* F.S. Ukuran matriks matriks terdefinisi dan valid */
+/* Matriks yang valid berukuran 10<=NB<=20 dan 10<=NK<=30 */
+void TulisMatriks (Matriks M);
 /* I.S. M terdefinisi */
-/* F.S. Menuliskan matriks peta sesuai dengan kondisi bangunan yang ada */
-/* Contoh: Menuliskan matriks peta berukuran 5x5
+/* F.S. Menuliskan matriks sesuai dengan kondisi bangunan yang ada */
+/* Contoh: Menuliskan matriks berukuran 5x5
     * * * * * * *
     *           *
     *           *
