@@ -1,9 +1,9 @@
-#include "../header/peta.h"
+#include "../header/matriks.h"
 #include <stdio.h>
 
 /*  DEFINISI PROTOTIPE PRIMITIF  */
 /*** Konstruktor ***/
-void MakePeta (int NB, int NK, Peta *M) {
+void MakePeta (int NB, int NK, MATRIKS *M) {
 /* I.S. NB dan NK adalah valid untuk memori peta yang dibuat */
 /* F.S. Peta M sesuai dengan definisi di atas terbentuk */
     // Kamus lokal
@@ -18,31 +18,31 @@ boolean IsIdxValid (int i, int j) {
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk peta apa pun */
     return(i>=BrsMin && i<=BrsMax && j>=KolMin && j<=KolMax);
 }
-indeks GetFirstIdxBrs (Peta M) {
+indeks GetFirstIdxBrs (MATRIKS M) {
 /* Mengirimkan indeks baris terkecil M */
     return BrsMin;
 }
-indeks GetFirstIdxKol (Peta M) {
+indeks GetFirstIdxKol (MATRIKS M) {
 /* Mengirimkan indeks kolom terkecil M */
     return KolMin;
 }
-indeks GetLastIdxBrs (Peta M) {
+indeks GetLastIdxBrs (MATRIKS M) {
 /* Mengirimkan indeks baris terbesar M */
     return(NBrsEff(M));
 }
-indeks GetLastIdxKol (Peta M) {
+indeks GetLastIdxKol (MATRIKS M) {
 /* Mengirimkan indeks kolom terbesar M */
     return(NKolEff(M));
 }
-boolean IsIdxEff (Peta M, indeks i, indeks j) {
+boolean IsIdxEff (MATRIKS M, indeks i, indeks j) {
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
     return(i>=GetFirstIdxBrs(M) && j>=GetFirstIdxKol(M) && i<=GetLastIdxBrs(M) && j<=GetLastIdxKol(M));
 }
 
 /* KELOMPOK BACA/TULIS */
-void BacaUkuranPeta (Peta * M) {
-/* I.S. Peta belum memiliki ukuran */
-/* F.S. Ukuran peta terdefinisi dan valid */
+void BacaUkuranMATRIKS (MATRIKS * M) {
+/* I.S. Matriks Peta belum memiliki ukuran */
+/* F.S. Ukuran matriks peta terdefinisi dan valid */
 /* Peta yang valid berukuran 10<=NB<=20 dan 10<=NK<=30 */
     // Kamus lokal
     int NB, NK;
@@ -52,12 +52,12 @@ void BacaUkuranPeta (Peta * M) {
     while(!IsIdxValid(NB,NK)){
         scanf("%d %d",NB,NK);
     }
-    MakePeta(NB, NK, M);
+    MakeMATRIKS(NB, NK, M);
 }
-void TulisPeta (Peta M){
+void TulisPeta (MATRIKS M){
 /* I.S. M terdefinisi */
-/* F.S. Menuliskan peta sesuai dengan kondisi bangunan yang ada */
-/* Contoh: Menuliskan peta berukuran 5x5
+/* F.S. Menuliskan matriks peta sesuai dengan kondisi bangunan yang ada */
+/* Contoh: Menuliskan matriks peta berukuran 5x5
     * * * * * * *
     *           *
     *           *
@@ -66,6 +66,7 @@ void TulisPeta (Peta M){
     *           *
     * * * * * * *
 */ 
+
     // Kamus lokal
     indeks i,j;
     int ctr;
