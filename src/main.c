@@ -3,6 +3,7 @@
 #include "header/bangunan.h"
 #include "header/boolean.h"
 #include "header/kata.h"
+#include "header/listlinier.h"
 #include "header/matriks.h"
 #include "header/mesinkar.h"
 #include "header/mesinkata.h"
@@ -12,17 +13,18 @@
 #include "header/status.h"
 
 int main() {
-  printf("Hello world\n");
-  Bangunan B1, B2;
-  B1 = MakeBangunan('C', MakePoint(1,1));
-  CopyBangunan(&B2, B1);
-  printf("%d\n", Maksimum(B1));
-  printf("%d\n", Maksimum(B2));
-  UpgradeLevel(&B2);
-  AssignProperti(&B2);
-  printf("%d\n", Maksimum(B1));
-  printf("%d\n", Maksimum(B2));
-  TulisBangunan(B1);
-  TulisBangunan(B2);
-  return 0;
+    printf("Hello world\n");
+    Bangunan B1, B2;
+    TabBangunan T;
+    printf("Initializing Tab\n");
+    MakeEmptyTab(&T, 100);
+    printf("Done...\n");
+    CopyBangunan(&ElmtTab(T, 1), MakeBangunan(1, 'C', MakePoint(1, 3)));
+    CopyBangunan(&ElmtTab(T, 2), ValUndefTab);
+
+    BacaIsiTab(&T);
+    // TulisBangunan(ValUndefTab);
+    TulisIsiTab(T);
+
+    return 0;
 }

@@ -6,8 +6,14 @@
 #include "boolean.h"
 #include "point.h"
 
+/* Kamus umum */
+#define IDUndef 0
+
 /* Definisi elemen dan koleksi objek */
 typedef struct {
+    int ID;             // ID Bangunan, IDUndef jika undefined
+  	char Tipe;
+    Point Lokasi;
     int Kepemilikan;    // Pemain yang memiliki bangunan, 0 jika tidak dimiliki siapapun
     int N;              // Jumlah pasukan
     int Level;          // Level bangunan, 1-4
@@ -15,32 +21,28 @@ typedef struct {
     int M;              // Maksimum penambahan pasukan
     boolean P;          // Pertahanan
     int U;              // Pasukan awal
-} Properti;
-typedef struct {
-  	char Tipe;
-    Point Lokasi;
-    Properti Prop;
 } Bangunan;
 
 /*** Selektor ***/
+#define ID(B) (B).ID
 #define Tipe(B) (B).Tipe
 #define Lokasi(B) (B).Lokasi
-#define Pemilik(B) (B).Prop.Kepemilikan
-#define Pasukan(B) (B).Prop.N
-#define Level(B) (B).Prop.Level
-#define Penambahan(B) (B).Prop.A
-#define Maksimum(B) (B).Prop.M
-#define Pertahanan(B) (B).Prop.P
-#define PAwal(B) (B).Prop.U
+#define Pemilik(B) (B).Kepemilikan
+#define Pasukan(B) (B).N
+#define Level(B) (B).Level
+#define Penambahan(B) (B).A
+#define Maksimum(B) (B).M
+#define Pertahanan(B) (B).P
+#define PAwal(B) (B).U
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-Bangunan MakeBangunan (char Tipe, Point Lokasi);
+Bangunan MakeBangunan (int ID, char Tipe, Point Lokasi);
 /* Membentuk sebuah Bangunan dari komponen-komponennya */
 /* Bangunan yang terbentuk memiliki level 1 */
 
 /*** Kelompok interaksi dengan I/O device, BACA / TULIS ***/
-void BacaBangunan (Bangunan * B);
+void BacaBangunan (Bangunan * B, int ID);
 /* Membaca nilai komponen Bangunan dari input device dan membentuk
    Bangunan B */
 /* Komponen dibaca dalam 1 baris, dipisahkan 1 buah spasi */

@@ -98,7 +98,8 @@ void BacaIsiTab(TabBangunan *T) {
 */
     // Kamus lokal
     IdxType i;
-    int N, X, Y;
+    int N;
+    int X, Y;
     char Tipe;
     // Algoritma
     do {
@@ -111,8 +112,7 @@ void BacaIsiTab(TabBangunan *T) {
     // Baca nilai elemen jika N > 0
     if (N > 0) {
         for (i = GetFirstIdxTab(*T); i <= N; i++) {
-            scanf("%c %d %d", &Tipe, &X, &Y);
-            ElmtTab(*T, i) = MakeBangunan(Tipe, MakePoint(X, Y));
+            BacaBangunan(&ElmtTab(*T, i), i);
         }
     }
 }

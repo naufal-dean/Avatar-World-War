@@ -87,7 +87,7 @@ void CopyQueue(Queue * Qout, Queue Qin) {
 /* Melakukan penyalinan Qin ke Qout */
 /* I.S. Qin terdefinisi, Qout sembarang */
 /* F.S. Semua elemen yang terdefinisi Qout sama dengan Qin,
-        Head dan Tail boleh berbeda */
+        Head dan Tail mungkin berbeda */
     // Kamus lokal
     ElTypeQueue X;
     // Algoritma

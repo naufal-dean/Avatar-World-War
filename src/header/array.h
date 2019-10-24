@@ -13,7 +13,7 @@
 /* Kamus Umum */
 #define IdxMin 1          // Indeks minimum array
 #define IdxUndef -999     // Indeks tak terdefinisi
-#define ValUndefTab MakeBangunan('#', MakePoint(0, 0))
+#define ValUndefTab MakeBangunan(IDUndef, '#', MakePoint(0, 0))
 // Nilai elemen tak terdefinisi
 
 /* Definisi elemen dan koleksi objek */

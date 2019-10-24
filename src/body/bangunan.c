@@ -2,13 +2,14 @@
 #include "../header/bangunan.h"
 
 /*** Konstruktor ***/
-Bangunan MakeBangunan (char Tipe, Point Lokasi) {
+Bangunan MakeBangunan (int ID, char Tipe, Point Lokasi) {
 /* Membentuk sebuah Bangunan dari komponen-komponennya */
 /* Bangunan yang terbentuk memiliki level 1 dan tidak dimiliki siapapun */
     // Kamus lokal
     Bangunan B;
     // Algoritma
     // Properti masukan
+    ID(B) = ID;
     Tipe(B) = Tipe;
     CopyPoint(&Lokasi(B), Lokasi);
     // Properti default
@@ -19,7 +20,7 @@ Bangunan MakeBangunan (char Tipe, Point Lokasi) {
 }
 
 /*** Kelompok interaksi dengan I/O device, BACA / TULIS ***/
-void BacaBangunan (Bangunan * B) {
+void BacaBangunan (Bangunan * B, int ID) {
 /* Membaca nilai komponen Bangunan dari input device dan membentuk
 Bangunan B */
 /* Komponen dibaca dalam 1 baris, dipisahkan 1 buah spasi */
@@ -28,10 +29,11 @@ akan membentuk Bangunan <'C',(1,3)> */
 /* I.S. Sembarang */
 /* F.S. B terdefinisi */
     // Kamus lokal
-    int Tipe, X, Y;
+    int X, Y;
+    char Tipe;
     // Algoritma
-    scanf("%c %d %d", &Tipe, &X, &Y);
-    (*B) = MakeBangunan(Tipe, MakePoint(X, Y));
+    scanf(" %c %d %d", &Tipe, &X, &Y);
+    CopyBangunan(B, MakeBangunan(ID, Tipe, MakePoint(X, Y)));
 }
 void TulisBangunan (Bangunan B) {
 /* Nilai B ditulis ke layar dengan format "Tipe (Lokasi)"
@@ -64,7 +66,7 @@ atau di antaranya. */
 /*** Kelompok operasi relasional terhadap Bangunan ***/
 boolean EQBangunan (Bangunan B1, Bangunan B2) {
 /* Mengirimkan true jika Tipe dan Lokasi B1 sama dengan B2 */
-    return ((Tipe(B1) == Tipe(B2)) && EQPoint(Lokasi(B1), Lokasi(B2)));
+    return (ID(B1) == ID(B2));
 }
 
 /*** Kelompok Mekanisme Game ***/
@@ -184,6 +186,7 @@ void CopyBangunan(Bangunan * Bout, Bangunan Bin) {
 /* I.S. Bin terdefinisi, Bout sembarang */
 /* F.S. Bout memiliki properti yang sama dengan Bin */
     // Algoritma
+    ID(*Bout) = ID(Bin);
     Tipe(*Bout) = Tipe(Bin);
     CopyPoint(&Lokasi(*Bout), Lokasi(Bin));
     Pemilik(*Bout) = Pemilik(Bin);
