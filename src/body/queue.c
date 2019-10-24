@@ -91,7 +91,7 @@ void CopyQueue(Queue * Qout, Queue Qin) {
     // Kamus lokal
     ElTypeQueue X;
     // Algoritma
-    MaxElQueue(*Qout) = MaxElQueue(Qin);
+    MakeEmptyQueue(Qout, MaxElQueue(Qin));
     while (!IsQueueEmpty(Qin)) {
         DelElQueue(&Qin, &X);
         AddElQueue(Qout, X);

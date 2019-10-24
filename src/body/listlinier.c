@@ -27,7 +27,7 @@ AddressList AlokasiElList (ElTypeList X){
     // Algoritma
     P=(ElmtList *)malloc(sizeof(ElmtList));
     if(P!=NilList){
-        CopyBangunan(&Info(P), X);
+        Info(P) = X;
         Next(P)=NilList;
     }
     return P;
@@ -50,7 +50,7 @@ AddressList SearchInfo (List L, ElTypeList X){
     found=false;
     P=First(L);
     while(P!=NilList && !found){
-        if(EQBangunan(Info(P), X)){
+        if(Info(P) == X){
             found=true;
         }
         else{
@@ -97,7 +97,7 @@ void DelVFirst (List *L, ElTypeList *X){
     AddressList P;
     // Algoritma
     DelFirst(L,&P);
-    CopyBangunan(X, Info(P));
+    (*X) = Info(P);
     DealokasiElList(&P);
 }
 void DelVLast (List *L, ElTypeList *X){
@@ -108,7 +108,7 @@ void DelVLast (List *L, ElTypeList *X){
     AddressList P;
     // Algoritma
     DelLast(L,&P);
-    CopyBangunan(X, Info(P));
+    (*X) = Info(P);
     DealokasiElList(&P);
 }
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
@@ -229,7 +229,7 @@ void PrintInfo (List L){
         P=First(L);
         printf("[");
         while(P!=NilList){
-            TulisBangunan(Info(P));
+            printf("%d", Info(P));
             P=Next(P);
             if(P!=NilList){
                 printf(",");

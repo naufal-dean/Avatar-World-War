@@ -11,7 +11,6 @@ void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab) {
            ActivePlayer = 1. Turn = 1. */
     // Algoritma
     MakeMatriks(NBMatriks, NKMatriks, &Peta(GameStatus));
-    MakeEmptyTab(&ListBangunan(GameStatus), MaxElTab);
     MakeEmptyStack(&StatusPemain(GameStatus));
     ActivePlayer(GameStatus) = 1;
     Turn(GameStatus) = 1;

@@ -23,7 +23,7 @@ int main() {
     CopyBangunan(&ElmtTab(T, 2), ValUndefTab);
 
     BacaIsiTab(&T);
-    // TulisBangunan(ValUndefTab);
+    // // TulisBangunan(ValUndefTab);
     TulisIsiTab(T);
 
     return 0;

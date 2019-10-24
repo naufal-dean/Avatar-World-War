@@ -11,7 +11,6 @@
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     Matriks Peta;               // Peta game
-    TabBangunan ListBangunan;   // List Bangunan awal
     Stack StatusPemain;         // Status Pemain turn ini
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
     int Turn;                   // Urutan turn saat ini
@@ -22,7 +21,6 @@ extern Status GameStatus;
 
 /*** Selektor ***/
 #define Peta(S) (S).Peta
-#define ListBangunan(S) (S).ListBangunan
 #define StatusPemain(S) (S).StatusPemain
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn

@@ -38,14 +38,13 @@ void Pop (Stack * S, ElTypeStack * X) {
 }
 
 /*** Kelompok fungsi pembantu ***/
-ElTypeStack MakeElTypeStack (List L1, Queue Q1, List L2, Queue Q2) {
+ElTypeStack MakeElTypeStack (TabBangunan T, Queue Q1, Queue Q2) {
 /* Membentuk ElTypeStack dari komponen-komponennya */
     // Kamus lokal
     ElTypeStack E;
     // Algoritma
-    CopyList(&B1(E), L1);
+    CopyTabBangunan(&TB(E), T);
     CopyQueue(&S1(E), Q1);
-    CopyList(&B2(E), L2);
     CopyQueue(&S2(E), Q2);
     return (E);
 }
@@ -55,8 +54,7 @@ void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein) {
 /* I.S. Ein terdefinisi, Eout sembarang */
 /* F.S. Eout sama dengan Ein */
     // Algoritma
-    CopyList(&B1(*Eout), B1(Ein));
+    CopyTabBangunan(&TB(*Eout), TB(Ein));
     CopyQueue(&S1(*Eout), S1(Ein));
-    CopyList(&B2(*Eout), B2(Ein));
     CopyQueue(&S2(*Eout), S2(Ein));
 }

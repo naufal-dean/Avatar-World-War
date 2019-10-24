@@ -10,7 +10,7 @@
 /* Kamus Umum */
 #define NilList NULL
 
-typedef Bangunan ElTypeList;	// Info elemen list berupa type bentukan "Bangunan"
+typedef int ElTypeList;	// Info elemen list berupa type bentukan "Bangunan"
 typedef struct tElmtlist *AddressList;	// Alamat elemen list
 typedef struct tElmtlist {
 	ElTypeList Info;

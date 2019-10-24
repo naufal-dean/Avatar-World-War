@@ -6,7 +6,7 @@
 #define STACK_H
 
 #include "boolean.h"
-#include "listlinier.h"
+#include "array.h"
 #include "queue.h"
 
 /* Kamus umum */
@@ -16,9 +16,8 @@
 /* Definisi elemen dan koleksi objek */
 typedef int AddressStack;
 typedef struct {
-    List Bangunan1;
+    TabBangunan ListBangunan;   // List Bangunan awal
     Queue Skill1;
-    List Bangunan2;
     Queue Skill2;
 } ElTypeStack;
 typedef struct {
@@ -32,9 +31,8 @@ typedef struct {
 #define Top(S) (S).Top
 #define InfoTop(S) (S).T[(S).Top]
 /*** Selektor ElTypeStack ***/
-#define B1(E) (E).Bangunan1
+#define TB(E) (E).ListBangunan
 #define S1(E) (E).Skill1
-#define B2(E) (E).Bangunan2
 #define S2(E) (E).Skill2
 
 /* DEFINISI PROTOTIPE PRIMITIF */
@@ -61,7 +59,7 @@ void Pop (Stack * S, ElTypeStack * X);
 /* F.S. X adalah nilai elemen Top terakhir sebelum dihapus, Top berkurang 1 */
 
 /*** Kelompok fungsi pembantu ***/
-ElTypeStack MakeElTypeStack (List L1, Queue Q1, List L2, Queue Q2);
+ElTypeStack MakeElTypeStack (TabBangunan T, Queue Q1, Queue Q2);
 /* Membentuk ElTypeStack dari komponen-komponennya */
 
 void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein);

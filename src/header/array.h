@@ -112,4 +112,11 @@ void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel);
         Banyaknya elemen tabel berkurang satu
         Tabel T mungkin menjadi kosong */
 
+/*** Kelompok operasi lain ***/
+void CopyTabBangunan(TabBangunan * Tout, TabBangunan Tin);
+/* Melakukan penyalinan Tin ke Tout */
+/* I.S. Tin terdefinisi, Tout sembarang */
+/* F.S. Semua elemen yang terdefinisi Tout sama dengan Tin,
+        Head dan Tail mungkin berbeda */
+
 #endif // ARRAY_H

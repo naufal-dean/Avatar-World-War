@@ -99,8 +99,6 @@ void BacaIsiTab(TabBangunan *T) {
     // Kamus lokal
     IdxType i;
     int N;
-    int X, Y;
-    char Tipe;
     // Algoritma
     do {
       scanf("%d", &N);
@@ -172,4 +170,19 @@ void DelElTab(TabBangunan *T, ElTypeTab *B, IdxType idxDel) {
         CopyBangunan(&ElmtTab((*T), i), ElmtTab((*T), i + 1));
     }
     CopyBangunan(&ElmtTab((*T), i), ValUndefTab);
+}
+
+/*** Kelompok operasi lain ***/
+void CopyTabBangunan(TabBangunan * Tout, TabBangunan Tin) {
+/* Melakukan penyalinan Tin ke Tout */
+/* I.S. Tin terdefinisi, Tout sembarang */
+/* F.S. Semua elemen yang terdefinisi Tout sama dengan Tin,
+Head dan Tail mungkin berbeda */
+    // Kamus lokal
+    IdxType i;
+    // Algoritma
+    MakeEmptyTab(Tout, MaxElementTab(Tin));
+    for (i = 1; i <= MaxElementTab(Tin); i++) {
+        CopyBangunan(&ElmtTab(*Tout, i), ElmtTab(Tin, i));
+    }
 }
