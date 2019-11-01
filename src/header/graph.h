@@ -9,18 +9,18 @@
 #include <stdlib.h>
 
 /* Kamus Umum */
-#define NilList NULL
+#define NilGraph NULL
 
-typedef int ElTypeList;	// Info elemen list berupa type bentukan "Bangunan"
-typedef struct tElmtlist *AddressList;	// Alamat elemen list
-typedef struct tElmtlist {
-	ElTypeList Info;
-	AddressList FirstAdj;	// Alamat pertama adj list, berisi alamat bila elemen tersebut merupakan U dan Nil bila elemen tersebut merupakan V
-	AddressList Next;
-} ElmtList;
+typedef int ElTypeGraph;	// Info elemen list berupa type bentukan "Bangunan"
+typedef struct tElmtGraph *AddressGraph;	// Alamat elemen list
+typedef struct tElmtGraph {
+	ElTypeGraph Info;
+	AddressGraph FirstAdj;	// Alamat pertama adj list, berisi alamat bila elemen tersebut merupakan U dan Nil bila elemen tersebut merupakan V
+	AddressGraph Next;
+} ElmtGraph;
 typedef struct {
-	AddressList First;	// Alamat pertama list
-} List;
+	AddressGraph First;	// Alamat pertama list
+} Graph;
 
 /* Definisi list : */
 /* List kosong : First(L) = NilList */
@@ -30,18 +30,18 @@ typedef struct {
 #define Info(P) (P)->Info
 #define FirstAdj(P) (P)->FirstAdj
 #define Next(P) (P)->Next
-#define First(L) ((L).First)
+#define FirstG(G) ((G).First)
 
-AddressList Alokasi (ElTypeList X);
+AddressGraph Alokasi (ElTypeGraph X);
 
-boolean IsEmpty (List *L);
+boolean IsEmptyGraph (Graph G);
 
-boolean IsU (AddressList P);
+boolean IsU (AddressGraph P);
 
-void CreateEmptyList (List *L);
+void CreateEmptyGraph (Graph *G);
 
-void Insert (List *L, ElTypeList X);
+void InsertGraph (Graph *G, ElTypeGraph X);
 
-boolean AdaEdge(List L, ElTypeList U, ElTypeList V);
+boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
 
 #endif

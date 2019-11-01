@@ -1,75 +1,75 @@
 #include "../header/graph.h"
 #include <stddef.h>
 
-AddressList Alokasi (ElTypeList X) {
-    AddressList P;
+AddressGraph Alokasi (ElTypeGraph X) {
+    AddressGraph P;
     // Algoritma
-    P=(ElmtList *)malloc(sizeof(ElmtList));
-    if(P!=NilList){
+    P=(ElmtGraph *)malloc(sizeof(ElmtGraph));
+    if(P!=NilGraph){
         Info(P) = X;
-        Next(P)=NilList;
+        Next(P)=NilGraph;
     }
     return P;
 }
 
-boolean IsEmpty (List L) {
-    return (First(L) == NilList);
+boolean IsEmptyGraph (Graph G) {
+    return (FirstG(G) == NilGraph);
 }
 
-boolean IsU (AddressList P) {
-    return (FirstAdj(P) != NilList);
+boolean IsU (AddressGraph P) {
+    return (FirstAdj(P) != NilGraph);
 }
 
-void CreateEmptyList (List *L) {
-    First(*L) = NilList;
+void CreateEmptyGraph (Graph *L) {
+    FirstG(*L) = NilGraph;
 }
 
-void Insert (List *L, ElTypeList X) {
-    if (IsU(First(*L))) {
-        AddressList P;
+void Insert (Graph *G, ElTypeGraph X) {
+    if (IsU(FirstG(*G))) {
+        AddressGraph P;
         P = Alokasi(X);
-        if (P != NilList) {
-            AddressList last;
-            if (IsEmpty(*L)) {
-                Next(P) = First(*L);
-                First(*L) = P;
+        if (P != NilGraph) {
+            AddressGraph last;
+            if (IsEmptyGraph(*G)) {
+                Next(P) = FirstG(*G);
+                FirstG(*G) = P;
             } else {
-                last = First(*L);
-                while (Next(last) != NilList) {
+                last = FirstG(*G);
+                while (Next(last) != NilGraph) {
                     last = Next(last);
                 }
                 Next(P) = Next(last);
                 Next(last) = P;
             }
-            AddressList PF;
+            AddressGraph PF;
             PF = Alokasi(0);    // dummy
             FirstAdj(P) = PF; 
         }
     } else {
-        AddressList P;
+        AddressGraph P;
         P = Alokasi(X);
-        if (P != NilList) {
-            AddressList last;
-            if (IsEmpty(*L)) {
-                Next(P) = First(*L);
-                First(*L) = P;
+        if (P != NilGraph) {
+            AddressGraph last;
+            if (IsEmptyGraph(*G)) {
+                Next(P) = FirstG(*G);
+                FirstG(*G) = P;
             } else {
-                last = First(*L);
-                while (Next(last) != NilList) {
+                last = FirstG(*G);
+                while (Next(last) != NilGraph) {
                     last = Next(last);
                 }
                 Next(P) = Next(last);
                 Next(last) = P;
             }
-            FirstAdj(P) = NilList; 
+            FirstAdj(P) = NilGraph; 
         }
     }
 }
 
-boolean AdaEdge(List L, ElTypeList U, ElTypeList V) {
-    AddressList P = First(L);
+boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
+    AddressGraph P = FirstG(L);
     boolean FoundU = false;
-    while (P != NilList && !FoundU) {
+    while (P != NilGraph && !FoundU) {
         if (Info(P) == U) {
             FoundU = true;
         } else {
@@ -77,9 +77,9 @@ boolean AdaEdge(List L, ElTypeList U, ElTypeList V) {
         }
     }
     if (FoundU) {
-        AddressList PF = FirstAdj(P);
+        AddressGraph PF = FirstAdj(P);
         boolean FoundV = false;
-        while (PF != NilList && !FoundV) {
+        while (PF != NilGraph && !FoundV) {
             if (Info(PF) == V) {
                 FoundV = true;
             } else {

@@ -2,6 +2,7 @@
 #include "header/array.h"
 #include "header/bangunan.h"
 #include "header/boolean.h"
+#include "header/graph.h"
 #include "header/kata.h"
 #include "header/listlinier.h"
 #include "header/matriks.h"
