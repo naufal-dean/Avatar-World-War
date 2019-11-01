@@ -73,7 +73,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
 
     // Assign T, Q1, Q2 to StatusPemain(GameStatus)
     Push(&StatusPemain(GameStatus), MakeElTypeStack(T, Q1, Q2));
-
+    TulisMatriksPeta(Peta(GameStatus), T);
     // Adjacency matriks
     // TODO: implement
 }

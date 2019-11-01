@@ -18,11 +18,11 @@ int main() {
     int X, error;
     Kata K;
     char C = 'a';
-    printf("%s%s%s", YELLOW, "Hello world\n", NORMAL);
+    printf("%s%s%s\n", YELLOW, "Hello world", NORMAL);
 
     printf("Initializing GameStatus...\n");
     SetupConfigGameStatus("../data/config.txt", &error);
-    printf("Initialization done...\n");
+    printf("\nInitialization done...\n");
 
     // STARTKATA("../data/test.txt", &error);
     // TulisKata(CKata);
