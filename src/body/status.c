@@ -4,13 +4,13 @@
 Status GameStatus;
 
 /*** Konstruktor ***/
-void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab) {
+void InitGameStatus (int NBPeta, int NKPeta, int NBangunan) {
 /* I.S. GameStatus sembarang */
 /* F.S. Status GameStatus terdefinisi */
 /* Proses: Melakukan alokasi, memanfaatkan konstruktor tiap komponen Status.
            ActivePlayer = 1. Turn = 1. */
     // Algoritma
-    MakeMatriks(NBMatriks, NKMatriks, &Peta(GameStatus));
+    MakeMatriks(NBPeta, NKPeta, &Peta(GameStatus));
     MakeEmptyGraph(&Adjacency(GameStatus));
     MakeEmptyStack(&StatusPemain(GameStatus));
     ActivePlayer(GameStatus) = 1;

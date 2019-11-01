@@ -46,7 +46,7 @@ extern Status GameStatus;
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab);
+void InitGameStatus (int NBPeta, int NKPeta, int NBangunan);
 /* I.S. GameStatus sembarang */
 /* F.S. Status GameStatus terdefinisi */
 /* Proses: Melakukan alokasi, memanfaatkan konstruktor tiap komponen Status.
