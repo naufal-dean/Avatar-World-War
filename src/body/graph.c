@@ -1,5 +1,6 @@
 #include "../header/graph.h"
 #include <stddef.h>
+#include <stdio.h>
 
 AddressGraph Alokasi (ElTypeGraph X) {
     AddressGraph P;
@@ -20,8 +21,8 @@ void CreateEmptyGraph (Graph *L) {
     FirstG(*L) = NilGraph;
 }
 
-void Insert (Graph *G, ElTypeGraph U, ElTypeGraph V) {
-    if (U != 0) {
+void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
+    if (V != 0) {
         AddressGraph P = FirstG(*G);
         boolean FoundU = false;
         while (P != NilGraph && !FoundU) {
@@ -42,13 +43,21 @@ void Insert (Graph *G, ElTypeGraph U, ElTypeGraph V) {
         }
     } else {
         AddressGraph P = FirstG(*G);
-        while (Next(P) != NilGraph) {
-            P = Next(P);
+        if (P == NilGraph) {
+            FirstG(*G) = Alokasi(U);
+            Next(FirstG(*G)) = NilGraph;
+            FirstAdj(FirstG(*G)) = Alokasi(0);
+            Next(FirstAdj(FirstG(*G))) = NilGraph;
+        } else {
+            while (Next(P) != NilGraph) {
+                P = Next(P);
+            }
+            AddressGraph New = Alokasi(U);
+            Next(New) = Next(P);
+            Next(P) = New;
+            FirstAdj(New) = Alokasi(0);
+            Next(FirstAdj(New)) = NilGraph;
         }
-        AddressGraph New = Alokasi(U);
-        Next(New) = Next(P);
-        Next(P) = New;
-        FirstAdj(New) = Alokasi(0);
     }
 }
 
@@ -75,5 +84,19 @@ boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
         return FoundV;
     } else {
         return false;
+    }
+}
+
+void PrintGraph (Graph G) {
+    AddressGraph P = FirstG(G);
+    while (Next(P) != NilGraph) {
+        printf("%d --> ", Info(P));
+        AddressGraph PF = FirstAdj(P);
+        while (Next(PF) != NilGraph) {
+            printf("%d ", Info(PF));
+            PF = Next(PF);
+        }
+        P = Next(P);
+        printf("\n");
     }
 }

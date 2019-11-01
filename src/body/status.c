@@ -26,6 +26,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     int NBPeta, NKPeta, NBangunan, i, j, X, Y;
     TabBangunan T;
     Queue Q1, Q2;
+    Graph G;
     // Algoritma
     // Inisialisasi mesin kata
     STARTKATA(ConfigPath, error);
@@ -38,7 +39,6 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     ADVKATA();
     NKPeta = KataToInt(CKata);
     ReadNextLine();
-    printf("%d%d\n",NBPeta,NKPeta);
     // Jumlah bangunan
     NBangunan = KataToInt(CKata);
     ReadNextLine();
@@ -75,7 +75,18 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     Push(&StatusPemain(GameStatus), MakeElTypeStack(T, Q1, Q2));
 
     // Adjacency matriks
-    // TODO: implement
+    CreateEmptyGraph(&G);
+    for (int i=1;i<=NBangunan;i++) {
+        InsertGraph(&G, i, 0);
+    }
+    
+    for (int i=1;i<=NBangunan;i++) {
+        for (int j=1;j<=NBangunan;j++) {
+            if (KataToInt(CKata) == 1) InsertGraph(&G, i, j);
+            ADVKATA();
+        }
+        ReadNextLine();
+    }
 }
 
 Bangunan ParseInputBangunan(int ID) {
