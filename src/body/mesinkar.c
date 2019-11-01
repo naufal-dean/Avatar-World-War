@@ -9,7 +9,7 @@ char MARK;
 static FILE * pita;
 static int retval;
 
-void START(char * path) {
+void START(char * path, int * error) {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita atau stdin (sesuai input path)
    posisinya adalah pada jendela.
@@ -34,7 +34,7 @@ void START(char * path) {
     } else { // Not error
         ADV();
     }
-
+    (*error) = errno;
 }
 
 void ADV() {

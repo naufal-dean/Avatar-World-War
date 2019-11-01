@@ -13,12 +13,15 @@ void IgnoreBlank() {
     }
 }
 
-void STARTKATA(char * path) {
+void STARTKATA(char * path, int * error) {
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-    START(path);
+    START(path, error);
+    if ((*error) != 0) {
+        return;
+    }
     if (CC == MARK) {
         EndKata = true;
     } else {
@@ -54,7 +57,7 @@ void AkuisisiKata() {
         CKata.TabKata[i] = CC;
         i++;
         ADV();
-    } while ((CC != MARK) && (CC != BLANK) && (i <= NMax));
+    } while ((CC != MARK) && (CC != BLANK) && (CC != '\n') && (i <= NMax));
     CKata.Length = i - 1;
 }
 
@@ -63,8 +66,10 @@ void ScanInt(int * input) {
 /* Membaca integer dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
+    // Kamus lokal
+    int error;
     // Algoritma
-    STARTKATA(NULL);
+    STARTKATA(NULL, &error);
     (*input) = KataToInt(CKata);
 }
 
@@ -72,8 +77,10 @@ void ScanChar(char * input) {
 /* Membaca char dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
+    // Kamus lokal
+    int error;
     // Algoritma
-    STARTKATA(NULL);
+    STARTKATA(NULL, &error);
     (*input) = Char(CKata, 1);
 }
 
@@ -81,7 +88,21 @@ void ScanKata(Kata * input) {
 /* Membaca Kata dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
+    // Kamus lokal
+    int error;
     // Algoritma
-    STARTKATA(NULL);
+    STARTKATA(NULL, &error);
     CopyKata(input, CKata);
+}
+
+void ReadNextLine() {
+/* I.S. Line selanjutnya terdefinisi pada file */
+/* F.S. CKata kata pertama line berikutnya, diakuisisi memanfaatkan ADVKATA */
+/* Proses: Abaikan semua karakter sebelum '\n' pertama yang ditemui */
+    // Algoritma
+    while (CC != '\n') {
+        ADV();
+    }
+    ADV();
+    ADVKATA();
 }

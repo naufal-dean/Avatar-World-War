@@ -5,13 +5,18 @@
 
 #include "boolean.h"
 #include "array.h"
+#include "kata.h"
 #include "matriks.h"
+#include "mesinkata.h"
+#include "point.h"
+#include "queue.h"
 #include "stack.h"
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     Matriks Peta;               // Peta game
     Stack StatusPemain;         // Status Pemain turn ini
+                                // Mengandung ListBangunan dan Queue Skill
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
     int Turn;                   // Urutan turn saat ini
 } Status;
@@ -32,5 +37,16 @@ void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab);
 /* F.S. Status GameStatus terdefinisi */
 /* Proses: Melakukan alokasi, memanfaatkan konstruktor tiap komponen Status.
            ActivePlayer = 1. Turn = 1. */
+
+/*** Setup ***/
+void SetupConfigGameStatus(char * ConfigPath, int * error);
+/* I.S. GameStatus terdefinisi
+        Isi file config terdefinisi, jumlah bangunan > 2, ukuran map valid */
+/* F.S. Isi GameStatus sesuai dengan config */
+/* Proses: Melakukan setup GameStatus sesuai isi file di ConfigPath */
+Bangunan ParseInputBangunan(int ID);
+/* Mengembalikan Bangunan sesuai input pada file
+   Format input: "Tipe Lokasi(X) Lokasi(Y)"
+   CKata awal ada di Tipe, CKata akhir ada di Lokasi(Y) */
 
 #endif // STATUS_H

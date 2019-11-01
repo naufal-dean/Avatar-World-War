@@ -18,20 +18,17 @@ void IgnoreBlank();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
-
-void STARTKATA(char * path);
+void STARTKATA(char * path, int * error);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-
 void ADVKATA();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure AkuisisiKata */
-
 void AkuisisiKata();
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
@@ -45,15 +42,17 @@ void ScanInt(int * input);
 /* Membaca integer dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
-
 void ScanChar(char * input);
 /* Membaca char dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
-
 void ScanKata(Kata * input);
 /* Membaca Kata dari keyboard memakai mesinkar. */
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
+void ReadNextLine();
+/* I.S. Line selanjutnya terdefinisi pada file */
+/* F.S. CKata kata pertama line berikutnya, diakuisisi memanfaatkan ADVKATA */
+/* Proses: Abaikan semua karakter sebelum '\n' pertama yang ditemui */
 
 #endif // MESINKATA_H

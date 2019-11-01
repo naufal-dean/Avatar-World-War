@@ -64,7 +64,7 @@ Tail "maju" dengan mekanisme circular buffer */
     } else { // Not empty
         Tail(*Q) = (Tail(*Q) % MaxElQueue(*Q)) + 1;
     }
-    CopyKata(&InfoTail(*Q), X);
+    InfoTail(*Q) = X;
 }
 void DelElQueue (Queue * Q, ElTypeQueue * X) {
 /* Menghapus X pada Q dengan aturan FIFO */
@@ -73,7 +73,7 @@ void DelElQueue (Queue * Q, ElTypeQueue * X) {
 Head "maju" dengan mekanisme circular buffer.
 Q mungkin menjadi kosong */
     // Algoritma
-    CopyKata(X, InfoHead(*Q));
+    (*X) = InfoHead(*Q);
     if (NBElmtQueue(*Q) == 1) {
         Head(*Q) = NilQueue;
         Tail(*Q) = NilQueue;

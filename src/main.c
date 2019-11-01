@@ -13,14 +13,26 @@
 #include "header/status.h"
 
 int main() {
-    int X;
+    int X, error;
     Kata K;
     char C;
     printf("Hello world\n");
 
-    // STARTKATA("../data/test.txt");
+    printf("Initializing GameStatus...\n");
+    SetupConfigGameStatus("../data/config.txt", &error);
+    printf("Initialization done...\n");
+
+    // STARTKATA("../data/test.txt", &error);
+    // TulisKata(CKata);
+    // ReadNextLine();
+    // TulisKata(CKata);
+    // ReadNextLine();
     // TulisKata(CKata);
 
+    // ScanKata(&K);
+    // TulisKata(K);
+    // ScanInt(&X);
+    // printf("%d\n", X);
     // ScanChar(&C);
     // printf("%c\n", C);
 

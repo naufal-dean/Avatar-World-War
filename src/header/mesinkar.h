@@ -12,7 +12,7 @@ extern char CC;
 extern boolean EOP;
 extern char MARK;
 
-void START(char * path);
+void START(char * path, int * error);
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita atau stdin (sesuai input path)
    posisinya adalah pada jendela.
