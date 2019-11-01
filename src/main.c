@@ -16,9 +16,8 @@
 
 int main() {
     int X, error;
+    /* KAMUS KATA */
     Kata K;
-    char C = 'a';
-    printf("%s%s%s\n", YELLOW, "Hello world", NORMAL);
 
     InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
@@ -30,6 +29,10 @@ int main() {
         for (int i=1;i<=NBangunan(GameStatus);i++) {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
         }
+        ScanKata(&K);
+        TulisKata(K);
+        printf("\n");
+        TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
         finish = 1;
     }
 
