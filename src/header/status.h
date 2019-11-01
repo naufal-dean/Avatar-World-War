@@ -6,6 +6,7 @@
 #include "boolean.h"
 #include "array.h"
 #include "bangunan.h"
+#include "graph.h"
 #include "kata.h"
 #include "matriks.h"
 #include "mesinkata.h"
@@ -17,7 +18,7 @@
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     Matriks Peta;               // Peta game
-    Graph Adjacency;          // AdjBangunan di game
+    Graph Adjacency;            // Adjacency Bangunan pada game
     Stack StatusPemain;         // Status Pemain turn ini
                                 // Mengandung ListBangunan dan Queue Skill
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
