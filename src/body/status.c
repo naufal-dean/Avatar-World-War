@@ -13,9 +13,6 @@ void InitGameStatus (int NBPeta, int NKPeta, int NBangunan) {
     MakeMatriks(NBPeta, NKPeta, &Peta(GameStatus));
     MakeEmptyGraph(&Adjacency(GameStatus));
     MakeEmptyStack(&StatusPemain(GameStatus));
-    NBPeta(GameStatus) = NBPeta;
-    NKPeta(GameStatus) = NKPeta;
-    NBangunan(GameStatus) = NBangunan;
     ActivePlayer(GameStatus) = 1;
     Turn(GameStatus) = 1;
 }
