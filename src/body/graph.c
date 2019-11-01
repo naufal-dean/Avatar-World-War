@@ -48,7 +48,7 @@ void InsertElGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
         }
     }
 
-    if (FoundU) {
+    if (FoundU) { // Basis
         PF = FirstAdj(P);
         while (Next(PF) != NilGraph) {
             PF = Next(PF);
@@ -56,13 +56,14 @@ void InsertElGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
         New = AlokasiElGraph(V);
         Next(New) = Next(PF);
         Next(PF) = New;
-    } else { // Not found, create new node
+    } else { // Not found, create new node. Rekurens
         P = FirstG(*G);
         if (P == NilGraph) {
             FirstG(*G) = AlokasiElGraph(U);
             Next(FirstG(*G)) = NilGraph;
-            FirstAdj(FirstG(*G)) = AlokasiElGraph(V);
+            FirstAdj(FirstG(*G)) = AlokasiElGraph(DummyElGraph);
             Next(FirstAdj(FirstG(*G))) = NilGraph;
+            InsertElGraph(G, U, V);
         } else {
             while (Next(P) != NilGraph) {
                 P = Next(P);
@@ -70,8 +71,9 @@ void InsertElGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
             New = AlokasiElGraph(U);
             Next(New) = Next(P);
             Next(P) = New;
-            FirstAdj(New) = AlokasiElGraph(V);
+            FirstAdj(New) = AlokasiElGraph(DummyElGraph);
             Next(FirstAdj(New)) = NilGraph;
+            InsertElGraph(G, U, V);
         }
     }
 }
@@ -118,7 +120,7 @@ void TulisGraph (Graph G) {
     P = FirstG(G);
     while (P != NilGraph) {
         printf("%d --> ", Info(P));
-        PF = FirstAdj(P);
+        PF = Next(FirstAdj(P));
         while (PF != NilGraph) {
             printf("%d ", Info(PF));
             PF = Next(PF);
@@ -139,7 +141,7 @@ void CopyGraph(Graph * Gout, Graph Gin) {
     MakeEmptyGraph(Gout);
     P = FirstG(Gin);
     while (P != NilGraph) {
-        PF = FirstAdj(P);
+        PF = Next(FirstAdj(P));
         while (PF != NilGraph) {
             InsertElGraph(Gout, Info(P), Info(PF));
             PF = Next(PF);

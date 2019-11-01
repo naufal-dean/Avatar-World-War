@@ -10,6 +10,7 @@
 
 /* Kamus Umum */
 #define NilGraph NULL
+#define DummyElGraph 0
 
 typedef int ElTypeGraph;	// Info elemen list berupa type bentukan "Bangunan"
 typedef struct tElmtGraph *AddressGraph;	// Alamat elemen list

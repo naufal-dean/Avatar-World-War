@@ -87,8 +87,10 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
           InsertElGraph(&G, i, j);
         ReadNextLine();
     }
+    TulisGraph(G);
     // Assign Graph G ke Adjacency(GameStatus)
     CopyGraph(&Adjacency(GameStatus), G);
+    TulisGraph(Adjacency(GameStatus));
 }
 
 Bangunan ParseInputBangunan(int ID) {
