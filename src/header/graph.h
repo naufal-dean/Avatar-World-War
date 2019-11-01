@@ -5,47 +5,43 @@
 #define GRAPH_H
 
 #include "boolean.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 /* Kamus Umum */
 #define NilList NULL
 
-typedef int ElTypeUList;    // U vertex
-typedef int ElTypeVList;    // V vertex
-typedef struct tElmtUlist *AddressUList;	// Alamat elemen list U
-typedef struct tElmtFirstVlist *AddressFirstVList;	// Alamat elemen pertama list V
-typedef struct tElmtVlist *AddressVList;	// Alamat elemen list V
-
-typedef struct tElmtUlist {
-	ElTypeUList InfoU;
-    AddressFirstVList FirstV;
-	AddressUList NextU;
-} ElmtUList;
-typedef struct tElmtVlist {
-	ElTypeVList InfoV;
-	AddressVList NextV;
-} ElmtVList;
+typedef int ElTypeList;	// Info elemen list berupa type bentukan "Bangunan"
+typedef struct tElmtlist *AddressList;	// Alamat elemen list
+typedef struct tElmtlist {
+	ElTypeList Info;
+	AddressList FirstAdj;	// Alamat pertama adj list, berisi alamat bila elemen tersebut merupakan U dan Nil bila elemen tersebut merupakan V
+	AddressList Next;
+} ElmtList;
 typedef struct {
-	AddressUList FirstU;	// Alamat pertama list U
-} UList;
-typedef struct {
-	AddressVList FirstV;	// Alamat pertama list V
-} VList;
+	AddressList First;	// Alamat pertama list
+} List;
 
 /* Definisi list : */
 /* List kosong : First(L) = NilList */
 /* Setiap elemen dengan AddressList P dapat diacu Info(P), Next(P) */
 /* Elemen terakhir list : jika AddressListnya Last, maka Next(Last)=NilList */
 
-#define InfoU(P) (P)->InfoU
-#define InfoV(P) (P)->InfoV
-#define FirstU(P) (P)->FirstU
-#define FirstV(P) (P)->FirstV
-#define NextU(P) (P)->NextU
-#define NextU(P) (P)->NextV
+#define Info(P) (P)->Info
+#define FirstAdj(P) (P)->FirstAdj
+#define Next(P) (P)->Next
+#define First(L) ((L).First)
 
-void CreateEmptyUList (UList *L);
+AddressList Alokasi (ElTypeList X);
 
-void CreateEmptyVList (VList *L);
+boolean IsEmpty (List *L);
 
+boolean IsU (AddressList P);
 
-#endif // LISTLINIER_H
+void CreateEmptyList (List *L);
+
+void Insert (List *L, ElTypeList X);
+
+boolean AdaEdge(List L, ElTypeList U, ElTypeList V);
+
+#endif
