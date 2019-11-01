@@ -20,11 +20,18 @@ int main() {
     char C = 'a';
     printf("%s%s%s\n", YELLOW, "Hello world", NORMAL);
 
+    InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
     SetupConfigGameStatus("../data/config.txt", &error);
     printf("Initialization done...\n");
 
-    TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
+    boolean finish = false;
+    while (!finish) {
+        for (int i=1;i<=NBangunan(GameStatus);i++) {
+            TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
+        }
+        finish = 1;
+    }
 
     return 0;
 }

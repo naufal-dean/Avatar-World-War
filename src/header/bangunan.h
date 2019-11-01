@@ -77,6 +77,10 @@ void AssignPropertiHelper(Bangunan * B, int A, int M, boolean P);
 /* Assign nilai A, M, P, ke B */
 /* I.S. B terdefinisi */
 /* F.S. Properti A, M, P diassign ke B */
+void TambahPasukan(Bangunan * B, int Pemain);
+/* Menambahkan pasukan pada awal turn */
+/* I.S. B terdefinisi */
+/* F.S. Jika pasukan pada B < M dan B milik Pemain, maka pasukan akan bertambah sebanyak A (tidak mungkin melebihi M) */
 
 /*** Kelompok operasi lain ***/
 void CopyBangunan(Bangunan * Bout, Bangunan Bin);
