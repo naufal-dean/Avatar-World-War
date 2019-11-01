@@ -11,6 +11,7 @@ void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab) {
            ActivePlayer = 1. Turn = 1. */
     // Algoritma
     MakeMatriks(NBMatriks, NKMatriks, &Peta(GameStatus));
+    MakeEmptyGraph(&Adjacency(GameStatus));
     MakeEmptyStack(&StatusPemain(GameStatus));
     ActivePlayer(GameStatus) = 1;
     Turn(GameStatus) = 1;
@@ -76,18 +77,24 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     TulisMatriksPeta(Peta(GameStatus), T);
     // Adjacency matriks
     MakeEmptyGraph(&G);
-    for (int i=1;i<=NBangunan;i++) {
-        InsertGraph(&G, i, 0);
+    for (i = 1; i <= NBangunan; i++) {
+        InsertElGraph(&G, i, DummyElGraph);
     }
 
-    for (int i=1;i<=NBangunan;i++) {
-        for (int j=1;j<=NBangunan;j++) {
+    for (i = 1; i <= NBangunan; i++) {
+        for (j = 1; j < NBangunan; j++) {
             if (KataToInt(CKata) == 1)
-                InsertGraph(&G, i, j);
+              InsertElGraph(&G, i, j);
             ADVKATA();
         }
+        if (KataToInt(CKata) == 1)
+          InsertElGraph(&G, i, j);
         ReadNextLine();
     }
+    TulisGraph(G);
+    // Assign Graph G ke Adjacency(GameStatus)
+    CopyGraph(&Adjacency(GameStatus), G);
+    TulisGraph(Adjacency(GameStatus));
 }
 
 Bangunan ParseInputBangunan(int ID) {

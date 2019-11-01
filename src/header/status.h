@@ -6,6 +6,7 @@
 #include "boolean.h"
 #include "array.h"
 #include "bangunan.h"
+#include "graph.h"
 #include "kata.h"
 #include "matriks.h"
 #include "mesinkata.h"
@@ -17,6 +18,7 @@
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     Matriks Peta;               // Peta game
+    Graph Adjacency;            // Adjacency Bangunan pada game
     Stack StatusPemain;         // Status Pemain turn ini
                                 // Mengandung ListBangunan dan Queue Skill
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
@@ -28,6 +30,7 @@ extern Status GameStatus;
 
 /*** Selektor ***/
 #define Peta(S) (S).Peta
+#define Adjacency(S) (S).Adjacency
 #define StatusPemain(S) (S).StatusPemain
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn

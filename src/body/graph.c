@@ -2,6 +2,14 @@
 #include <stddef.h>
 #include <stdio.h>
 
+/*** Konstruktor ***/
+void MakeEmptyGraph (Graph *L) {
+/* Menginisialisasi graph kosong */
+/* I.S. G sembarang */
+/* F.S. Terbentuk Graph kosong, FirstG(G) = NilGraph */
+    FirstG(*L) = NilGraph;
+}
+
 AddressGraph AlokasiElGraph (ElTypeGraph X) {
 /* Melakukan alokasi terhadap suatu elemen graph */
     // Kamus lokal
@@ -15,19 +23,14 @@ AddressGraph AlokasiElGraph (ElTypeGraph X) {
     return P;
 }
 
+/*** Kelompok tes Graph kosong ***/
 boolean IsGraphEmpty (Graph G) {
 /* Mengeluarkan true apabila graph kosong, dan false bila tidak */
     return (FirstG(G) == NilGraph);
 }
 
-void MakeEmptyGraph (Graph *L) {
-/* Menginisialisasi graph kosong */
-/* I.S. G sembarang */
-/* F.S. Terbentuk Graph kosong, FirstG(G) = NilGraph */
-    FirstG(*L) = NilGraph;
-}
-
-void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
+/*** Kelompok insert dan cek elemen Graph ***/
+void InsertElGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
 /* Menambahkan elemen ke dalam Graph */
 /* Jika V == 0, maka menambahkan elemen V di dalam list adj U */
 /* Jika V != 0, maka menambahkan elemen U di dalam G */
@@ -35,7 +38,7 @@ void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
     AddressGraph P, PF, New;
     boolean FoundU;
     // Algoritma
-    if (V != 0) {
+    if (V != DummyElGraph) {
         P = FirstG(*G);
         FoundU = false;
         while (P != NilGraph && !FoundU) {
@@ -105,6 +108,7 @@ boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
     }
 }
 
+/*** Kelompok operasi OUTPUT ***/
 void TulisGraph (Graph G) {
 /* Menuliskan isi G ke layar */
 /* I.S. Graph G terdefinisi */
@@ -113,14 +117,34 @@ void TulisGraph (Graph G) {
     AddressGraph P, PF;
     // Algoritma
     P = FirstG(G);
-    while (Next(P) != NilGraph) {
+    while (P != NilGraph) {
         printf("%d --> ", Info(P));
-        PF = FirstAdj(P);
-        while (Next(PF) != NilGraph) {
+        PF = Next(FirstAdj(P));
+        while (PF != NilGraph) {
             printf("%d ", Info(PF));
             PF = Next(PF);
         }
         P = Next(P);
         printf("\n");
+    }
+}
+
+/*** Kelompok operasi lain ***/
+void CopyGraph(Graph * Gout, Graph Gin) {
+/* Melakukan penyalinan Gin ke Gout */
+/* I.S. Gin terdefinisi, Gout sembarang */
+/* F.S. Gout memiliki properti yang sama dengan Gin */
+    // Kamus lokal
+    AddressGraph P, PF;
+    // Algoritma
+    MakeEmptyGraph(Gout);
+    P = FirstG(Gin);
+    while (P != NilGraph) {
+        PF = FirstAdj(P);
+        while (PF != NilGraph) {
+            InsertElGraph(Gout, Info(P), Info(PF));
+            PF = Next(PF);
+        }
+        P = Next(P);
     }
 }
