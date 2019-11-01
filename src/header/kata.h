@@ -44,4 +44,6 @@ void CopyKata(Kata * Kout, Kata Kin);
 /* F.S. Length(Kout) = Length(Kin) dan semua elemen yang terdefinisi
    di Kout sama dengan Kin. Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+int KataToInt(Kata K);
+
 #endif // KATA_H

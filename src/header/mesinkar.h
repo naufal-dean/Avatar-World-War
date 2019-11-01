@@ -5,17 +5,19 @@
 
 #include "boolean.h"
 
-#define MARK '\n'
+#define MARKFILE '.'
+#define MARKSTDIN '\n'
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
+extern char MARK;
 
-void START();
+void START(char * path);
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-   Karakter pertama yang ada pada pita posisinya adalah pada jendela.
+   Karakter pertama yang ada pada pita atau stdin (sesuai input path)
+   posisinya adalah pada jendela.
    I.S. : sembarang
-   F.S. : CC adalah karakter pertama pada pita
-          Jika CC != MARK maka EOP akan padam (false)
+   F.S. : CC adalah karakter pertama pada pita. Jika CC != MARK maka EOP akan padam (false).
           Jika CC = MARK maka EOP akan menyala (true) */
 
 void ADV();

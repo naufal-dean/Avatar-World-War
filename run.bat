@@ -1,2 +1,4 @@
 call compile.bat
-.\bin\main
+cd bin
+main.exe
+cd ..

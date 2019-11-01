@@ -13,12 +13,12 @@ void IgnoreBlank() {
     }
 }
 
-void STARTKATA() {
+void STARTKATA(char * path) {
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-    START();
+    START(path);
     if (CC == MARK) {
         EndKata = true;
     } else {
@@ -33,16 +33,16 @@ void ADVKATA() {
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure SalinKata */
+   Proses : Akuisisi kata menggunakan procedure AkuisisiKata */
     if (CC == MARK) {
         EndKata = true;
     } else {
-        SalinKata();
+        AkuisisiKata();
         IgnoreBlank();
     }
 }
 
-void SalinKata() {
+void AkuisisiKata() {
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
@@ -55,5 +55,33 @@ void SalinKata() {
         i++;
         ADV();
     } while ((CC != MARK) && (CC != BLANK) && (i <= NMax));
-    CKata.Length = i-1;
+    CKata.Length = i - 1;
+}
+
+/*** Kelompok input stdin ***/
+void ScanInt(int * input) {
+/* Membaca integer dari keyboard memakai mesinkar. */
+/* I.S. input sembarang */
+/* F.S. nilai input sesuai masukan pengguna */
+    // Algoritma
+    STARTKATA(NULL);
+    (*input) = KataToInt(CKata);
+}
+
+void ScanChar(char * input) {
+/* Membaca char dari keyboard memakai mesinkar. */
+/* I.S. input sembarang */
+/* F.S. nilai input sesuai masukan pengguna */
+    // Algoritma
+    STARTKATA(NULL);
+    (*input) = Char(CKata, 1);
+}
+
+void ScanKata(Kata * input) {
+/* Membaca Kata dari keyboard memakai mesinkar. */
+/* I.S. input sembarang */
+/* F.S. nilai input sesuai masukan pengguna */
+    // Algoritma
+    STARTKATA(NULL);
+    CopyKata(input, CKata);
 }

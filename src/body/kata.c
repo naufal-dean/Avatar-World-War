@@ -60,3 +60,13 @@ void CopyKata(Kata * Kout, Kata Kin) {
         Char(*Kout, i) = Char(Kin, i);
     }
 }
+
+int KataToInt(Kata K) {
+    // Kamus lokal
+    int val = 0, i;
+    // Algoritma
+    for (i = 1; i <= K.Length; i++) {
+        val = (val * 10) + (Char(K, i) - '0');
+    }
+    return (val);
+}

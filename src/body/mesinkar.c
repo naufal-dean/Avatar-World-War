@@ -1,18 +1,40 @@
 #include <stdio.h>
+#include <errno.h>
 #include "../header/mesinkar.h"
 
 char CC;
 boolean EOP;
+char MARK;
 
-void START() {
+static FILE * pita;
+static int retval;
+
+void START(char * path) {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-   Karakter pertama yang ada pada pita posisinya adalah pada jendela.
+   Karakter pertama yang ada pada pita atau stdin (sesuai input path)
+   posisinya adalah pada jendela.
    I.S. : sembarang
-   F.S. : CC adalah karakter pertama pada input. Jika CC != MARK maka EOP akan padam (false).
+   F.S. : CC adalah karakter pertama pada pita. Jika CC != MARK maka EOP akan padam (false).
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    ADV();
+    errno = 0;
+    if (path == NULL) { // Baca dari stdin
+        pita = stdin;
+        MARK = MARKSTDIN;
+    } else { // Baca dari file
+        pita = fopen(path,"r");
+        MARK = MARKFILE;
+    }
+    if (pita == NULL) {
+        printf("Error number: %d \n", errno);
+        if (errno == 2) {
+            printf("No such file or directory.\n");
+        }
+    } else { // Not error
+        ADV();
+    }
+
 }
 
 void ADV() {
@@ -24,6 +46,9 @@ void ADV() {
           Jika  CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    scanf("%c", &CC);
+    retval = fscanf(pita,"%c",&CC);
     EOP = (CC == MARK);
+    if (EOP) {
+        fclose(pita);
+    }
 }

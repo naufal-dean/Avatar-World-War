@@ -1,2 +1,4 @@
 ./compile.sh
-./bin/main
+cd bin
+./main.exe
+cd ..

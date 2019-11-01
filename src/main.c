@@ -13,18 +13,28 @@
 #include "header/status.h"
 
 int main() {
+    int X;
+    Kata K;
+    char C;
     printf("Hello world\n");
-    Bangunan B1, B2;
-    TabBangunan T;
-    printf("Initializing Tab\n");
-    MakeEmptyTab(&T, 100);
-    printf("Done...\n");
-    CopyBangunan(&ElmtTab(T, 1), MakeBangunan(1, 'C', MakePoint(1, 3)));
-    CopyBangunan(&ElmtTab(T, 2), ValUndefTab);
 
-    BacaIsiTab(&T);
+    // STARTKATA("../data/test.txt");
+    // TulisKata(CKata);
+
+    // ScanChar(&C);
+    // printf("%c\n", C);
+
+    // Bangunan B1, B2;
+    // TabBangunan T;
+    // printf("Initializing Tab\n");
+    // MakeEmptyTab(&T, 100);
+    // printf("Done...\n");
+    // CopyBangunan(&ElmtTab(T, 1), MakeBangunan(1, 'C', MakePoint(1, 3)));
+    // CopyBangunan(&ElmtTab(T, 2), ValUndefTab);
+
+    // BacaIsiTab(&T);
     // // TulisBangunan(ValUndefTab);
-    TulisIsiTab(T);
+    // TulisIsiTab(T);
 
     return 0;
 }
