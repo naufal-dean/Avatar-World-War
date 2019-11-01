@@ -38,7 +38,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     ADVKATA();
     NKPeta = KataToInt(CKata);
     ReadNextLine();
-
+    printf("%d%d\n",NBPeta,NKPeta);
     // Jumlah bangunan
     NBangunan = KataToInt(CKata);
     ReadNextLine();
