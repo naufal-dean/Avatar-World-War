@@ -23,6 +23,9 @@ void MakeEmptyKata (Kata * K);
 /* Membentuk sebuah Kata kosong */
 /* I.S. K sembarang */
 /* F.S. K kosong, Length(K) = 0 */
+Kata MakeKata(char * C);
+/* Mengembalikan Kata sesuai char pointer C
+   Akhir char pointer ditandai oleh karakter '\n' pada C */
 
 /*** Kelompok fungsi TULIS ***/
 void TulisKata (Kata K);

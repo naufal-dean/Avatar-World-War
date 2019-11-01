@@ -24,7 +24,10 @@ int main() {
     SetupConfigGameStatus("../data/config.txt", &error);
     printf("Initialization done...\n");
 
-    TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
+    CopyKata(&K, MakeKata("Ahahaha\n"));
+    TulisKata(K);
+
+    // TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
 
     return 0;
 }
