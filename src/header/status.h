@@ -17,6 +17,7 @@
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     Matriks Peta;               // Peta game
+    Graph Adjacency;          // AdjBangunan di game
     Stack StatusPemain;         // Status Pemain turn ini
                                 // Mengandung ListBangunan dan Queue Skill
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
@@ -28,6 +29,7 @@ extern Status GameStatus;
 
 /*** Selektor ***/
 #define Peta(S) (S).Peta
+#define Adjacency(S) (S).Adjacency
 #define StatusPemain(S) (S).StatusPemain
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn

@@ -11,6 +11,7 @@ void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab) {
            ActivePlayer = 1. Turn = 1. */
     // Algoritma
     MakeMatriks(NBMatriks, NKMatriks, &Peta(GameStatus));
+    CreateEmptyGraph(&Adjacency(GameStatus));
     MakeEmptyStack(&StatusPemain(GameStatus));
     ActivePlayer(GameStatus) = 1;
     Turn(GameStatus) = 1;
@@ -33,7 +34,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     if ((*error) != 0) {
         return;
     }
-    
+
     // Ukuran peta
     NBPeta = KataToInt(CKata);
     ADVKATA();
@@ -73,20 +74,24 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
 
     // Assign T, Q1, Q2 to StatusPemain(GameStatus)
     Push(&StatusPemain(GameStatus), MakeElTypeStack(T, Q1, Q2));
-    TulisMatriksPeta(Peta(GameStatus), T);
+
     // Adjacency matriks
     CreateEmptyGraph(&G);
-    for (int i=1;i<=NBangunan;i++) {
+    for (i = 1; i <= NBangunan; i++) {
         InsertGraph(&G, i, 0);
     }
-    
-    for (int i=1;i<=NBangunan;i++) {
-        for (int j=1;j<=NBangunan;j++) {
-            if (KataToInt(CKata) == 1) InsertGraph(&G, i, j);
+    PrintGraph(G);
+    for (i = 1; i <= NBangunan; i++) {
+        for (j = 1; j <= NBangunan; j++) {
+            if (KataToInt(CKata) == 1)
+                InsertGraph(&G, i, j);
+            TulisKata(CKata);
             ADVKATA();
         }
         ReadNextLine();
     }
+    // Assign Graph G ke Adjacency(GameStatus)
+    // CopyGraph(&Adjacency(GameStatus), G);
 }
 
 Bangunan ParseInputBangunan(int ID) {
