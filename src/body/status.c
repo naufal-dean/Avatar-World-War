@@ -32,7 +32,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     if ((*error) != 0) {
         return;
     }
-
+    
     // Ukuran peta
     NBPeta = KataToInt(CKata);
     ADVKATA();
@@ -52,13 +52,13 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     }
     Pemilik(ElmtTab(T, 1)) = 1;
     Pemilik(ElmtTab(T, 2)) = 2;
-
     // Assign ID bangunan ke Peta(GameStatus)
     for (i = 1; i <= NBPeta; i++) {
         for (j = 1; j <= NKPeta; j++) {
             ElmtMatriks(Peta(GameStatus), i, j) = 0;
         }
     }
+
     for (i = 1; i <= NBangunan; i++) {
         X = Absis(Lokasi(ElmtTab(T, i)));
         Y = Ordinat(Lokasi(ElmtTab(T, i)));
