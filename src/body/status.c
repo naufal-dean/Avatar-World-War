@@ -26,19 +26,19 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     int NBPeta, NKPeta, NBangunan, i, j, X, Y;
     TabBangunan T;
     Queue Q1, Q2;
+    Graph G;
     // Algoritma
     // Inisialisasi mesin kata
     STARTKATA(ConfigPath, error);
     if ((*error) != 0) {
         return;
     }
-
+    
     // Ukuran peta
     NBPeta = KataToInt(CKata);
     ADVKATA();
     NKPeta = KataToInt(CKata);
     ReadNextLine();
-
     // Jumlah bangunan
     NBangunan = KataToInt(CKata);
     ReadNextLine();
@@ -52,13 +52,13 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     }
     Pemilik(ElmtTab(T, 1)) = 1;
     Pemilik(ElmtTab(T, 2)) = 2;
-
     // Assign ID bangunan ke Peta(GameStatus)
     for (i = 1; i <= NBPeta; i++) {
         for (j = 1; j <= NKPeta; j++) {
             ElmtMatriks(Peta(GameStatus), i, j) = 0;
         }
     }
+
     for (i = 1; i <= NBangunan; i++) {
         X = Absis(Lokasi(ElmtTab(T, i)));
         Y = Ordinat(Lokasi(ElmtTab(T, i)));
@@ -75,7 +75,18 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     Push(&StatusPemain(GameStatus), MakeElTypeStack(T, Q1, Q2));
     TulisMatriksPeta(Peta(GameStatus), T);
     // Adjacency matriks
-    // TODO: implement
+    CreateEmptyGraph(&G);
+    for (int i=1;i<=NBangunan;i++) {
+        InsertGraph(&G, i, 0);
+    }
+    
+    for (int i=1;i<=NBangunan;i++) {
+        for (int j=1;j<=NBangunan;j++) {
+            if (KataToInt(CKata) == 1) InsertGraph(&G, i, j);
+            ADVKATA();
+        }
+        ReadNextLine();
+    }
 }
 
 Bangunan ParseInputBangunan(int ID) {

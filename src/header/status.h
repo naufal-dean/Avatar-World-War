@@ -12,6 +12,7 @@
 #include "point.h"
 #include "queue.h"
 #include "stack.h"
+#include "graph.h"
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {

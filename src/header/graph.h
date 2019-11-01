@@ -33,19 +33,23 @@ typedef struct {
 #define FirstG(G) ((G).First)
 
 AddressGraph Alokasi (ElTypeGraph X);
+/* Melakukan alokasi terhadap suatu elemen graph */
 
 boolean IsEmptyGraph (Graph G);
-
-boolean IsU (AddressGraph P);
+/* Mengeluarkan true apabila graph kosong, dan false bila tidak */
 
 void CreateEmptyGraph (Graph *G);
+/* Menginisialisasi graph kosong */
 
 void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
 /* Menambahkan elemen ke dalam Graph */
-/* Jika U == 0, maka menambahkan elemen V di dalam list adj U */
-/* Jika U != 0, maka menambahkan elemen U di dalam G */
+/* Jika V == 0, maka menambahkan elemen V di dalam list adj U */
+/* Jika V != 0, maka menambahkan elemen U di dalam G */
 
 boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
-/* Mengecek apakah ada edge dari vertex U ke V */
+/* Mengeluarkan true bila ada edge dari vertex U ke V */
+
+void PrintGraph (Graph G);
+/* Mengeluarkan isi hraph */
 
 #endif
