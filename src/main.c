@@ -8,6 +8,7 @@
 #include "header/mesinkar.h"
 #include "header/mesinkata.h"
 #include "header/point.h"
+#include "header/pcolor.h"
 #include "header/queue.h"
 #include "header/stack.h"
 #include "header/status.h"
@@ -15,8 +16,8 @@
 int main() {
     int X, error;
     Kata K;
-    char C;
-    printf("Hello world\n");
+    char C = 'a';
+    printf("%s%s%s", YELLOW, "Hello world\n", NORMAL);
 
     printf("Initializing GameStatus...\n");
     SetupConfigGameStatus("../data/config.txt", &error);
