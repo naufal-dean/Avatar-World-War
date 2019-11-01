@@ -24,9 +24,6 @@ typedef struct {
     Graph Adjacency;            // Adjacency Bangunan pada game
     Stack StatusPemain;         // Status Pemain turn ini
                                 // Mengandung ListBangunan dan Queue Skill
-    int NBPeta;                 // Jumlah baris peta
-    int NKPeta;                 // Jumlah kolom peta
-    int NBangunan;              // Jumlah bangunan
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
     int Turn;                   // Urutan turn saat ini
 } Status;
@@ -44,9 +41,6 @@ extern Status GameStatus;
 #define Peta(S) (S).Peta
 #define Adjacency(S) (S).Adjacency
 #define StatusPemain(S) (S).StatusPemain
-#define NBPeta(S) (S).NBPeta
-#define NKPeta(S) (S).NKPeta
-#define NBangunan(S) (S).NBangunan
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn
 
