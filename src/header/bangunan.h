@@ -15,7 +15,7 @@ typedef struct {
   	char Tipe;
     Point Lokasi;
     int Kepemilikan;    // Pemain yang memiliki bangunan, 0 jika tidak dimiliki siapapun
-    int Pasukan;        // Jumlah pasukan
+    int N;        // Jumlah pasukan
     int Level;          // Level bangunan, 1-4
     int A;              // Nilai penambahan pasukan
     int M;              // Maksimum penambahan pasukan
