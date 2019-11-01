@@ -32,14 +32,16 @@ typedef struct {
 #define Next(P) (P)->Next
 #define FirstG(G) ((G).First)
 
-AddressGraph Alokasi (ElTypeGraph X);
+AddressGraph AlokasiElGraph (ElTypeGraph X);
 /* Melakukan alokasi terhadap suatu elemen graph */
 
-boolean IsEmptyGraph (Graph G);
+boolean IsGraphEmpty (Graph G);
 /* Mengeluarkan true apabila graph kosong, dan false bila tidak */
 
-void CreateEmptyGraph (Graph *G);
+void MakeEmptyGraph (Graph *G);
 /* Menginisialisasi graph kosong */
+/* I.S. G sembarang */
+/* F.S. Terbentuk Graph kosong, FirstG(G) = NilGraph */
 
 void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
 /* Menambahkan elemen ke dalam Graph */
@@ -49,7 +51,9 @@ void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
 boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
 /* Mengeluarkan true bila ada edge dari vertex U ke V */
 
-void PrintGraph (Graph G);
-/* Mengeluarkan isi hraph */
+void TulisGraph (Graph G);
+/* Menuliskan isi G ke layar */
+/* I.S. Graph G terdefinisi */
+/* F.S. Isi Graph G dituliskan ke layar */
 
 #endif

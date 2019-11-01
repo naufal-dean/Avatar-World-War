@@ -2,7 +2,9 @@
 #include <stddef.h>
 #include <stdio.h>
 
-AddressGraph Alokasi (ElTypeGraph X) {
+AddressGraph AlokasiElGraph (ElTypeGraph X) {
+/* Melakukan alokasi terhadap suatu elemen graph */
+    // Kamus lokal
     AddressGraph P;
     // Algoritma
     P=(ElmtGraph *)malloc(sizeof(ElmtGraph));
@@ -13,18 +15,29 @@ AddressGraph Alokasi (ElTypeGraph X) {
     return P;
 }
 
-boolean IsEmptyGraph (Graph G) {
+boolean IsGraphEmpty (Graph G) {
+/* Mengeluarkan true apabila graph kosong, dan false bila tidak */
     return (FirstG(G) == NilGraph);
 }
 
-void CreateEmptyGraph (Graph *L) {
+void MakeEmptyGraph (Graph *L) {
+/* Menginisialisasi graph kosong */
+/* I.S. G sembarang */
+/* F.S. Terbentuk Graph kosong, FirstG(G) = NilGraph */
     FirstG(*L) = NilGraph;
 }
 
 void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
+/* Menambahkan elemen ke dalam Graph */
+/* Jika V == 0, maka menambahkan elemen V di dalam list adj U */
+/* Jika V != 0, maka menambahkan elemen U di dalam G */
+    // Kamus lokal
+    AddressGraph P, PF, New;
+    boolean FoundU;
+    // Algoritma
     if (V != 0) {
-        AddressGraph P = FirstG(*G);
-        boolean FoundU = false;
+        P = FirstG(*G);
+        FoundU = false;
         while (P != NilGraph && !FoundU) {
             if (Info(P) == U) {
                 FoundU = true;
@@ -33,37 +46,42 @@ void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V) {
             }
         }
         if (FoundU) {
-            AddressGraph PF = FirstAdj(P);
+            PF = FirstAdj(P);
             while (Next(PF) != NilGraph) {
                 PF = Next(PF);
             }
-            AddressGraph New = Alokasi(V);
+            New = AlokasiElGraph(V);
             Next(New) = Next(PF);
             Next(PF) = New;
         }
     } else {
-        AddressGraph P = FirstG(*G);
+        P = FirstG(*G);
         if (P == NilGraph) {
-            FirstG(*G) = Alokasi(U);
+            FirstG(*G) = AlokasiElGraph(U);
             Next(FirstG(*G)) = NilGraph;
-            FirstAdj(FirstG(*G)) = Alokasi(0);
+            FirstAdj(FirstG(*G)) = AlokasiElGraph(0);
             Next(FirstAdj(FirstG(*G))) = NilGraph;
         } else {
             while (Next(P) != NilGraph) {
                 P = Next(P);
             }
-            AddressGraph New = Alokasi(U);
+            New = AlokasiElGraph(U);
             Next(New) = Next(P);
             Next(P) = New;
-            FirstAdj(New) = Alokasi(0);
+            FirstAdj(New) = AlokasiElGraph(0);
             Next(FirstAdj(New)) = NilGraph;
         }
     }
 }
 
 boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
-    AddressGraph P = FirstG(L);
-    boolean FoundU = false;
+/* Mengeluarkan true bila ada edge dari vertex U ke V */
+    // Kamus lokal
+    AddressGraph P, PF;
+    boolean FoundU, FoundV;
+    // Algoritma
+    P = FirstG(L);
+    FoundU = false;
     while (P != NilGraph && !FoundU) {
         if (Info(P) == U) {
             FoundU = true;
@@ -72,8 +90,8 @@ boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
         }
     }
     if (FoundU) {
-        AddressGraph PF = FirstAdj(P);
-        boolean FoundV = false;
+        PF = FirstAdj(P);
+        FoundV = false;
         while (PF != NilGraph && !FoundV) {
             if (Info(PF) == V) {
                 FoundV = true;
@@ -87,11 +105,17 @@ boolean AdaEdge(Graph L, ElTypeGraph U, ElTypeGraph V) {
     }
 }
 
-void PrintGraph (Graph G) {
-    AddressGraph P = FirstG(G);
+void TulisGraph (Graph G) {
+/* Menuliskan isi G ke layar */
+/* I.S. Graph G terdefinisi */
+/* F.S. Isi Graph G dituliskan ke layar */
+    // Kamus lokal
+    AddressGraph P, PF;
+    // Algoritma
+    P = FirstG(G);
     while (Next(P) != NilGraph) {
         printf("%d --> ", Info(P));
-        AddressGraph PF = FirstAdj(P);
+        PF = FirstAdj(P);
         while (Next(PF) != NilGraph) {
             printf("%d ", Info(PF));
             PF = Next(PF);

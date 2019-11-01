@@ -33,7 +33,7 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     if ((*error) != 0) {
         return;
     }
-    
+
     // Ukuran peta
     NBPeta = KataToInt(CKata);
     ADVKATA();
@@ -75,14 +75,15 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     Push(&StatusPemain(GameStatus), MakeElTypeStack(T, Q1, Q2));
     TulisMatriksPeta(Peta(GameStatus), T);
     // Adjacency matriks
-    CreateEmptyGraph(&G);
+    MakeEmptyGraph(&G);
     for (int i=1;i<=NBangunan;i++) {
         InsertGraph(&G, i, 0);
     }
-    
+
     for (int i=1;i<=NBangunan;i++) {
         for (int j=1;j<=NBangunan;j++) {
-            if (KataToInt(CKata) == 1) InsertGraph(&G, i, j);
+            if (KataToInt(CKata) == 1)
+                InsertGraph(&G, i, j);
             ADVKATA();
         }
         ReadNextLine();
