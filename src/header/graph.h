@@ -38,6 +38,7 @@ void MakeEmptyGraph (Graph *G);
 /* Menginisialisasi graph kosong */
 /* I.S. G sembarang */
 /* F.S. Terbentuk Graph kosong, FirstG(G) = NilGraph */
+
 AddressGraph AlokasiElGraph (ElTypeGraph X);
 /* Melakukan alokasi terhadap suatu elemen graph */
 
@@ -50,6 +51,7 @@ void InsertElGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
 /* Menambahkan elemen ke dalam Graph */
 /* Jika V == DummyElGraph, maka menambahkan elemen V di dalam list adj U */
 /* Jika V != DummyElGraph, maka menambahkan elemen U di dalam G */
+
 boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
 /* Mengeluarkan true bila ada edge dari vertex U ke V */
 
