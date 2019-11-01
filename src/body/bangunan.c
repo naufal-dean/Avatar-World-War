@@ -2,14 +2,22 @@
 #include "../header/bangunan.h"
 
 /*** Konstruktor ***/
+<<<<<<< Updated upstream
 Bangunan MakeBangunan (int ID, char Tipe, Point Lokasi) {
+=======
+Bangunan MakeBangunan (int id, char Tipe, Point Lokasi) {
+>>>>>>> Stashed changes
 /* Membentuk sebuah Bangunan dari komponen-komponennya */
 /* Bangunan yang terbentuk memiliki level 1 dan tidak dimiliki siapapun */
     // Kamus lokal
     Bangunan B;
     // Algoritma
     // Properti masukan
+<<<<<<< Updated upstream
     ID(B) = ID;
+=======
+    ID(B) = id;
+>>>>>>> Stashed changes
     Tipe(B) = Tipe;
     CopyPoint(&Lokasi(B), Lokasi);
     // Properti default
