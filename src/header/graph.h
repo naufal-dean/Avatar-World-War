@@ -5,47 +5,47 @@
 #define GRAPH_H
 
 #include "boolean.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 /* Kamus Umum */
-#define NilList NULL
+#define NilGraph NULL
 
-typedef int ElTypeUList;    // U vertex
-typedef int ElTypeVList;    // V vertex
-typedef struct tElmtUlist *AddressUList;	// Alamat elemen list U
-typedef struct tElmtFirstVlist *AddressFirstVList;	// Alamat elemen pertama list V
-typedef struct tElmtVlist *AddressVList;	// Alamat elemen list V
-
-typedef struct tElmtUlist {
-	ElTypeUList InfoU;
-    AddressFirstVList FirstV;
-	AddressUList NextU;
-} ElmtUList;
-typedef struct tElmtVlist {
-	ElTypeVList InfoV;
-	AddressVList NextV;
-} ElmtVList;
+typedef int ElTypeGraph;	// Info elemen list berupa type bentukan "Bangunan"
+typedef struct tElmtGraph *AddressGraph;	// Alamat elemen list
+typedef struct tElmtGraph {
+	ElTypeGraph Info;
+	AddressGraph FirstAdj;	// Alamat pertama adj list, berisi alamat bila elemen tersebut merupakan U dan Nil bila elemen tersebut merupakan V
+	AddressGraph Next;
+} ElmtGraph;
 typedef struct {
-	AddressUList FirstU;	// Alamat pertama list U
-} UList;
-typedef struct {
-	AddressVList FirstV;	// Alamat pertama list V
-} VList;
+	AddressGraph First;	// Alamat pertama list
+} Graph;
 
 /* Definisi list : */
 /* List kosong : First(L) = NilList */
 /* Setiap elemen dengan AddressList P dapat diacu Info(P), Next(P) */
 /* Elemen terakhir list : jika AddressListnya Last, maka Next(Last)=NilList */
 
-#define InfoU(P) (P)->InfoU
-#define InfoV(P) (P)->InfoV
-#define FirstU(P) (P)->FirstU
-#define FirstV(P) (P)->FirstV
-#define NextU(P) (P)->NextU
-#define NextU(P) (P)->NextV
+#define Info(P) (P)->Info
+#define FirstAdj(P) (P)->FirstAdj
+#define Next(P) (P)->Next
+#define FirstG(G) ((G).First)
 
-void CreateEmptyUList (UList *L);
+AddressGraph Alokasi (ElTypeGraph X);
 
-void CreateEmptyVList (VList *L);
+boolean IsEmptyGraph (Graph G);
 
+boolean IsU (AddressGraph P);
 
-#endif // LISTLINIER_H
+void CreateEmptyGraph (Graph *G);
+
+void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
+/* Menambahkan elemen ke dalam Graph */
+/* Jika U == 0, maka menambahkan elemen V di dalam list adj U */
+/* Jika U != 0, maka menambahkan elemen U di dalam G */
+
+boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
+/* Mengecek apakah ada edge dari vertex U ke V */
+
+#endif
