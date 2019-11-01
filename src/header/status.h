@@ -5,6 +5,7 @@
 
 #include "boolean.h"
 #include "array.h"
+#include "bangunan.h"
 #include "kata.h"
 #include "matriks.h"
 #include "mesinkata.h"
