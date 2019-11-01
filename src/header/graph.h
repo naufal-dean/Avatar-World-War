@@ -40,8 +40,12 @@ boolean IsU (AddressGraph P);
 
 void CreateEmptyGraph (Graph *G);
 
-void InsertGraph (Graph *G, ElTypeGraph X);
+void InsertGraph (Graph *G, ElTypeGraph U, ElTypeGraph V);
+/* Menambahkan elemen ke dalam Graph */
+/* Jika U == 0, maka menambahkan elemen V di dalam list adj U */
+/* Jika U != 0, maka menambahkan elemen U di dalam G */
 
 boolean AdaEdge(Graph G, ElTypeGraph U, ElTypeGraph V);
+/* Mengecek apakah ada edge dari vertex U ke V */
 
 #endif
