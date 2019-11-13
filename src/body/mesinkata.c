@@ -91,8 +91,9 @@ void ScanKata(Kata * input) {
     // Kamus lokal
     int error;
     // Algoritma
-    STARTKATA(NULL, &error);
-    CopyKata(input, CKata);
+    //STARTKATA(NULL, &error);
+    scanf("%s", &((*input).TabKata));
+    //CopyKata(input, CKata);
 }
 
 void ReadNextLine() {

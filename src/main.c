@@ -24,21 +24,48 @@ int main() {
     SetupConfigGameStatus("../data/config.txt", &error);
     printf("Initialization done...\n");
 
-    boolean finish = false;
-    while (!finish) {
+    boolean finishGame = false;
+    while (!finishGame) {
         for (int i=1;i<=NBangunan(GameStatus);i++) {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
         }
-        ScanKata(&K);
-        TulisKata(K);
-        printf("\n");
-        TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
-        finish = 1;
+        boolean finishTurn = false;
+        while (!finishTurn) {
+            printf("========================\n");
+            if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
+            else printf("Player 2's Turn\n");
+            TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
+            printf("\n");
+            printf("Your command: ");
+            Kata command;
+            ScanKata(&command);
+            TulisKata(command);
+            printf("\n");
+            if (EQKata(command, MakeKata("ATTACK\n"))) {
+
+            } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
+
+            } else if (EQKata(command, MakeKata("SKILL\n"))) {
+                
+            } else if (EQKata(command, MakeKata("UNDO\n"))) {
+                
+            } else if (EQKata(command, MakeKata("END_TURN\n"))) {
+                printf("Player change!\n");
+                ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
+                if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
+                finishTurn = true;
+            } else if (EQKata(command, MakeKata("SAVE\n"))) {
+                
+            } else if (EQKata(command, MakeKata("MOVE\n"))) {
+                
+            } else if (EQKata(command, MakeKata("EXIT\n"))) {
+                printf("Babai :)\n");
+                exit(0);
+            }
+            TulisKata(command);
+            printf("\n");
+        }
+        // finishGame = true;
     }
-
-    // Test MakeKata
-    CopyKata(&K, MakeKata("Ahahaha\n"));
-    TulisKata(K);
-
     return 0;
 }
