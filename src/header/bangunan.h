@@ -21,6 +21,7 @@ typedef struct {
     int M;              // Maksimum penambahan pasukan
     boolean P;          // Pertahanan
     int U;              // Pasukan awal
+    boolean S;          // Apakah bangunan sudah menyerang
 } Bangunan;
 
 /*** Selektor ***/
@@ -34,6 +35,7 @@ typedef struct {
 #define Maksimum(B) (B).M
 #define Pertahanan(B) (B).P
 #define PAwal(B) (B).U
+#define SudahSerang(B) (B).S
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
@@ -51,12 +53,12 @@ void BacaBangunan (Bangunan * B, int ID);
 /* I.S. Sembarang */
 /* F.S. B terdefinisi */
 void TulisBangunan (Bangunan B);
-/* Nilai B ditulis ke layar dengan format "Tipe (Lokasi)"
+/* Nilai B ditulis ke layar dengan format "Tipe (Lokasi) Pasukan Level"
    tanpa spasi, enter, atau karakter lain di depan, belakang,
    atau di antaranya. */
-/* Contoh: <'C',(1,3)> ditulis "Castle (1,3)"*/
+/* Contoh: <'C',(1,3), 40, 3> ditulis "Castle (1,3) 40 lv. 3"*/
 /* I.S. B terdefinisi */
-/* F.S. B tertulis di layar dengan format "Tipe (Lokasi)" */
+/* F.S. B tertulis di layar dengan format "Tipe (Lokasi) Pasukan Level" */
 
 /*** Kelompok operasi relasional terhadap Bangunan ***/
 boolean EQBangunan (Bangunan B1, Bangunan B2);

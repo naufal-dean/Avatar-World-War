@@ -16,6 +16,7 @@ Bangunan MakeBangunan (int ID, char Tipe, Point Lokasi) {
     Pemilik(B) = 0;
     Level(B) = 1;
     AssignProperti(&B);
+    SudahSerang(B) = 0;
     return (B);
 }
 
@@ -61,7 +62,7 @@ atau di antaranya. */
           break;
     }
     TulisPoint(Lokasi(B));
-    printf(" %d", Pasukan(B));
+    printf(" %d lv. %d", Pasukan(B), Level(B));
 }
 
 /*** Kelompok operasi relasional terhadap Bangunan ***/
