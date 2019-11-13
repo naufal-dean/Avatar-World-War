@@ -18,10 +18,6 @@ int main() {
     int X, error, counter;
     /* KAMUS KATA */
     Kata K;
-    ScanKata(&K);
-    TulisKata(K);
-    ScanKata(&K);
-    TulisKata(K);
 
     InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
