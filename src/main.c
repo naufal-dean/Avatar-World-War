@@ -105,7 +105,6 @@ int main() {
                     }
                 }
 
-                printf("%d %d\n", attackBuilding, defendBuilding);
                 // attacking
                 printf("Jumlah pasukan: ");
                 int usedTroops;
@@ -176,6 +175,7 @@ int main() {
                 for (int i = 1; i <= NBangunan(GameStatus); i++) {
                     printf("%d. ", i);
                     TulisBangunan(ElmtTab(T(GameStatus), i));
+                    printf(" ");
                     if (Pemilik(ElmtTab(T(GameStatus), i)) == 0) {
                         print_yellow('N');  // neutral
                     } else if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) {
