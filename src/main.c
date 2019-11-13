@@ -74,8 +74,8 @@ int main() {
                 if (SudahSerang(ElmtTab(T(GameStatus), attackBuilding))) {
                     printf("This building is busy. The attack could not commence.\n");
                     continue;
-                } 
-                
+                }
+
                 printf("Daftar bangunan yang dapat diserang: \n");
                 counter = 0;
                 for (int i = 1; i <= NBangunan(GameStatus); i++) {

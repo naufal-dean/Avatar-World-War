@@ -20,6 +20,7 @@ void START(char * path, int * error) {
     /* Algoritma */
     errno = 0;
     if (path == NULL) { // Baca dari stdin
+        fflush(stdin);
         pita = stdin;
         MARK = MARKSTDIN;
     } else { // Baca dari file
