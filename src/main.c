@@ -24,31 +24,7 @@ int main() {
     SetupConfigGameStatus("../data/config.txt", &error);
     printf("Initialization done...\n");
 
-    // STARTKATA("../data/test.txt", &error);
-    // TulisKata(CKata);
-    // ReadNextLine();
-    // TulisKata(CKata);
-    // ReadNextLine();
-    // TulisKata(CKata);
-
-    // ScanKata(&K);
-    // TulisKata(K);
-    // ScanInt(&X);
-    // printf("%d\n", X);
-    // ScanChar(&C);
-    // printf("%c\n", C);
-
-    // Bangunan B1, B2;
-    // TabBangunan T;
-    // printf("Initializing Tab\n");
-    // MakeEmptyTab(&T, 100);
-    // printf("Done...\n");
-    // CopyBangunan(&ElmtTab(T, 1), MakeBangunan(1, 'C', MakePoint(1, 3)));
-    // CopyBangunan(&ElmtTab(T, 2), ValUndefTab);
-
-    // BacaIsiTab(&T);
-    // // TulisBangunan(ValUndefTab);
-    // TulisIsiTab(T);
+    
 
     return 0;
 }
