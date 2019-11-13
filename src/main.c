@@ -147,9 +147,9 @@ int main() {
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
 
             } else if (EQKata(command, MakeKata("SKILL\n"))) {
-                
+
             } else if (EQKata(command, MakeKata("UNDO\n"))) {
-                
+
             } else if (EQKata(command, MakeKata("END_TURN\n"))) {
                 printf("Player change!\n");
                 // reset status bangunan
@@ -163,9 +163,9 @@ int main() {
                 // mengakhiri turn
                 finishTurn = true;
             } else if (EQKata(command, MakeKata("SAVE\n"))) {
-                
+
             } else if (EQKata(command, MakeKata("MOVE\n"))) {
-                
+
             } else if (EQKata(command, MakeKata("EXIT\n"))) {
                 printf("Babai :)\n");
                 exit(0);
