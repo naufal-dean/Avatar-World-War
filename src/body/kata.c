@@ -49,7 +49,7 @@ boolean EQKata (Kata K1, Kata K2) {
     int i;
     boolean eq = true;
     // Algoritma
-    if (Length(K1), Length(K2)) {
+    if (Length(K1) != Length(K2)) {
         eq = false;
     } else {
         for (i = 1; i <= Length(K1); i++) {
@@ -58,7 +58,7 @@ boolean EQKata (Kata K1, Kata K2) {
             }
         }
     }
-    return (eq);
+    return eq;
 }
 
 /*** Kelompok operasi lain ***/

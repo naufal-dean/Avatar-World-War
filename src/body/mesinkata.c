@@ -89,7 +89,7 @@ void ScanKata(Kata * input) {
 /* I.S. input sembarang */
 /* F.S. nilai input sesuai masukan pengguna */
     // Kamus lokal
-    int error;
+    int error, i = 0;
     // Algoritma
     STARTKATA(NULL, &error);
     CopyKata(input, CKata);
