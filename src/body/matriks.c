@@ -52,43 +52,43 @@ void BacaUkuranMatriks (Matriks * M) {
     }
     MakeMatriks(NB, NK, M);
 }
-void TulisMatriks (Matriks M){
+void TulisMatriksPeta (Matriks M, TabBangunan T){
 /* I.S. M terdefinisi */
-/* F.S. Menuliskan matriks sesuai dengan kondisi bangunan yang ada */
+/* F.S. Menuliskan matriks sesuai dengan lokasi bangunan  */
 /* Contoh: Menuliskan matriks berukuran 5x5
-    * * * * * * *
-    *           *
-    *           *
-    *           *
-    *           *
-    *           *
-    * * * * * * *
+    #######
+    #     #
+    #     #
+    #     #
+    #     #
+    #     #
+    #######
 */
-
     // Kamus lokal
-    indeks i,j;
-    int ctr;
+    int i, j;
     // Algoritma
-    ctr=1;
-    for(i=GetFirstIdxBrs(M)-1; i<=GetLastIdxBrs(M)+1; i++){
-        for(j=GetFirstIdxKol(M)+1; j<=GetLastIdxKol(M)+1; j++){
-            if(i==GetFirstIdxBrs(M)-1 || i==GetLastIdxBrs(M)+1){
-                if(j==GetLastIdxKol(M)+1){
-                    printf("*\n");
+    for (i = GetFirstIdxKol(M) - 1; i <= GetLastIdxKol(M) + 1; i++) {
+        printf("#");
+    }
+    printf("\n");
+    for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
+        printf("#");
+        for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
+            if (ElmtMatriks(M, i, j) != 0) {
+                if (Pemilik(ElmtTab(T, ElmtMatriks(M, i, j))) == 1) {
+                    print_green(Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
+                } else if (Pemilik(ElmtTab(T, ElmtMatriks(M, i, j))) == 2) {
+                    print_red(Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
+                } else {
+                    printf("%c", Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
                 }
-                else{
-                    printf("* ");
-                }
-            }
-            else{
-                if(j==GetFirstIdxKol(M)-1){
-                    printf("* ");
-                }
-                else{
-                    printf("%d ",ctr);
-                    ctr++;
-                }
+            } else {
+                printf(" ");
             }
         }
+        printf("#\n");
+    }
+    for (i = GetFirstIdxKol(M) - 1; i <= GetLastIdxKol(M) + 1; i++) {
+        printf("#");
     }
 }

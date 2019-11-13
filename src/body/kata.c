@@ -10,6 +10,22 @@ void MakeEmptyKata (Kata * K) {
     Length(*K) = 0;
 }
 
+Kata MakeKata(char * C) {
+/* Mengembalikan Kata sesuai char pointer C
+   Akhir char pointer ditandai oleh karakter '\n' pada C */
+    // Kamus lokal
+    int i = 0;
+    Kata K;
+    // Algoritma
+    while (C[i] != '\n') {
+        Char(K, i + 1) = C[i];
+        i++;
+    }
+    Length(K) = i;
+
+    return (K);
+}
+
 /*** Kelompok fungsi TULIS ***/
 void TulisKata (Kata K) {
 /* Nilai elemen K ditulis ke layar, format "e1e2...en",

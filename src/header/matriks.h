@@ -4,6 +4,9 @@
 #define MATRIKS_H
 
 #include "boolean.h"
+#include "array.h"
+#include "bangunan.h"
+#include "pcolor.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define IdxBrsMin 1
@@ -52,7 +55,7 @@ void BacaUkuranMatriks (Matriks * M);
 /* I.S. Matriks belum memiliki ukuran */
 /* F.S. Ukuran matriks matriks terdefinisi dan valid */
 /* Matriks yang valid berukuran 10<=NB<=20 dan 10<=NK<=30 */
-void TulisMatriks (Matriks M);
+void TulisMatriksPeta (Matriks M, TabBangunan T);
 /* I.S. M terdefinisi */
 /* F.S. Menuliskan matriks sesuai dengan kondisi bangunan yang ada */
 /* Contoh: Menuliskan matriks berukuran 5x5

@@ -61,6 +61,7 @@ atau di antaranya. */
           break;
     }
     TulisPoint(Lokasi(B));
+    printf(" %d", Pasukan(B));
 }
 
 /*** Kelompok operasi relasional terhadap Bangunan ***/
@@ -178,6 +179,18 @@ void AssignPropertiHelper(Bangunan * B, int A, int M, boolean P) {
     Penambahan(*B) = A;
     Maksimum(*B) = M;
     Pertahanan(*B) = P;
+}
+
+void TambahPasukan(Bangunan * B, int Pemain) {
+/* Menambahkan pasukan pada awal turn */
+/* I.S. B terdefinisi */
+/* F.S. Jika pasukan pada B < M, maka pasukan akan bertambah sebanyak A (tidak mungkin melebihi M) */
+    if (Pemilik(*B) == Pemain) {
+        Pasukan(*B) += Penambahan(*B);
+        if (Pasukan(*B) > Maksimum(*B)) {
+            Pasukan(*B) = Maksimum(*B);
+        }
+    }
 }
 
 /*** Kelompok operasi lain ***/

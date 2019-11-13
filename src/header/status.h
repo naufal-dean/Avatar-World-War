@@ -6,6 +6,7 @@
 #include "boolean.h"
 #include "array.h"
 #include "bangunan.h"
+#include "graph.h"
 #include "kata.h"
 #include "matriks.h"
 #include "mesinkata.h"
@@ -16,7 +17,11 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {
+    int NBPeta, NKPeta, NBangunan;  // Baris, kolom, dan jumlah bangunan
+    TabBangunan T;              // Tabel bangunan
+    Queue Q1, Q2;               // List skill
     Matriks Peta;               // Peta game
+    Graph Adjacency;            // Adjacency Bangunan pada game
     Stack StatusPemain;         // Status Pemain turn ini
                                 // Mengandung ListBangunan dan Queue Skill
     int ActivePlayer;           // Player aktif turn ini, 1 atau 2
@@ -27,14 +32,21 @@ typedef struct {
 extern Status GameStatus;
 
 /*** Selektor ***/
+#define NBPeta(S) (S).NBPeta
+#define NKPeta(S) (S).NKPeta
+#define NBangunan(S) (S).NBangunan
+#define T(S) (S).T
+#define Q1(S) (S).Q1
+#define Q2(S) (S).Q2
 #define Peta(S) (S).Peta
+#define Adjacency(S) (S).Adjacency
 #define StatusPemain(S) (S).StatusPemain
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
-void InitGameStatus (int NBMatriks, int NKMatriks, int MaxElTab);
+void InitGameStatus (int NBPeta, int NKPeta, int NBangunan);
 /* I.S. GameStatus sembarang */
 /* F.S. Status GameStatus terdefinisi */
 /* Proses: Melakukan alokasi, memanfaatkan konstruktor tiap komponen Status.
