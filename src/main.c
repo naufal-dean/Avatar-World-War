@@ -24,21 +24,26 @@ int main() {
     SetupConfigGameStatus("../data/config.txt", &error);
     printf("Initialization done...\n");
 
-    boolean finish = false;
-    while (!finish) {
-        for (int i=1;i<=NBangunan(GameStatus);i++) {
-            TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
-        }
-        ScanKata(&K);
-        TulisKata(K);
-        printf("\n");
-        TulisMatriksPeta(Peta(GameStatus), T(GameStatus));
-        finish = 1;
-    }
-
-    // Test MakeKata
-    CopyKata(&K, MakeKata("Ahahaha\n"));
+    ScanKata(&K);
     TulisKata(K);
+    ScanKata(&K);
+    TulisKata(K);
+
+    // boolean finish = false;
+    // while (!finish) {
+    //     for (int i=1;i<=NBangunan(GameStatus);i++) {
+    //         TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
+    //     }
+    //     ScanKata(&K);
+    //     TulisKata(K);
+    //     printf("\n");
+    //     TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
+    //     finish = 1;
+    // }
+    //
+    // // Test MakeKata
+    // CopyKata(&K, MakeKata("Ahahaha\n"));
+    // TulisKata(K);
 
     return 0;
 }
