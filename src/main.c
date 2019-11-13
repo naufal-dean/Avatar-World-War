@@ -18,6 +18,10 @@ int main() {
     int X, error, counter;
     /* KAMUS KATA */
     Kata K;
+    ScanKata(&K);
+    TulisKata(K);
+    ScanKata(&K);
+    TulisKata(K);
 
     InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
@@ -119,6 +123,7 @@ int main() {
 
                 // various attack modifiers
                 if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding))) {
+                    // "When in doubt, bruteforce." - Thomas Alfa Edison
                     for (int i = 1; i <= usedTroops; i++) {
                         if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
                             usedTroops -= i*3/4;
