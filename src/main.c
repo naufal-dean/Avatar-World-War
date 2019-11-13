@@ -30,6 +30,7 @@ int main() {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
         }
         boolean finishTurn = false;
+        printf("Current Turn #: %d\n", Turn(GameStatus));
         while (!finishTurn) {
             printf("========================\n");
             if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
@@ -40,7 +41,18 @@ int main() {
             Kata command;
             ScanKata(&command);
             if (EQKata(command, MakeKata("ATTACK\n"))) {
-
+                printf("Daftar bangunan:\n");
+                int counter = 0;
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                        counter++;
+                        printf("%d. ", counter);
+                        TulisBangunan(ElmtTab(T(GameStatus), i));
+                        if (SudahSerang(ElmtTab(T(GameStatus), i))) printf(" BUSY");
+                        else printf(" AVAILABLE");
+                        printf("\n");
+                    }
+                }
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
 
             } else if (EQKata(command, MakeKata("SKILL\n"))) {
@@ -49,8 +61,15 @@ int main() {
 
             } else if (EQKata(command, MakeKata("END_TURN\n"))) {
                 printf("Player change!\n");
+                // reset status bangunan
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+                }
+                // mengubah 1 -> 2, 2 -> 1
                 ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
+                // menambah turn number
                 if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
+                // mengakhiri turn
                 finishTurn = true;
             } else if (EQKata(command, MakeKata("SAVE\n"))) {
 
@@ -59,6 +78,10 @@ int main() {
             } else if (EQKata(command, MakeKata("EXIT\n"))) {
                 printf("Babai :)\n");
                 exit(0);
+            } else if (EQKata(command, MakeKata("HELP\n"))) {
+                // Isiin dong siapapun males gua
+            } else {
+                printf("Wrong Command! Type HELP for help.\n");
             }
         }
     }
