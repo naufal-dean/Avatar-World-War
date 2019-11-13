@@ -15,7 +15,7 @@
 #include "header/status.h"
 
 int main() {
-    int X, error;
+    int X, error, counter;
     /* KAMUS KATA */
     Kata K;
 
@@ -42,7 +42,7 @@ int main() {
             ScanKata(&command);
             if (EQKata(command, MakeKata("ATTACK\n"))) {
                 printf("Daftar bangunan:\n");
-                int counter = 0;
+                counter = 0;
                 for (int i = 1; i <= NBangunan(GameStatus); i++) {
                     if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
                         counter++;
@@ -51,6 +51,97 @@ int main() {
                         if (SudahSerang(ElmtTab(T(GameStatus), i))) printf(" BUSY");
                         else printf(" AVAILABLE");
                         printf("\n");
+                    }
+                }
+                printf("Bangunan yang digunakan untuk menyerang: ");
+                int attackBuilding;
+                scanf("%d", &attackBuilding);
+                if (attackBuilding <= 0 || attackBuilding > counter) {
+                    printf("Bro... Das not your building\n");
+                    continue;
+                }
+                counter = 0;
+                // mencari id dari attackBuilding
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                        counter++;
+                        if (counter == attackBuilding) {
+                            attackBuilding = i;
+                            break;
+                        }
+                    }
+                }
+                if (SudahSerang(ElmtTab(T(GameStatus), attackBuilding))) {
+                    printf("This building is busy. The attack could not commence.\n");
+                    continue;
+                } 
+                
+                printf("Daftar bangunan yang dapat diserang: \n");
+                counter = 0;
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    if ((Pemilik(ElmtTab(T(GameStatus), i)) != ActivePlayer(GameStatus)) && (AdaEdge(Adjacency(GameStatus), attackBuilding, i))) {
+                        counter++;
+                        printf("%d. ", counter);
+                        TulisBangunan(ElmtTab(T(GameStatus), i));
+                        printf("\n");
+                    }
+                }
+                printf("Bangunan yang diserang: ");
+                int defendBuilding;
+                scanf("%d", &defendBuilding);
+                if (defendBuilding <= 0 || defendBuilding > counter) {
+                    printf("Um wat?\n");
+                    continue;
+                }
+                counter = 0;
+                // mencari id dari defendBuilding
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    if ((Pemilik(ElmtTab(T(GameStatus), i)) != ActivePlayer(GameStatus)) && (AdaEdge(Adjacency(GameStatus), attackBuilding, i))) {
+                        counter++;
+                        if (counter == defendBuilding) {
+                            defendBuilding = i;
+                            break;
+                        }
+                    }
+                }
+
+                printf("%d %d\n", attackBuilding, defendBuilding);
+                // attacking
+                printf("Jumlah pasukan: ");
+                int usedTroops;
+                scanf("%d", &usedTroops);
+                if (usedTroops > Pasukan(ElmtTab(T(GameStatus), attackBuilding))) {
+                    printf("You don't have that many troops, do you?\n");
+                    continue;
+                }
+                SudahSerang(ElmtTab(T(GameStatus), attackBuilding)) = true;
+                Pasukan(ElmtTab(T(GameStatus), attackBuilding)) -= usedTroops;
+
+                // various attack modifiers
+                if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding))) {
+                    for (int i = 1; i <= usedTroops; i++) {
+                        if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
+                            usedTroops -= i*3/4;
+                            Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
+                            usedTroops = 0;
+                            Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+                            printf("Overcoming the defenses, this building is now yours!\n");
+                            break;
+                        }
+                    }
+                    // if max troops can't kill (usedTroops == 0 if succeded before)
+                    if (usedTroops > 0) printf("F. Their deaths are not in vain. The walls are thicc.\n");
+                    Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops*3/4;
+                    usedTroops = 0;
+                } else /* No modifier */ {
+                    Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops;
+                    usedTroops = 0;
+                    if (Pasukan(ElmtTab(T(GameStatus), defendBuilding)) <= 0) /* Success */ {
+                        Pasukan(ElmtTab(T(GameStatus), defendBuilding)) *= -1;
+                        Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+                        printf("This building is now yours!\n");
+                    } else {
+                        printf("F. Their deaths are in vain.\n");
                     }
                 }
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
@@ -80,6 +171,19 @@ int main() {
                 exit(0);
             } else if (EQKata(command, MakeKata("HELP\n"))) {
                 // Isiin dong siapapun males gua
+            } else if (EQKata(command, MakeKata("BUILDINGS\n"))) {
+                for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                    printf("%d. ", i);
+                    TulisBangunan(ElmtTab(T(GameStatus), i));
+                    if (Pemilik(ElmtTab(T(GameStatus), i)) == 0) {
+                        print_yellow('N');  // neutral
+                    } else if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) {
+                        print_green('R');   // radiant
+                    } else {
+                        print_red('D');     // dire
+                    }
+                    printf("\n");
+                }
             } else {
                 printf("Wrong Command! Type HELP for help.\n");
             }
