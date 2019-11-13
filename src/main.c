@@ -39,8 +39,6 @@ int main() {
             printf("Your command: ");
             Kata command;
             ScanKata(&command);
-            TulisKata(command);
-            printf("\n");
             if (EQKata(command, MakeKata("ATTACK\n"))) {
 
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
@@ -62,10 +60,7 @@ int main() {
                 printf("Babai :)\n");
                 exit(0);
             }
-            TulisKata(command);
-            printf("\n");
         }
-        // finishGame = true;
     }
     return 0;
 }

@@ -6,7 +6,7 @@
 #include "boolean.h"
 
 #define MARKFILE '.'
-#define MARKSTDIN '\n'
+#define MARKSTDIN '\x90'
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
