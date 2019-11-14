@@ -16,14 +16,29 @@
 #include "header/stack.h"
 #include "header/status.h"
 
+/*** Kelompok Fungsi Command ***/
 boolean AttackCommand();
+/* Melaksanakan command ATTACK */
+/* Mengembalikan true jika attack berhasil, dan sebaliknya */
 boolean LevelUpCommand();
-boolean EndTurnCommand();
-boolean MoveCommand();
-void HelpCommand();
-void BuildingsCommand();
+/* Melaksanakan command LEVEL_UP */
+/* Mengembalikan true jika level up berhasil, dan sebaliknya */
 boolean UndoCommand();
-
-int GetBuildingID(int choice);
+/* Melaksanakan command UNDO */
+/* Selalu mengembalikan true, karena undo selalu berhasil */
+boolean EndTurnCommand();
+/* Melaksanakan command END_TURN */
+/* Selalu mengembalikan true, karena end turn selalu berhasil */
+boolean MoveCommand();
+/* Melaksanakan command MOVE */
+/* Mengembalikan true jika move berhasil, dan sebaliknya */
+void HelpCommand();
+/* Melaksanakan command HELP */
+/* I.S. Kondisi sembarang */
+/* F.S. Menampilkan panel bantuan ke layar */
+void BuildingsCommand();
+/* Melaksanakan command BUILDINGS */
+/* I.S. GameStatus terdefinisi */
+/* F.S. Menampilkan list Bangunan ke layar */
 
 #endif // CONSOLE_H
