@@ -33,6 +33,7 @@ int main() {
         }
         boolean finishTurn = false;
         printf("Current Turn #: %d\n", Turn(GameStatus));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         while (!finishTurn) {
             printf("========================\n");
             if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
@@ -40,22 +41,23 @@ int main() {
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
             printf("Your command: ");
             Kata command;
+            boolean berhasil = false;
             ScanKata(&command);
             if (EQKata(command, MakeKata("ATTACK\n"))) {
-                AttackCommand();
+                berhasil = AttackCommand();
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
-                LevelUpCommand();
+                berhasil = LevelUpCommand();
             } else if (EQKata(command, MakeKata("SKILL\n"))) {
 
             } else if (EQKata(command, MakeKata("UNDO\n"))) {
-
+                berhasil = UndoCommand();
             } else if (EQKata(command, MakeKata("END_TURN\n"))) {
-                EndTurnCommand();
+                berhasil = EndTurnCommand();
                 finishTurn = true;
             } else if (EQKata(command, MakeKata("SAVE\n"))) {
 
             } else if (EQKata(command, MakeKata("MOVE\n"))) {
-                MoveCommand();
+                berhasil = MoveCommand();
             } else if (EQKata(command, MakeKata("EXIT\n"))) {
                 printf("Babai :)\n");
                 exit(0);
@@ -66,6 +68,7 @@ int main() {
             } else {
                 printf("Wrong Command! Type HELP for help.\n");
             }
+            if (berhasil) Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         }
     }
     return 0;

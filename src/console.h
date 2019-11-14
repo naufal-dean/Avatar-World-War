@@ -16,12 +16,13 @@
 #include "header/stack.h"
 #include "header/status.h"
 
-void AttackCommand();
-void LevelUpCommand();
-void EndTurnCommand();
-void MoveCommand();
+boolean AttackCommand();
+boolean LevelUpCommand();
+boolean EndTurnCommand();
+boolean MoveCommand();
 void HelpCommand();
 void BuildingsCommand();
+boolean UndoCommand();
 
 int GetBuildingID(int choice);
 

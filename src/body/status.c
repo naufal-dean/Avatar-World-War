@@ -70,9 +70,6 @@ void SetupConfigGameStatus(char * ConfigPath, int * error) {
     MakeEmptyQueue(&Q2(GameStatus), 10);
     AddElQueue(&Q2(GameStatus), INSTANT_UPGRADE);
 
-    // Assign T, Q1, Q2 to StatusPemain(GameStatus)
-    Push(&StatusPemain(GameStatus), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
-
     // Adjacency matriks
     MakeEmptyGraph(&G);
     for (i = 1; i <= NBangunan(GameStatus); i++) {
