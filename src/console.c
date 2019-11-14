@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include "console.h"
 
+/*** Kelompok Fungsi Command ***/
 boolean AttackCommand() {
+/* Melaksanakan command ATTACK */
+/* Mengembalikan true jika attack berhasil, dan sebaliknya */
+    // Kamus lokal
+    int counter, i, attackBuilding, defendBuilding, usedTroops;
+    // Algoritma
     printf("Daftar bangunan:\n");
-    int counter = 0;
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    counter = 0;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
             counter++;
             printf("%d. ", counter);
@@ -15,15 +21,14 @@ boolean AttackCommand() {
         }
     }
     printf("Bangunan yang digunakan untuk menyerang: ");
-    int attackBuilding;
-    scanf("%d", &attackBuilding);
+    ScanInt(&attackBuilding);
     if (attackBuilding <= 0 || attackBuilding > counter) {
         printf("Bro... Das not your building\n");
         return false;
     }
     counter = 0;
     // mencari id dari attackBuilding
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
             counter++;
             if (counter == attackBuilding) {
@@ -39,7 +44,7 @@ boolean AttackCommand() {
 
     printf("Daftar bangunan yang dapat diserang: \n");
     counter = 0;
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         if ((Pemilik(ElmtTab(T(GameStatus), i)) != ActivePlayer(GameStatus)) && (AdaEdge(Adjacency(GameStatus), attackBuilding, i))) {
             counter++;
             printf("%d. ", counter);
@@ -48,15 +53,14 @@ boolean AttackCommand() {
         }
     }
     printf("Bangunan yang diserang: ");
-    int defendBuilding;
-    scanf("%d", &defendBuilding);
+    ScanInt(&defendBuilding);
     if (defendBuilding <= 0 || defendBuilding > counter) {
         printf("Um wat?\n");
         return false;
     }
     counter = 0;
     // mencari id dari defendBuilding
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         if ((Pemilik(ElmtTab(T(GameStatus), i)) != ActivePlayer(GameStatus)) && (AdaEdge(Adjacency(GameStatus), attackBuilding, i))) {
             counter++;
             if (counter == defendBuilding) {
@@ -68,8 +72,7 @@ boolean AttackCommand() {
 
     // attacking
     printf("Jumlah pasukan: ");
-    int usedTroops;
-    scanf("%d", &usedTroops);
+    ScanInt(&usedTroops);
     if (usedTroops <= 0 || usedTroops > Pasukan(ElmtTab(T(GameStatus), attackBuilding))) {
         printf("Serius dong mas\n");
         return false;
@@ -80,7 +83,7 @@ boolean AttackCommand() {
     // various attack modifiers
     if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding))) {
         // "When in doubt, bruteforce." - Thomas Alfa Edison
-        for (int i = 1; i <= usedTroops; i++) {
+        for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
                 usedTroops -= i*3/4;
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
@@ -109,6 +112,8 @@ boolean AttackCommand() {
 }
 
 boolean LevelUpCommand() {
+/* Melaksanakan command LEVEL_UP */
+/* Mengembalikan true jika level up berhasil, dan sebaliknya */
     // Kamus lokal
     int counter, i, lvUpBuilding, costTroops;
     // Algoritma
@@ -131,7 +136,7 @@ boolean LevelUpCommand() {
     }
     // Cari ID dari lvUpBuilding
     counter = 0;
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
             counter++;
             if (counter == lvUpBuilding) {
@@ -159,11 +164,14 @@ boolean LevelUpCommand() {
 }
 
 boolean UndoCommand() {
+/* Melaksanakan command UNDO */
+/* Selalu mengembalikan true, karena undo selalu berhasil */
+    // Kamus lokal
+    ElTypeStack tmp;
     // Algoritma
     if (Top(StatusPemain(GameStatus)) == 1) {
         printf("Mau mundur kemana mas?\n");
     } else {
-        ElTypeStack tmp;
         Pop(&(StatusPemain(GameStatus)), &tmp);
         CopyTabBangunan(&(T(GameStatus)), TB(tmp));
         CopyTabSkill(&S1(GameStatus), TS1(tmp));
@@ -174,9 +182,14 @@ boolean UndoCommand() {
 }
 
 boolean EndTurnCommand() {
+/* Melaksanakan command END_TURN */
+/* Selalu mengembalikan true, karena end turn selalu berhasil */
+    // Kamus lokal
+    int i;
+    // Algoritma
     printf("Player change!\n");
     // reset status bangunan
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         SudahSerang(ElmtTab(T(GameStatus), i)) = false;
     }
     // mengubah 1 -> 2, 2 -> 1
@@ -189,6 +202,8 @@ boolean EndTurnCommand() {
 }
 
 boolean MoveCommand() {
+/* Melaksanakan command MOVE */
+/* Mengembalikan true jika move berhasil, dan sebaliknya */
     // Kamus lokal
     int numTroops, counter, i, srcBuilding, destBuilding;
     // Algoritma
@@ -273,6 +288,9 @@ boolean MoveCommand() {
 }
 
 void HelpCommand() {
+/* Melaksanakan command HELP */
+/* I.S. Kondisi sembarang */
+/* F.S. Menampilkan panel bantuan ke layar */
     printf("# ============================== HELP =============================== #\n");
     printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
     printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
@@ -288,7 +306,13 @@ void HelpCommand() {
 }
 
 void BuildingsCommand() {
-    for (int i = 1; i <= NBangunan(GameStatus); i++) {
+/* Melaksanakan command BUILDINGS */
+/* I.S. GameStatus terdefinisi */
+/* F.S. Menampilkan list Bangunan ke layar */
+    // Kamus lokal
+    int i;
+    // Algoritma
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
         printf("%d. ", i);
         TulisBangunan(ElmtTab(T(GameStatus), i));
         printf(" ");
