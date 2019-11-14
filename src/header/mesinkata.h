@@ -7,7 +7,7 @@
 #include "mesinkar.h"
 #include "kata.h"
 
-#define NMax 50
+#define NMax 500
 #define BLANK ' '
 
 /* State Mesin Kata */
