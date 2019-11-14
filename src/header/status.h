@@ -63,12 +63,25 @@ void InitGameStatus (int NBPeta, int NKPeta, int NBangunan);
 /*** Setup ***/
 void SetupConfigGameStatus(char * ConfigPath, int * error);
 /* I.S. GameStatus terdefinisi
-        Isi file config terdefinisi, jumlah bangunan > 2, ukuran map valid */
+        Isi file config terdefinisi, jumlah bangunan >= 2, ukuran map valid */
 /* F.S. Isi GameStatus sesuai dengan config */
 /* Proses: Melakukan setup GameStatus sesuai isi file di ConfigPath */
 Bangunan ParseInputBangunan(int ID);
 /* Mengembalikan Bangunan sesuai input pada file
    Format input: "Tipe Lokasi(X) Lokasi(Y)"
    CKata awal ada di Tipe, CKata akhir ada di Lokasi(Y) */
+
+/*** Save dan Load Game ***/
+void SaveGameStatus(char * SavePath);
+/* I.S. GameStatus terdefinisi */
+/* F.S. Isi GameStatus tersimpan dalam file di SavePath */
+/* Proses:  Melakukan penulisan isi GameStatus ke file di GameStatus
+            Tidak menyimpan status undo */
+void LoadGameStatus(char * LoadPath, int * error);
+/* I.S. GameStatus terdefinisi
+        Isi file load terdefinisi, jumlah bangunan >= 2, ukuran map valid */
+/* F.S. Isi GameStatus sesuai dengan load */
+/* Proses:  Melakukan setup GameStatus sesuai isi file di LoadPath
+            Memanfaatkan prosedur SetupConfigGameStatus */
 
 #endif // STATUS_H

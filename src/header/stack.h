@@ -12,11 +12,11 @@
 /* Kamus umum */
 #define NilStack 0            // Indeks top stack kosong
 #define MaxElStack 25         // Max elemen
-#define MaxElTabSkill 8       // Max elemen tab skill
+#define MaxElTabSkill 7       // Max elemen tab skill
 
 /* Definisi elemen dan koleksi objek */
 typedef int AddressStack;
-typedef int TabSkill[MaxElTabSkill];
+typedef int TabSkill[MaxElTabSkill + 1];
 typedef struct {
     TabBangunan ListBangunan;   // List Bangunan
     TabSkill SkillActive1;      // List Skill aktif P1

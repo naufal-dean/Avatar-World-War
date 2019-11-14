@@ -201,6 +201,24 @@ boolean EndTurnCommand() {
     return true;
 }
 
+void SaveCommand() {
+/* Melaksanakan command SAVE */
+/* I.S. GameStatus terdefinisi */
+/* F.S. Melakukan proses penyimpanan GameStatus ke path file yang diberikan */
+    // Algoritma
+    SaveGameStatus("../data/saveTest.txt");
+}
+
+void LoadCommand() {
+/* Melaksanakan command LOAD */
+/* I.S. GameStatus sembarang, file load terdefinisi dan valid */
+/* F.S. Melakukan proses loading data pada file load yang diberikan ke GameStatus */
+    // Kamus lokal
+    int error;
+    // Algoritma
+    LoadGameStatus("../data/saveTest.txt", &error);
+}
+
 boolean MoveCommand() {
 /* Melaksanakan command MOVE */
 /* Mengembalikan true jika move berhasil, dan sebaliknya */

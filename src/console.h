@@ -29,6 +29,14 @@ boolean UndoCommand();
 boolean EndTurnCommand();
 /* Melaksanakan command END_TURN */
 /* Selalu mengembalikan true, karena end turn selalu berhasil */
+void SaveCommand();
+/* Melaksanakan command SAVE */
+/* I.S. GameStatus terdefinisi */
+/* F.S. Melakukan proses penyimpanan GameStatus ke path file yang diberikan */
+void LoadCommand();
+/* Melaksanakan command LOAD */
+/* I.S. GameStatus sembarang, file load terdefinisi dan valid */
+/* F.S. Melakukan proses loading data pada file load yang diberikan ke GameStatus */
 boolean MoveCommand();
 /* Melaksanakan command MOVE */
 /* Mengembalikan true jika move berhasil, dan sebaliknya */

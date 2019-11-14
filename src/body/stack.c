@@ -67,7 +67,7 @@ void MakeEmptyTabSkill(TabSkill * S) {
     // Kamus lokal
     int i;
     // Algoritma
-    for (i = 0; i < MaxElTabSkill; i++) {
+    for (i = 1; i <= MaxElTabSkill; i++) {
         (*S)[i] = 0;
     }
 }
@@ -78,7 +78,7 @@ void CopyTabSkill(TabSkill * Sout, TabSkill Sin) {
     // Kamus lokal
     int i;
     // Algoritma
-    for (i = 0; i < MaxElTabSkill; i++) {
+    for (i = 1; i <= MaxElTabSkill; i++) {
         (*Sout)[i] = Sin[i];
     }
 }

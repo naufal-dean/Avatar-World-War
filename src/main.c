@@ -64,7 +64,9 @@ int main() {
                 berhasil = EndTurnCommand();
                 finishTurn = true;
             } else if (EQKata(command, MakeKata("SAVE\n"))) {
-
+                SaveCommand();
+            } else if (EQKata(command, MakeKata("LOAD\n"))) {
+                LoadCommand();
             } else if (EQKata(command, MakeKata("MOVE\n"))) {
                 berhasil = MoveCommand();
             } else if (EQKata(command, MakeKata("EXIT\n"))) {
