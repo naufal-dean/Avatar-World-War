@@ -575,13 +575,14 @@ void HelpCommand() {
     printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
     printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
     printf("| 3. SKILL (S)      : Gunakan skill yang tersedia.                    |\n");
-    printf("| 4. UNDO (D)       : Batalkan pergerakan terakhir.                   |\n");
+    printf("| 4. UNDO (W)       : Batalkan pergerakan terakhir.                   |\n");
     printf("| 5. END_TURN (E)   : Giliran selesai.                                |\n");
     printf("| 6. SAVE (V)       : Simpan status game.                             |\n");
-    printf("| 7. MOVE (W)       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
-    printf("| 8. EXIT (P)       : Keluar dari game.                               |\n");
-    printf("| 9. HELP (H)       : Tampilkan bantuan.                              |\n");
-    printf("| 10. BUILDINGS (B) : Tampilkan status seluruh bangunan.              |\n");
+    printf("| 7. LOAD (L)       : Mengembalikan status game.                      |\n");
+    printf("| 8. MOVE (M)       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
+    printf("| 9. EXIT (X)       : Keluar dari game.                               |\n");
+    printf("| 10. HELP (H)      : Tampilkan bantuan.                              |\n");
+    printf("| 11. BUILDINGS (B) : Tampilkan status seluruh bangunan.              |\n");
     printf("# ============================== HELP =============================== #\n");
 }
 

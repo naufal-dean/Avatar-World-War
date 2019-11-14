@@ -17,13 +17,17 @@
 #include "console.h"
 
 int main() {
-    int X, error, counter;
+    int X, error, counter, troops0, troops1, troops2, buildings0, buildings1, buildings2;
     /* KAMUS KATA */
     Kata K;
 
     InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
     SetupConfigGameStatus("../data/config.txt", &error);
+    if (error != 0) {
+        printf("Config file not found. Exiting game...\n");
+        return 0;
+    }
     printf("Initialization done...\n");
 
     boolean finishGame = false;
@@ -48,8 +52,33 @@ int main() {
         printf("Current Turn #: %d\n", Turn(GameStatus));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), TS, TS));
         while (!finishTurn) {
-            printf("========================\n");
+
+            // count troops & buildings per player
+            troops0 = 0;
+            troops1 = 0;
+            troops2 = 0;
+            buildings0 = 0;
+            buildings1 = 0;
+            buildings2 = 0;
+            for (int i=1;i<=NBangunan(GameStatus);i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 0) {
+                    troops0 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings0++;
+                }
+                else if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) {
+                    troops1 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings1++;
+                }
+                else if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) {
+                    troops2 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings2++;
+                }
+            }
+
+            printf("===================================================================\n");
             Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+            printf("Current forces: %d - %d - %d\n", troops1, troops0, troops2);
+            printf("Current buildings: %d - %d - %d\n", buildings1, buildings0, buildings2);
 
             if (ActivePlayer(GameStatus) == 1) {
                 printf("Player 1's Turn\n");
@@ -67,10 +96,10 @@ int main() {
                 }
             }
             else {
+                printf("Player 2's Turn\n");
                 if (IsQueueEmpty(Q2(GameStatus))) {
                     printf("You currently have no skills available.\n");
                 } else {
-                    printf("Player 2's Turn\n");
                     printf("Current skill: ");
                     if (InfoHead(Q2(GameStatus)) == 1) printf("IU\n");
                     else if (InfoHead(Q2(GameStatus)) == 2) printf("S\n");
@@ -98,19 +127,19 @@ int main() {
                 berhasil = LevelUpCommand();
             } else if (EQKata(command, MakeKata("SKILL\n")) || EQKata(command, MakeKata("S\n"))) {
                 berhasil = SkillCommand();
-            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("D\n"))) {
+            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("W\n"))) {
                 Pop(&StatusPemain(GameStatus), &tmp);
                 berhasil = UndoCommand();
             } else if (EQKata(command, MakeKata("END_TURN\n")) || EQKata(command, MakeKata("E\n"))) {
                 berhasil = EndTurnCommand();
                 finishTurn = true;
-            } else if (EQKata(command, MakeKata("SAVE\n"))) {
+            } else if (EQKata(command, MakeKata("SAVE\n")) || EQKata(command, MakeKata("V\n"))) {
                 SaveCommand();
-            } else if (EQKata(command, MakeKata("LOAD\n"))) {
+            } else if (EQKata(command, MakeKata("LOAD\n")) || EQKata(command, MakeKata("L\n"))) {
                 LoadCommand();
-            } else if (EQKata(command, MakeKata("MOVE\n"))) {
+            } else if (EQKata(command, MakeKata("MOVE\n")) || EQKata(command, MakeKata("M\n"))) {
                 berhasil = MoveCommand();
-            } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("P\n"))) {
+            } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("X\n"))) {
                 printf("Babai :)\n");
                 exit(0);
             } else if (EQKata(command, MakeKata("HELP\n")) || EQKata(command, MakeKata("H\n"))) {
