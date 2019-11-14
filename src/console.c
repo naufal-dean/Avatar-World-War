@@ -325,6 +325,7 @@ boolean SkillCommand() {
             for (int i = 1; i <= NBangunan(GameStatus); i++) {
                 if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
                     Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
+                    if (Pasukan(ElmtTab(T(GameStatus), i)) < 0) Pasukan(ElmtTab(T(GameStatus), i)) = 0;
                 }
             }
         }
@@ -372,6 +373,7 @@ boolean SkillCommand() {
             for (int i = 1; i <= NBangunan(GameStatus); i++) {
                 if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
                     Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
+                    if (Pasukan(ElmtTab(T(GameStatus), i)) < 0) Pasukan(ElmtTab(T(GameStatus), i)) = 0;
                 }
             }
         }
