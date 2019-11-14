@@ -40,24 +40,53 @@ int main() {
             printf("========================\n");
             Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
 
-            if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
-            else printf("Player 2's Turn\n");
+            if (ActivePlayer(GameStatus) == 1) {
+                printf("Player 1's Turn\n");
+                if (IsQueueEmpty(Q1(GameStatus))) {
+                    printf("You currently have no skills available.\n");
+                } else {
+                    printf("Current skill: ");
+                    if (InfoHead(Q1(GameStatus)) == 1) printf("IU\n");
+                    else if (InfoHead(Q1(GameStatus)) == 2) printf("S\n");
+                    else if (InfoHead(Q1(GameStatus)) == 3) printf("ET\n");
+                    else if (InfoHead(Q1(GameStatus)) == 4) printf("AU\n");
+                    else if (InfoHead(Q1(GameStatus)) == 5) printf("CH\n");
+                    else if (InfoHead(Q1(GameStatus)) == 6) printf("IR\n");
+                    else if (InfoHead(Q1(GameStatus)) == 7) printf("B\n");
+                }
+            }
+            else {
+                if (IsQueueEmpty(Q2(GameStatus))) {
+                    printf("You currently have no skills available.\n");
+                } else {
+                    printf("Player 2's Turn\n");
+                    printf("Current skill: ");
+                    if (InfoHead(Q2(GameStatus)) == 1) printf("IU\n");
+                    else if (InfoHead(Q2(GameStatus)) == 2) printf("S\n");
+                    else if (InfoHead(Q2(GameStatus)) == 3) printf("ET\n");
+                    else if (InfoHead(Q2(GameStatus)) == 4) printf("AU\n");
+                    else if (InfoHead(Q2(GameStatus)) == 5) printf("CH\n");
+                    else if (InfoHead(Q2(GameStatus)) == 6) printf("IR\n");
+                    else if (InfoHead(Q2(GameStatus)) == 7) printf("B\n");
+                }
+            }
 
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
+            
+            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus)); // debug
 
             Kata command;
             boolean berhasil = false;
             ElTypeStack tmp;
             printf("Your command: ");
             ScanKata(&command);
-            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus));
 
             if (EQKata(command, MakeKata("ATTACK\n")) || EQKata(command, MakeKata("A\n"))) {
                 berhasil = AttackCommand();
             } else if (EQKata(command, MakeKata("LEVEL_UP\n")) || EQKata(command, MakeKata("Q\n"))) {
                 berhasil = LevelUpCommand();
             } else if (EQKata(command, MakeKata("SKILL\n")) || EQKata(command, MakeKata("S\n"))) {
-
+                berhasil = SkillCommand();
             } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("D\n"))) {
                 Pop(&StatusPemain(GameStatus), &tmp);
                 berhasil = UndoCommand();

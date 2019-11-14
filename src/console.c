@@ -163,6 +163,47 @@ boolean LevelUpCommand() {
     }
 }
 
+boolean SkillCommand() {
+/* Melaksanakan command SKILL dan membersikhkan undo stack */
+/* Mengembalikan true jika pemakaian skill berhasil, dan sebaliknya */
+    int activeSkill = -1;
+    if (ActivePlayer(GameStatus) == 1) {
+        if (IsQueueEmpty(Q1(GameStatus))) {
+            printf("No skill. Noob.\n");
+            return false;
+        }
+        DelElQueue(&(Q1(GameStatus)), &activeSkill);
+        if (activeSkill == 1) {
+            printf("The buildings are now stronger...\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
+                    Level(ElmtTab(T(GameStatus), i))++;
+                }
+            }
+        }
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        return true;
+    } else {
+        if (IsQueueEmpty(Q2(GameStatus))) {
+            printf("No skill. Noob.\n");
+            return false;
+        }
+        DelElQueue(&(Q2(GameStatus)), &activeSkill);
+        if (activeSkill == 1) {
+            printf("The buildings are now stronger...\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
+                    Level(ElmtTab(T(GameStatus), i))++;
+                }
+            }
+        }
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        return true;
+    }
+}
+
 boolean UndoCommand() {
 /* Melaksanakan command UNDO */
 /* Selalu mengembalikan true, karena undo selalu berhasil */
