@@ -204,6 +204,27 @@ boolean AttackCommand() {
         }
     }
 
+    // Barrage Granted?
+    if (ActivePlayer(GameStatus) == 1) {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) remainingBuilding++;
+        }
+        if (startingBuilding1 == 9 && remainingBuilding == 10 && !IsQueueFull(Q2(GameStatus))) {
+            printf("STOP! He's already dead! Here's a consolation prize. Player 2 gets a Barrage skill.\n");
+            AddElQueue(&(Q2(GameStatus)), BARRAGE);
+        }
+    } else {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) remainingBuilding++;
+        }
+        if (startingBuilding2 == 9 && remainingBuilding == 10 && !IsQueueFull(Q1(GameStatus))) {
+            printf("STOP! He's already dead! Here's a consolation prize. Player 1 gets a Barrage skill.\n");
+            AddElQueue(&(Q1(GameStatus)), BARRAGE);
+        }
+    }
+
     return true;
 }
 
@@ -299,6 +320,13 @@ boolean SkillCommand() {
                     Pasukan(ElmtTab(T(GameStatus), i)) += 5;
                 }
             }
+        } else if (activeSkill == 7) {
+            printf("All of your enemy's buildings seems to be less crowded (by 10).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
+                }
+            }
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -337,6 +365,13 @@ boolean SkillCommand() {
             for (int i = 1; i <= NBangunan(GameStatus); i++) {
                 if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
                     Pasukan(ElmtTab(T(GameStatus), i)) += 5;
+                }
+            }
+        } else if (activeSkill == 7) {
+            printf("All of your enemy's buildings seems to be less crowded (by 10).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
                 }
             }
         }
