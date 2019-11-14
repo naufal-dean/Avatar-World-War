@@ -50,29 +50,30 @@ int main() {
             ElTypeStack tmp;
             printf("Your command: ");
             ScanKata(&command);
+            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus));
 
-            if (EQKata(command, MakeKata("ATTACK\n"))) {
+            if (EQKata(command, MakeKata("ATTACK\n")) || EQKata(command, MakeKata("A\n"))) {
                 berhasil = AttackCommand();
-            } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
+            } else if (EQKata(command, MakeKata("LEVEL_UP\n")) || EQKata(command, MakeKata("Q\n"))) {
                 berhasil = LevelUpCommand();
-            } else if (EQKata(command, MakeKata("SKILL\n"))) {
+            } else if (EQKata(command, MakeKata("SKILL\n")) || EQKata(command, MakeKata("S\n"))) {
 
-            } else if (EQKata(command, MakeKata("UNDO\n"))) {
+            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("D\n"))) {
                 Pop(&StatusPemain(GameStatus), &tmp);
                 berhasil = UndoCommand();
-            } else if (EQKata(command, MakeKata("END_TURN\n"))) {
+            } else if (EQKata(command, MakeKata("END_TURN\n")) || EQKata(command, MakeKata("E\n"))) {
                 berhasil = EndTurnCommand();
                 finishTurn = true;
-            } else if (EQKata(command, MakeKata("SAVE\n"))) {
+            } else if (EQKata(command, MakeKata("SAVE\n")) || EQKata(command, MakeKata("V\n"))) {
 
-            } else if (EQKata(command, MakeKata("MOVE\n"))) {
+            } else if (EQKata(command, MakeKata("MOVE\n")) || EQKata(command, MakeKata("W\n"))) {
                 berhasil = MoveCommand();
-            } else if (EQKata(command, MakeKata("EXIT\n"))) {
+            } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("P\n"))) {
                 printf("Babai :)\n");
                 exit(0);
-            } else if (EQKata(command, MakeKata("HELP\n"))) {
+            } else if (EQKata(command, MakeKata("HELP\n")) || EQKata(command, MakeKata("H\n"))) {
                 HelpCommand();
-            } else if (EQKata(command, MakeKata("BUILDINGS\n"))) {
+            } else if (EQKata(command, MakeKata("BUILDINGS\n")) || EQKata(command, MakeKata("B\n"))) {
                 BuildingsCommand();
             } else {
                 printf("Wrong Command! Type HELP for help.\n");

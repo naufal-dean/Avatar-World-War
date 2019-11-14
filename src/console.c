@@ -273,18 +273,18 @@ boolean MoveCommand() {
 }
 
 void HelpCommand() {
-    printf("# ============================ HELP ============================= #\n");
-    printf("| 1. ATTACK     : Serang bangunan musuh.                          |\n");
-    printf("| 2. LEVEL_UP   : Naikkan level bangunan milik kita.              |\n");
-    printf("| 3. SKILL      : Gunakan skill yang tersedia.                    |\n");
-    printf("| 4. UNDO       : Batalkan pergerakan terakhir.                   |\n");
-    printf("| 5. END_TURN   : Giliran selesai.                                |\n");
-    printf("| 6. SAVE       : Simpan status game.                             |\n");
-    printf("| 7. MOVE       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
-    printf("| 8. EXIT       : Keluar dari game.                               |\n");
-    printf("| 9. HELP       : Tampilkan bantuan.                              |\n");
-    printf("| 10. BUILDINGS : Tampilkan status seluruh bangunan.              |\n");
-    printf("# ============================ HELP ============================= #\n");
+    printf("# ============================== HELP =============================== #\n");
+    printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
+    printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
+    printf("| 3. SKILL (S)      : Gunakan skill yang tersedia.                    |\n");
+    printf("| 4. UNDO (D)       : Batalkan pergerakan terakhir.                   |\n");
+    printf("| 5. END_TURN (E)   : Giliran selesai.                                |\n");
+    printf("| 6. SAVE (V)       : Simpan status game.                             |\n");
+    printf("| 7. MOVE (W)       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
+    printf("| 8. EXIT (P)       : Keluar dari game.                               |\n");
+    printf("| 9. HELP (H)       : Tampilkan bantuan.                              |\n");
+    printf("| 10. BUILDINGS (B) : Tampilkan status seluruh bangunan.              |\n");
+    printf("# ============================== HELP =============================== #\n");
 }
 
 void BuildingsCommand() {

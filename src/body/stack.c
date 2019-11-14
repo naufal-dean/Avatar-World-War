@@ -82,3 +82,15 @@ void CopyTabSkill(TabSkill * Sout, TabSkill Sin) {
         (*Sout)[i] = Sin[i];
     }
 }
+void PrintTabSkill(TabSkill S) {
+/* Melakukan penulisan counter skill ke layar */
+/* I.S. S terdefinisi */
+/* F.S. S tercetak di layar */
+    // Kamus lokal
+    int i;
+    // Algoritma
+    for (i = 1; i < MaxElTabSkill; i++) {
+        printf("%d ", (S)[i]);
+    }
+    printf("\n");
+}

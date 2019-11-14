@@ -80,5 +80,9 @@ void CopyTabSkill(TabSkill * Sout, TabSkill Sin);
 /* Melakukan penyalinan Sin ke Sout */
 /* I.S. Sin terdefinisi, Sout sembarang */
 /* F.S. Sout sama dengan Sin */
+void PrintTabSkill(TabSkill S);
+/* Melakukan penulisan counter skill ke layar */
+/* I.S. S terdefinisi */
+/* F.S. S tercetak di layar */
 
 #endif // STACK_H
