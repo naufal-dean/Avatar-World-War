@@ -6,8 +6,19 @@ boolean AttackCommand() {
 /* Melaksanakan command ATTACK */
 /* Mengembalikan true jika attack berhasil, dan sebaliknya */
     // Kamus lokal
-    int counter, i, attackBuilding, defendBuilding, usedTroops;
+    int counter, i, attackBuilding, defendBuilding, usedTroops, startingBuilding1, startingBuilding2, remainingBuilding;
     // Algoritma
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) startingBuilding1++;
+        else if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) startingBuilding2++;
+    }
+
+    // count number of owned towers
+    int originalTower = 0;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if ((Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) && (Tipe(ElmtTab(T(GameStatus), i)) == 'T')) originalTower++;
+    }
+
     printf("Daftar bangunan:\n");
     counter = 0;
     for (i = 1; i <= NBangunan(GameStatus); i++) {
@@ -70,6 +81,10 @@ boolean AttackCommand() {
         }
     }
 
+    int fortOriginalOwner = 0;
+    // owner of building (if fort)
+    if (Tipe(ElmtTab(T(GameStatus), defendBuilding)) == 'F') fortOriginalOwner = Pemilik(ElmtTab(T(GameStatus), defendBuilding));
+
     // attacking
     printf("Jumlah pasukan: ");
     ScanInt(&usedTroops);
@@ -80,12 +95,40 @@ boolean AttackCommand() {
     SudahSerang(ElmtTab(T(GameStatus), attackBuilding)) = true;
     Pasukan(ElmtTab(T(GameStatus), attackBuilding)) -= usedTroops;
 
+    // check if enemy has a shield
+    boolean adaShield = false;
+    if (ActivePlayer(GameStatus) == 1 && SHIELD2(GameStatus) > 0) adaShield = true; 
+    if (ActivePlayer(GameStatus) == 2 && SHIELD1(GameStatus) > 0) adaShield = true;
+
+    // check if player has attack up activated
+    boolean adaAttackUp = false;
+    if (ActivePlayer(GameStatus) == 1 && ATTACK_UP1(GameStatus) == 1) adaAttackUp = true;
+    if (ActivePlayer(GameStatus) == 2 && ATTACK_UP2(GameStatus) == 1) adaAttackUp = true;
+
     // various attack modifiers
-    if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding))) {
+    if ((ActivePlayer(GameStatus) == 1 && CRITICAL_HIT1(GameStatus) == 1) || (ActivePlayer(GameStatus) == 2 && CRITICAL_HIT2(GameStatus) == 1)) {
+        for (i = 1; i <= usedTroops; i++) {
+            if (i*2 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
+                usedTroops -= i;
+                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
+                usedTroops = 0;
+                Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+                printf("Critical Hit! This building is now yours!\n");
+                break;
+            }
+        }
+        // if max troops can't kill (usedTroops == 0 if succeded before)
+        if (usedTroops > 0) printf("Don't worry. You dealt a lot of damage to that building.\n");
+        Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops*2;
+        usedTroops = 0;
+        // reset crit
+        if (ActivePlayer(GameStatus) == 1) CRITICAL_HIT1(GameStatus) = 0;
+        if (ActivePlayer(GameStatus) == 2) CRITICAL_HIT2(GameStatus) = 0;
+    } else if ((Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) && (!adaAttackUp)) {
         // "When in doubt, bruteforce." - Thomas Alfa Edison
         for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
-                usedTroops -= i*3/4;
+                usedTroops -= i;
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
@@ -97,7 +140,7 @@ boolean AttackCommand() {
         if (usedTroops > 0) printf("F. Their deaths are not in vain. The walls are thicc.\n");
         Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops*3/4;
         usedTroops = 0;
-    } else /* No modifier */ {
+    } else /* No modifier or defense ignored by attack up skill */ {
         Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops;
         usedTroops = 0;
         if (Pasukan(ElmtTab(T(GameStatus), defendBuilding)) <= 0) /* Success */ {
@@ -108,6 +151,80 @@ boolean AttackCommand() {
             printf("F. Their deaths are in vain.\n");
         }
     }
+
+    // SHIELD
+    if (ActivePlayer(GameStatus) == 1) {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) remainingBuilding++;
+        }
+        if (startingBuilding2 == 3 && remainingBuilding == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Player 2 gets a SHIELD skill.\n");
+            AddElQueue(&(Q2(GameStatus)), SHIELD);
+        }
+    } else {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) remainingBuilding++;
+        }
+        if (startingBuilding1 == 3 && remainingBuilding == 2 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Player 1 gets a SHIELD skill.\n");
+            AddElQueue(&(Q1(GameStatus)), SHIELD);
+        }
+    }
+
+    int fortNewOwner = 0;
+    // owner of building (if fort)
+    if (Tipe(ElmtTab(T(GameStatus), defendBuilding)) == 'F') fortNewOwner = Pemilik(ElmtTab(T(GameStatus), defendBuilding));
+
+    // Extra Turn Granted?
+    if (fortOriginalOwner == 2 && fortNewOwner == 1 && !IsQueueFull(Q2(GameStatus))) {
+        printf("Player 2 gets UNO REVERSE CARD.\n");
+        AddElQueue(&(Q2(GameStatus)), EXTRA_TURN);
+    }
+    if (fortOriginalOwner == 1 && fortNewOwner == 2 && !IsQueueFull(Q1(GameStatus))) {
+        printf("Player 1 gets UNO REVERSE CARD.\n");
+        AddElQueue(&(Q1(GameStatus)), EXTRA_TURN);
+    }
+
+    // count number of (newly) owned towers
+    int newTower = 0;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if ((Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) && (Tipe(ElmtTab(T(GameStatus), i)) == 'T')) newTower++;
+    }
+
+    // Attack Up Granted?
+    if (originalTower == 2 && newTower == 3) {
+        if (ActivePlayer(GameStatus) == 1 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Player 1 gets Attack Up skill.\n");
+            AddElQueue(&(Q1(GameStatus)), ATTACK_UP);
+        } else if (ActivePlayer(GameStatus) == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Player 2 gets Attack Up skill.\n");
+            AddElQueue(&(Q2(GameStatus)), ATTACK_UP);
+        }
+    }
+
+    // Barrage Granted?
+    if (ActivePlayer(GameStatus) == 1) {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) remainingBuilding++;
+        }
+        if (startingBuilding1 == 9 && remainingBuilding == 10 && !IsQueueFull(Q2(GameStatus))) {
+            printf("STOP! He's already dead! Here's a consolation prize. Player 2 gets a Barrage skill.\n");
+            AddElQueue(&(Q2(GameStatus)), BARRAGE);
+        }
+    } else {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) remainingBuilding++;
+        }
+        if (startingBuilding2 == 9 && remainingBuilding == 10 && !IsQueueFull(Q1(GameStatus))) {
+            printf("STOP! He's already dead! Here's a consolation prize. Player 1 gets a Barrage skill.\n");
+            AddElQueue(&(Q1(GameStatus)), BARRAGE);
+        }
+    }
+
     return true;
 }
 
@@ -163,6 +280,109 @@ boolean LevelUpCommand() {
     }
 }
 
+boolean SkillCommand() {
+/* Melaksanakan command SKILL dan membersikhkan undo stack */
+/* Mengembalikan true jika pemakaian skill berhasil, dan sebaliknya */
+    int activeSkill = -1;
+    if (ActivePlayer(GameStatus) == 1) {
+        if (IsQueueEmpty(Q1(GameStatus))) {
+            printf("No skill. Noob.\n");
+            return false;
+        }
+        DelElQueue(&(Q1(GameStatus)), &activeSkill);
+        if (activeSkill == 1) {
+            printf("The buildings are now stronger...\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
+                    Level(ElmtTab(T(GameStatus), i))++;
+                }
+            }
+        } else if (activeSkill == 2) {
+            printf("S.H.I.E.L.D. activated.\n");
+            SHIELD1(GameStatus) = 2;
+        } else if (activeSkill == 3) {
+            printf("UNO SKIP CARD activated. You gained an extra turn.\n");
+            EXTRA_TURN1(GameStatus) = 1;
+            if (!IsQueueFull(Q2(GameStatus))) {
+                printf("Your enemy gained a critical hit skill though...\n");
+                AddElQueue(&(Q2(GameStatus)), CRITICAL_HIT);
+            }
+        } else if (activeSkill == 4) {
+            printf("Piercing Hit! All enemy defenses neutralized.\n");
+            ATTACK_UP1(GameStatus) = 1;
+        } else if (activeSkill == 5) {
+            printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
+            CRITICAL_HIT1(GameStatus) = 1;
+        } else if (activeSkill == 6) {
+            printf("All of your buildings become more crowded (by 5).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) += 5;
+                }
+            }
+        } else if (activeSkill == 7) {
+            printf("All of your enemy's buildings seems to be less crowded (by 10).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
+                    if (Pasukan(ElmtTab(T(GameStatus), i)) < 0) Pasukan(ElmtTab(T(GameStatus), i)) = 0;
+                }
+            }
+        }
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        return true;
+    } else {
+        if (IsQueueEmpty(Q2(GameStatus))) {
+            printf("No skill. Noob.\n");
+            return false;
+        }
+        DelElQueue(&(Q2(GameStatus)), &activeSkill);
+        if (activeSkill == 1) {
+            printf("The buildings are now stronger...\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
+                    Level(ElmtTab(T(GameStatus), i))++;
+                }
+            }
+        } else if (activeSkill == 2) {
+            printf("S.H.I.E.L.D. activated.\n");
+            SHIELD2(GameStatus) = 2;
+        } else if (activeSkill == 3) {
+            printf("UNO SKIP CARD activated. You gained an extra turn.\n");
+            EXTRA_TURN2(GameStatus) = 1;
+            if (!IsQueueFull(Q1(GameStatus))) {
+                printf("Your enemy gained a critical hit skill though...\n");
+                AddElQueue(&(Q1(GameStatus)), CRITICAL_HIT);
+            }
+        } else if (activeSkill == 4) {
+            printf("Piercing Hit! All enemy defenses neutralized.\n");
+            ATTACK_UP2(GameStatus) = 1;
+        } else if (activeSkill == 5) {
+            printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
+            CRITICAL_HIT2(GameStatus) = 1;
+        } else if (activeSkill == 6) {
+            printf("All of your buildings become more crowded (by 5).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) += 5;
+                }
+            }
+        } else if (activeSkill == 7) {
+            printf("All of your enemy's buildings seems to be less crowded (by 10).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 3 - ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) -= 10;
+                    if (Pasukan(ElmtTab(T(GameStatus), i)) < 0) Pasukan(ElmtTab(T(GameStatus), i)) = 0;
+                }
+            }
+        }
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        return true;
+    }
+}
+
 boolean UndoCommand() {
 /* Melaksanakan command UNDO */
 /* Selalu mengembalikan true, karena undo selalu berhasil */
@@ -187,17 +407,59 @@ boolean EndTurnCommand() {
     // Kamus lokal
     int i;
     // Algoritma
-    printf("Player change!\n");
-    // reset status bangunan
-    for (i = 1; i <= NBangunan(GameStatus); i++) {
-        SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+
+    // check extra turn
+    boolean extra = false;
+    if (ActivePlayer(GameStatus) == 1 && EXTRA_TURN1(GameStatus) == 1) {
+        EXTRA_TURN1(GameStatus) = 0;
+        extra = true;
     }
-    // mengubah 1 -> 2, 2 -> 1
-    ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
-    // menambah turn number
-    if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
-    // membersihkan stack
-    MakeEmptyStack(&(StatusPemain(GameStatus)));
+    if (ActivePlayer(GameStatus) == 2 && EXTRA_TURN2(GameStatus) == 1) {
+        EXTRA_TURN2(GameStatus) = 0;
+        extra = true;
+    }
+
+    // reset attack up
+    ATTACK_UP1(GameStatus) = 0;
+    ATTACK_UP2(GameStatus) = 0;
+
+    // Instant Reinforcement Grant? All owned buildings' level must be 4
+    boolean grantIR = true;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) != 4) grantIR = false;
+    }
+    if (grantIR) {
+        if (ActivePlayer(GameStatus) == 1 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Congratulations on maxing all of your buildings. Here, get an IR skill. Use it wisely.\n");
+            AddElQueue(&(Q1(GameStatus)), INSTANT_REINFORCEMENT);
+        }
+        if (ActivePlayer(GameStatus) == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Congratulations on maxing all of your buildings. Here, get an IR skill. Use it wisely.\n");
+            AddElQueue(&(Q2(GameStatus)), INSTANT_REINFORCEMENT);
+        }
+    }
+
+    if (extra) {
+        printf("Sini main lagi hehe :p\n");
+        // reset status bangunan
+        for (i = 1; i <= NBangunan(GameStatus); i++) {
+            SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+        }
+        // membersihkan stack
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+    } else {
+        printf("Player change!\n");
+        // reset status bangunan
+        for (i = 1; i <= NBangunan(GameStatus); i++) {
+            SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+        }
+        // mengubah 1 -> 2, 2 -> 1
+        ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
+        // menambah turn number
+        if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
+        // membersihkan stack
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+    }
     return true;
 }
 
@@ -309,19 +571,18 @@ void HelpCommand() {
 /* Melaksanakan command HELP */
 /* I.S. Kondisi sembarang */
 /* F.S. Menampilkan panel bantuan ke layar */
-    // Algoritma
-    printf("# ============================ HELP ============================= #\n");
-    printf("| 1. ATTACK     : Serang bangunan musuh.                          |\n");
-    printf("| 2. LEVEL_UP   : Naikkan level bangunan milik kita.              |\n");
-    printf("| 3. SKILL      : Gunakan skill yang tersedia.                    |\n");
-    printf("| 4. UNDO       : Batalkan pergerakan terakhir.                   |\n");
-    printf("| 5. END_TURN   : Giliran selesai.                                |\n");
-    printf("| 6. SAVE       : Simpan status game.                             |\n");
-    printf("| 7. MOVE       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
-    printf("| 8. EXIT       : Keluar dari game.                               |\n");
-    printf("| 9. HELP       : Tampilkan bantuan.                              |\n");
-    printf("| 10. BUILDINGS : Tampilkan status seluruh bangunan.              |\n");
-    printf("# ============================ HELP ============================= #\n");
+    printf("# ============================== HELP =============================== #\n");
+    printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
+    printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
+    printf("| 3. SKILL (S)      : Gunakan skill yang tersedia.                    |\n");
+    printf("| 4. UNDO (D)       : Batalkan pergerakan terakhir.                   |\n");
+    printf("| 5. END_TURN (E)   : Giliran selesai.                                |\n");
+    printf("| 6. SAVE (V)       : Simpan status game.                             |\n");
+    printf("| 7. MOVE (W)       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
+    printf("| 8. EXIT (P)       : Keluar dari game.                               |\n");
+    printf("| 9. HELP (H)       : Tampilkan bantuan.                              |\n");
+    printf("| 10. BUILDINGS (B) : Tampilkan status seluruh bangunan.              |\n");
+    printf("# ============================== HELP =============================== #\n");
 }
 
 void BuildingsCommand() {

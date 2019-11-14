@@ -23,6 +23,9 @@ boolean AttackCommand();
 boolean LevelUpCommand();
 /* Melaksanakan command LEVEL_UP */
 /* Mengembalikan true jika level up berhasil, dan sebaliknya */
+boolean SkillCommand();
+/* Melaksanakan command SKILL dan membersikhkan undo stack */
+/* Mengembalikan true jika pemakaian skill berhasil, dan sebaliknya */
 boolean UndoCommand();
 /* Melaksanakan command UNDO */
 /* Selalu mengembalikan true, karena undo selalu berhasil */

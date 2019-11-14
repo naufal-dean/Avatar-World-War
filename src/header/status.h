@@ -49,6 +49,23 @@ extern Status GameStatus;
 #define S2(S) (S).S2
 #define ElmtS2(S, i) ((S).S2)[(i)]
 
+/*** Selektor skill ***/
+#define INSTANT_UPGRADE1(S) ((S).S1)[(1)]
+#define SHIELD1(S) ((S).S1)[(2)]
+#define EXTRA_TURN1(S) ((S).S1)[(3)]
+#define ATTACK_UP1(S) ((S).S1)[(4)]
+#define CRITICAL_HIT1(S) ((S).S1)[(5)]
+#define INSTANT_REINFORCEMENT1(S) ((S).S1)[(6)]
+#define BARRAGE1(S) ((S).S1)[(7)]
+
+#define INSTANT_UPGRADE2(S) ((S).S2)[(1)]
+#define SHIELD2(S) ((S).S2)[(2)]
+#define EXTRA_TURN2(S) ((S).S2)[(3)]
+#define ATTACK_UP2(S) ((S).S2)[(4)]
+#define CRITICAL_HIT2(S) ((S).S2)[(5)]
+#define INSTANT_REINFORCEMENT2(S) ((S).S2)[(6)]
+#define BARRAGE2(S) ((S).S2)[(7)]
+
 #define ActivePlayer(S) (S).ActivePlayer
 #define Turn(S) (S).Turn
 
