@@ -1,0 +1,22 @@
+format save file:
+R C
+N
+Building-1
+Building-2
+...
+Building-N
+ADJMATRIX
+N x N
+N
+Pemilik Level Pasukan SudahSerang -1
+Pemilik Level Pasukan SudahSerang -2
+...
+Pemilik Level Pasukan SudahSerang -N 
+NQueueP1
+QueueP1
+NQueueP2
+QueueP2
+TabSkill1
+TabSkill2
+ActivePlayer
+Turn
