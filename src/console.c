@@ -292,6 +292,13 @@ boolean SkillCommand() {
         } else if (activeSkill == 5) {
             printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
             CRITICAL_HIT1(GameStatus) = 1;
+        } else if (activeSkill == 6) {
+            printf("All of your buildings become more crowded (by 5).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) += 5;
+                }
+            }
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -325,6 +332,13 @@ boolean SkillCommand() {
         } else if (activeSkill == 5) {
             printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
             CRITICAL_HIT2(GameStatus) = 1;
+        } else if (activeSkill == 6) {
+            printf("All of your buildings become more crowded (by 5).\n");
+            for (int i = 1; i <= NBangunan(GameStatus); i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) {
+                    Pasukan(ElmtTab(T(GameStatus), i)) += 5;
+                }
+            }
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -372,8 +386,24 @@ boolean EndTurnCommand() {
     ATTACK_UP1(GameStatus) = 0;
     ATTACK_UP2(GameStatus) = 0;
 
+    // Instant Reinforcement Grant? All owned buildings' level must be 4
+    boolean grantIR = true;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) != 4) grantIR = false;
+    }
+    if (grantIR) {
+        if (ActivePlayer(GameStatus) == 1 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Congratulations on maxing all of your buildings. Here, get an IR skill. Use it wisely.\n");
+            AddElQueue(&(Q1(GameStatus)), INSTANT_REINFORCEMENT);
+        }
+        if (ActivePlayer(GameStatus) == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Congratulations on maxing all of your buildings. Here, get an IR skill. Use it wisely.\n");
+            AddElQueue(&(Q2(GameStatus)), INSTANT_REINFORCEMENT);
+        }
+    }
+
     if (extra) {
-        printf("Cie keskip :p\n");
+        printf("Sini main lagi hehe :p\n");
         // reset status bangunan
         for (i = 1; i <= NBangunan(GameStatus); i++) {
             SudahSerang(ElmtTab(T(GameStatus), i)) = false;
