@@ -106,11 +106,29 @@ boolean AttackCommand() {
     if (ActivePlayer(GameStatus) == 2 && ATTACK_UP2(GameStatus) == 1) adaAttackUp = true;
 
     // various attack modifiers
-    if ((Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) && (!adaAttackUp)) {
+    if ((ActivePlayer(GameStatus) == 1 && CRITICAL_HIT1(GameStatus) == 1) || (ActivePlayer(GameStatus) == 2 && CRITICAL_HIT2(GameStatus) == 1)) {
+        for (i = 1; i <= usedTroops; i++) {
+            if (i*2 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
+                usedTroops -= i;
+                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
+                usedTroops = 0;
+                Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+                printf("Critical Hit! This building is now yours!\n");
+                break;
+            }
+        }
+        // if max troops can't kill (usedTroops == 0 if succeded before)
+        if (usedTroops > 0) printf("Don't worry. You dealt a lot of damage to that building.\n");
+        Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops*2;
+        usedTroops = 0;
+        // reset crit
+        if (ActivePlayer(GameStatus) == 1) CRITICAL_HIT1(GameStatus) = 0;
+        if (ActivePlayer(GameStatus) == 2) CRITICAL_HIT2(GameStatus) = 0;
+    } else if ((Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) && (!adaAttackUp)) {
         // "When in doubt, bruteforce." - Thomas Alfa Edison
         for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
-                usedTroops -= i*3/4;
+                usedTroops -= i;
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
@@ -262,11 +280,18 @@ boolean SkillCommand() {
             printf("S.H.I.E.L.D. activated.\n");
             SHIELD1(GameStatus) = 2;
         } else if (activeSkill == 3) {
-            printf("UNO SKIP CARD activated.\n");
+            printf("UNO SKIP CARD activated. You gained an extra turn.\n");
             EXTRA_TURN1(GameStatus) = 1;
+            if (!IsQueueFull(Q2(GameStatus))) {
+                printf("Your enemy gained a critical hit skill though...\n");
+                AddElQueue(&(Q2(GameStatus)), CRITICAL_HIT);
+            }
         } else if (activeSkill == 4) {
             printf("Piercing Hit! All enemy defenses neutralized.\n");
             ATTACK_UP1(GameStatus) = 1;
+        } else if (activeSkill == 5) {
+            printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
+            CRITICAL_HIT1(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -288,11 +313,18 @@ boolean SkillCommand() {
             printf("S.H.I.E.L.D. activated.\n");
             SHIELD2(GameStatus) = 2;
         } else if (activeSkill == 3) {
-            printf("UNO SKIP CARD activated.\n");
+            printf("UNO SKIP CARD activated. You gained an extra turn.\n");
             EXTRA_TURN2(GameStatus) = 1;
+            if (!IsQueueFull(Q1(GameStatus))) {
+                printf("Your enemy gained a critical hit skill though...\n");
+                AddElQueue(&(Q1(GameStatus)), CRITICAL_HIT);
+            }
         } else if (activeSkill == 4) {
             printf("Piercing Hit! All enemy defenses neutralized.\n");
             ATTACK_UP2(GameStatus) = 1;
+        } else if (activeSkill == 5) {
+            printf("Critical Hit activated. Your attack becomes twice as powerful!\nP.S. You nullified their defenses too.\n");
+            CRITICAL_HIT2(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
