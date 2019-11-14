@@ -169,7 +169,7 @@ boolean UndoCommand() {
         CopyQueue(&(Q2(GameStatus)), S2(tmp));
         printf("Berhasil undo!\n");
     }
-    return false;
+    return true;
 }
 
 boolean EndTurnCommand() {
@@ -184,7 +184,7 @@ boolean EndTurnCommand() {
     if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
     // membersihkan stack
     MakeEmptyStack(&(StatusPemain(GameStatus)));
-    return false;
+    return true;
 }
 
 boolean MoveCommand() {

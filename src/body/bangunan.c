@@ -204,7 +204,8 @@ void CopyBangunan(Bangunan * Bout, Bangunan Bin) {
     Tipe(*Bout) = Tipe(Bin);
     CopyPoint(&Lokasi(*Bout), Lokasi(Bin));
     Pemilik(*Bout) = Pemilik(Bin);
-    Pasukan(*Bout) = Pasukan(Bin);
     Level(*Bout) = Level(Bin);
+    SudahSerang(*Bout) = SudahSerang(Bin);
     AssignProperti(Bout);
+    Pasukan(*Bout) = Pasukan(Bin);
 }

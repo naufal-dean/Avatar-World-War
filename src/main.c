@@ -36,13 +36,19 @@ int main() {
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         while (!finishTurn) {
             printf("========================\n");
+            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
+
             if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
             else printf("Player 2's Turn\n");
+
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
-            printf("Your command: ");
+
             Kata command;
             boolean berhasil = false;
+            ElTypeStack tmp;
+            printf("Your command: ");
             ScanKata(&command);
+
             if (EQKata(command, MakeKata("ATTACK\n"))) {
                 berhasil = AttackCommand();
             } else if (EQKata(command, MakeKata("LEVEL_UP\n"))) {
@@ -50,6 +56,7 @@ int main() {
             } else if (EQKata(command, MakeKata("SKILL\n"))) {
 
             } else if (EQKata(command, MakeKata("UNDO\n"))) {
+                Pop(&StatusPemain(GameStatus), &tmp);
                 berhasil = UndoCommand();
             } else if (EQKata(command, MakeKata("END_TURN\n"))) {
                 berhasil = EndTurnCommand();
@@ -68,7 +75,10 @@ int main() {
             } else {
                 printf("Wrong Command! Type HELP for help.\n");
             }
-            if (berhasil) Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
+
+            if (!berhasil) {
+                Pop(&StatusPemain(GameStatus), &tmp);
+            }
         }
     }
     return 0;
