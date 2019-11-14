@@ -6,8 +6,13 @@ boolean AttackCommand() {
 /* Melaksanakan command ATTACK */
 /* Mengembalikan true jika attack berhasil, dan sebaliknya */
     // Kamus lokal
-    int counter, i, attackBuilding, defendBuilding, usedTroops;
+    int counter, i, attackBuilding, defendBuilding, usedTroops, startingBuilding1, startingBuilding2, remainingBuilding;
     // Algoritma
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) startingBuilding1++;
+        else if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) startingBuilding2++;
+    }
+
     printf("Daftar bangunan:\n");
     counter = 0;
     for (i = 1; i <= NBangunan(GameStatus); i++) {
@@ -80,8 +85,13 @@ boolean AttackCommand() {
     SudahSerang(ElmtTab(T(GameStatus), attackBuilding)) = true;
     Pasukan(ElmtTab(T(GameStatus), attackBuilding)) -= usedTroops;
 
+    // check if enemy has a shield
+    boolean adaShield = false;
+    if (ActivePlayer(GameStatus) == 1 && SHIELD2(GameStatus) > 0) adaShield = true; 
+    if (ActivePlayer(GameStatus) == 2 && SHIELD1(GameStatus) > 0) adaShield = true;
+
     // various attack modifiers
-    if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding))) {
+    if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) {
         // "When in doubt, bruteforce." - Thomas Alfa Edison
         for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
@@ -108,6 +118,28 @@ boolean AttackCommand() {
             printf("F. Their deaths are in vain.\n");
         }
     }
+
+    // SHIELD
+    if (ActivePlayer(GameStatus) == 1) {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) remainingBuilding++;
+        }
+        if (startingBuilding2 == 3 && remainingBuilding == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Player 2 gets a SHIELD skill.\n");
+            AddElQueue(&(Q2(GameStatus)), SHIELD);
+        }
+    } else {
+        remainingBuilding = 0;
+        for (i=1;i<=NBangunan(GameStatus);i++) {
+            if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) remainingBuilding++;
+        }
+        if (startingBuilding1 == 3 && remainingBuilding == 2 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Player 1 gets a SHIELD skill.\n");
+            AddElQueue(&(Q1(GameStatus)), SHIELD);
+        }
+    }
+
     return true;
 }
 
@@ -180,6 +212,9 @@ boolean SkillCommand() {
                     Level(ElmtTab(T(GameStatus), i))++;
                 }
             }
+        } else if (activeSkill == 2) {
+            printf("S.H.I.E.L.D. activated.\n");
+            SHIELD1(GameStatus) = 2;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -197,6 +232,9 @@ boolean SkillCommand() {
                     Level(ElmtTab(T(GameStatus), i))++;
                 }
             }
+        } else if (activeSkill == 2) {
+            printf("S.H.I.E.L.D. activated.\n");
+            SHIELD2(GameStatus) = 2;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));

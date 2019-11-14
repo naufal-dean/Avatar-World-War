@@ -28,9 +28,20 @@ int main() {
 
     boolean finishGame = false;
     while (!finishGame) {
+        // add troops to owned buildings
         for (int i=1;i<=NBangunan(GameStatus);i++) {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
         }
+
+        // active skills turn decay
+        if (ActivePlayer(GameStatus) == 1) {
+            SHIELD2(GameStatus)--;
+            if (SHIELD2(GameStatus) < 0) SHIELD2(GameStatus) = 0;
+        } else {
+            SHIELD1(GameStatus)--;
+            if (SHIELD1(GameStatus) < 0) SHIELD1(GameStatus) = 0;
+        }
+
         boolean finishTurn = false;
         TabSkill TS;
         MakeEmptyTabSkill(&TS);
