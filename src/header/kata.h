@@ -6,7 +6,7 @@
 #include "boolean.h"
 
 /* Kamus umum */
-#define LengthMax 50
+#define LengthMax 500
 
 typedef struct {
     char TabKata[LengthMax + 1];   // container char, indeks yang dipakai [1..NMax]
@@ -15,6 +15,7 @@ typedef struct {
 
 /*** Selektor ***/
 #define Char(K, i) (K).TabKata[i]
+#define TabKata(K) (K).TabKata
 #define Length(K) (K).Length
 
 /* DEFINISI PROTOTIPE PRIMITIF */

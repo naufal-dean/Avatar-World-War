@@ -97,7 +97,7 @@ boolean AttackCommand() {
 
     // check if enemy has a shield
     boolean adaShield = false;
-    if (ActivePlayer(GameStatus) == 1 && SHIELD2(GameStatus) > 0) adaShield = true; 
+    if (ActivePlayer(GameStatus) == 1 && SHIELD2(GameStatus) > 0) adaShield = true;
     if (ActivePlayer(GameStatus) == 2 && SHIELD1(GameStatus) > 0) adaShield = true;
 
     // check if player has attack up activated
@@ -467,8 +467,13 @@ void SaveCommand() {
 /* Melaksanakan command SAVE */
 /* I.S. GameStatus terdefinisi */
 /* F.S. Melakukan proses penyimpanan GameStatus ke path file yang diberikan */
+    // Kamus lokal
+    Kata K;
     // Algoritma
-    SaveGameStatus("../data/saveTest.txt");
+    printf("Filesave path (abs or rel path): ");
+    ScanKata(&K);
+    Char(K, (Length(K) + 1)) = '\x00';
+    SaveGameStatus(TabKata(K) + sizeof(char));
 }
 
 void LoadCommand() {
@@ -476,9 +481,13 @@ void LoadCommand() {
 /* I.S. GameStatus sembarang, file load terdefinisi dan valid */
 /* F.S. Melakukan proses loading data pada file load yang diberikan ke GameStatus */
     // Kamus lokal
+    Kata K;
     int error;
     // Algoritma
-    LoadGameStatus("../data/saveTest.txt", &error);
+    printf("Fileload path (abs or rel path): ");
+    ScanKata(&K);
+    Char(K, (Length(K) + 1)) = '\x00';
+    LoadGameStatus(TabKata(K) + sizeof(char), &error);
 }
 
 boolean MoveCommand() {
