@@ -13,6 +13,12 @@ boolean AttackCommand() {
         else if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) startingBuilding2++;
     }
 
+    // count number of owned towers
+    int originalTower = 0;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if ((Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) && (Tipe(ElmtTab(T(GameStatus), i)) == 'T')) originalTower++;
+    }
+
     printf("Daftar bangunan:\n");
     counter = 0;
     for (i = 1; i <= NBangunan(GameStatus); i++) {
@@ -94,8 +100,13 @@ boolean AttackCommand() {
     if (ActivePlayer(GameStatus) == 1 && SHIELD2(GameStatus) > 0) adaShield = true; 
     if (ActivePlayer(GameStatus) == 2 && SHIELD1(GameStatus) > 0) adaShield = true;
 
+    // check if player has attack up activated
+    boolean adaAttackUp = false;
+    if (ActivePlayer(GameStatus) == 1 && ATTACK_UP1(GameStatus) == 1) adaAttackUp = true;
+    if (ActivePlayer(GameStatus) == 2 && ATTACK_UP2(GameStatus) == 1) adaAttackUp = true;
+
     // various attack modifiers
-    if (Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) {
+    if ((Pertahanan(ElmtTab(T(GameStatus), defendBuilding)) || adaShield) && (!adaAttackUp)) {
         // "When in doubt, bruteforce." - Thomas Alfa Edison
         for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
@@ -111,7 +122,7 @@ boolean AttackCommand() {
         if (usedTroops > 0) printf("F. Their deaths are not in vain. The walls are thicc.\n");
         Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops*3/4;
         usedTroops = 0;
-    } else /* No modifier */ {
+    } else /* No modifier or defense ignored by attack up skill */ {
         Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops;
         usedTroops = 0;
         if (Pasukan(ElmtTab(T(GameStatus), defendBuilding)) <= 0) /* Success */ {
@@ -156,6 +167,23 @@ boolean AttackCommand() {
     if (fortOriginalOwner == 1 && fortNewOwner == 2 && !IsQueueFull(Q1(GameStatus))) {
         printf("Player 1 gets UNO REVERSE CARD.\n");
         AddElQueue(&(Q1(GameStatus)), EXTRA_TURN);
+    }
+
+    // count number of (newly) owned towers
+    int newTower = 0;
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        if ((Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus)) && (Tipe(ElmtTab(T(GameStatus), i)) == 'T')) newTower++;
+    }
+
+    // Attack Up Granted?
+    if (originalTower == 2 && newTower == 3) {
+        if (ActivePlayer(GameStatus) == 1 && !IsQueueFull(Q1(GameStatus))) {
+            printf("Player 1 gets Attack Up skill.\n");
+            AddElQueue(&(Q1(GameStatus)), ATTACK_UP);
+        } else if (ActivePlayer(GameStatus) == 2 && !IsQueueFull(Q2(GameStatus))) {
+            printf("Player 2 gets Attack Up skill.\n");
+            AddElQueue(&(Q2(GameStatus)), ATTACK_UP);
+        }
     }
 
     return true;
@@ -236,6 +264,9 @@ boolean SkillCommand() {
         } else if (activeSkill == 3) {
             printf("UNO SKIP CARD activated.\n");
             EXTRA_TURN1(GameStatus) = 1;
+        } else if (activeSkill == 4) {
+            printf("Piercing Hit! All enemy defenses neutralized.\n");
+            ATTACK_UP1(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -259,6 +290,9 @@ boolean SkillCommand() {
         } else if (activeSkill == 3) {
             printf("UNO SKIP CARD activated.\n");
             EXTRA_TURN2(GameStatus) = 1;
+        } else if (activeSkill == 4) {
+            printf("Piercing Hit! All enemy defenses neutralized.\n");
+            ATTACK_UP2(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -301,6 +335,10 @@ boolean EndTurnCommand() {
         EXTRA_TURN2(GameStatus) = 0;
         extra = true;
     }
+
+    // reset attack up
+    ATTACK_UP1(GameStatus) = 0;
+    ATTACK_UP2(GameStatus) = 0;
 
     if (extra) {
         printf("Cie keskip :p\n");
