@@ -12,13 +12,15 @@
 /* Kamus umum */
 #define NilStack 0            // Indeks top stack kosong
 #define MaxElStack 25         // Max elemen
+#define MaxElTabSkill 8       // Max elemen tab skill
 
 /* Definisi elemen dan koleksi objek */
 typedef int AddressStack;
+typedef int TabSkill[MaxElTabSkill];
 typedef struct {
-    TabBangunan ListBangunan;   // List Bangunan awal
-    Queue Skill1;
-    Queue Skill2;
+    TabBangunan ListBangunan;   // List Bangunan
+    TabSkill SkillActive1;      // List Skill aktif P1
+    TabSkill SkillActive2;      // List Skill aktif P2
 } ElTypeStack;
 typedef struct {
     ElTypeStack T[MaxElStack + 1]; // tabel penyimpan elemen
@@ -32,8 +34,10 @@ typedef struct {
 #define InfoTop(S) (S).T[(S).Top]
 /*** Selektor ElTypeStack ***/
 #define TB(E) (E).ListBangunan
-#define S1(E) (E).Skill1
-#define S2(E) (E).Skill2
+#define TS1(E) (E).SkillActive1
+#define ElmtTS1(E, i) ((E).SkillActive1)[(i)]
+#define TS2(E) (E).SkillActive2
+#define ElmtTS2(E, i) ((E).SkillActive2)[(i)]
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
@@ -58,13 +62,23 @@ void Pop (Stack * S, ElTypeStack * X);
 /* I.S. S tidak mungkin kosong */
 /* F.S. X adalah nilai elemen Top terakhir sebelum dihapus, Top berkurang 1 */
 
-/*** Kelompok fungsi pembantu ***/
-ElTypeStack MakeElTypeStack (TabBangunan T, Queue Q1, Queue Q2);
+/*** Kelompok fungsi pembantu eltypestack ***/
+ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[]);
 /* Membentuk ElTypeStack dari komponen-komponennya */
 
 void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein);
 /* Melakukan penyalinan Ein ke Eout */
 /* I.S. Ein terdefinisi, Eout sembarang */
 /* F.S. Eout sama dengan Ein */
+
+/*** Kelompok fungsi pembantu tab skill ***/
+void MakeEmptyTabSkill(TabSkill * S);
+/* I.S. S sembarang */
+/* F.S. Terbentuk tabel S kosong dengan elemen bernilai 0 */
+/* Proses: Inisialisasi semua elemen S dengan 0 */
+void CopyTabSkill(TabSkill * Sout, TabSkill Sin);
+/* Melakukan penyalinan Sin ke Sout */
+/* I.S. Sin terdefinisi, Sout sembarang */
+/* F.S. Sout sama dengan Sin */
 
 #endif // STACK_H

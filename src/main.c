@@ -32,11 +32,13 @@ int main() {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
         }
         boolean finishTurn = false;
+        TabSkill TS;
+        MakeEmptyTabSkill(&TS);
         printf("Current Turn #: %d\n", Turn(GameStatus));
-        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), TS, TS));
         while (!finishTurn) {
             printf("========================\n");
-            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), Q1(GameStatus), Q2(GameStatus)));
+            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
 
             if (ActivePlayer(GameStatus) == 1) printf("Player 1's Turn\n");
             else printf("Player 2's Turn\n");

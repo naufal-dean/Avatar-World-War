@@ -11,13 +11,13 @@
 /* Kamus Umum */
 #define NilQueue 0     // alamat tidak terdefinisi
 // Nilai ElTypeQueue valid
-#define INSTANT_UPGRADE 100
-#define SHIELD 101
-#define EXTRA_TURN 102
-#define ATTACK_UP 103
-#define CRITICAL_HIT 104
-#define INSTANT_REINFORCEMENT 105
-#define BARRAGE 106
+#define INSTANT_UPGRADE 1
+#define SHIELD 2
+#define EXTRA_TURN 3
+#define ATTACK_UP 4
+#define CRITICAL_HIT 5
+#define INSTANT_REINFORCEMENT 6
+#define BARRAGE 7
 
 /* Definisi elemen dan koleksi objek */
 typedef int ElTypeQueue;    // nilai ElTypeQueue valid adalah yang terdefinisi di kamus umum

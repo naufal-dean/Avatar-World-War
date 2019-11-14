@@ -159,14 +159,15 @@ boolean LevelUpCommand() {
 }
 
 boolean UndoCommand() {
+    // Algoritma
     if (Top(StatusPemain(GameStatus)) == 1) {
         printf("Mau mundur kemana mas?\n");
     } else {
         ElTypeStack tmp;
         Pop(&(StatusPemain(GameStatus)), &tmp);
         CopyTabBangunan(&(T(GameStatus)), TB(tmp));
-        CopyQueue(&(Q1(GameStatus)), S1(tmp));
-        CopyQueue(&(Q2(GameStatus)), S2(tmp));
+        CopyTabSkill(&S1(GameStatus), TS1(tmp));
+        CopyTabSkill(&S2(GameStatus), TS2(tmp));
         printf("Berhasil undo!\n");
     }
     return true;

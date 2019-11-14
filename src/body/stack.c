@@ -38,14 +38,14 @@ void Pop (Stack * S, ElTypeStack * X) {
 }
 
 /*** Kelompok fungsi pembantu ***/
-ElTypeStack MakeElTypeStack (TabBangunan T, Queue Q1, Queue Q2) {
+ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[]) {
 /* Membentuk ElTypeStack dari komponen-komponennya */
     // Kamus lokal
     ElTypeStack E;
     // Algoritma
     CopyTabBangunan(&TB(E), T);
-    CopyQueue(&S1(E), Q1);
-    CopyQueue(&S2(E), Q2);
+    CopyTabSkill(&TS1(E), S1);
+    CopyTabSkill(&TS2(E), S2);
     return (E);
 }
 
@@ -55,6 +55,30 @@ void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein) {
 /* F.S. Eout sama dengan Ein */
     // Algoritma
     CopyTabBangunan(&TB(*Eout), TB(Ein));
-    CopyQueue(&S1(*Eout), S1(Ein));
-    CopyQueue(&S2(*Eout), S2(Ein));
+    CopyTabSkill(&TS1(*Eout), TS1(Ein));
+    CopyTabSkill(&TS2(*Eout), TS2(Ein));
+}
+
+/*** Kelompok fungsi pembantu tab skill ***/
+void MakeEmptyTabSkill(TabSkill * S) {
+/* I.S. S sembarang */
+/* F.S. Terbentuk tabel S kosong dengan elemen bernilai 0 */
+/* Proses: Inisialisasi semua elemen S dengan 0 */
+    // Kamus lokal
+    int i;
+    // Algoritma
+    for (i = 0; i < MaxElTabSkill; i++) {
+        (*S)[i] = 0;
+    }
+}
+void CopyTabSkill(TabSkill * Sout, TabSkill Sin) {
+/* Melakukan penyalinan Sin ke Sout */
+/* I.S. Sin terdefinisi, Sout sembarang */
+/* F.S. Sout sama dengan Sin */
+    // Kamus lokal
+    int i;
+    // Algoritma
+    for (i = 0; i < MaxElTabSkill; i++) {
+        (*Sout)[i] = Sin[i];
+    }
 }
