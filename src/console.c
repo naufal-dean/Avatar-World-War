@@ -75,6 +75,10 @@ boolean AttackCommand() {
         }
     }
 
+    int fortOriginalOwner = 0;
+    // owner of building (if fort)
+    if (Tipe(ElmtTab(T(GameStatus), defendBuilding)) == 'F') fortOriginalOwner = Pemilik(ElmtTab(T(GameStatus), defendBuilding));
+
     // attacking
     printf("Jumlah pasukan: ");
     ScanInt(&usedTroops);
@@ -138,6 +142,20 @@ boolean AttackCommand() {
             printf("Player 1 gets a SHIELD skill.\n");
             AddElQueue(&(Q1(GameStatus)), SHIELD);
         }
+    }
+
+    int fortNewOwner = 0;
+    // owner of building (if fort)
+    if (Tipe(ElmtTab(T(GameStatus), defendBuilding)) == 'F') fortNewOwner = Pemilik(ElmtTab(T(GameStatus), defendBuilding));
+
+    // Extra Turn Granted?
+    if (fortOriginalOwner == 2 && fortNewOwner == 1 && !IsQueueFull(Q2(GameStatus))) {
+        printf("Player 2 gets UNO REVERSE CARD.\n");
+        AddElQueue(&(Q2(GameStatus)), EXTRA_TURN);
+    }
+    if (fortOriginalOwner == 1 && fortNewOwner == 2 && !IsQueueFull(Q1(GameStatus))) {
+        printf("Player 1 gets UNO REVERSE CARD.\n");
+        AddElQueue(&(Q1(GameStatus)), EXTRA_TURN);
     }
 
     return true;
@@ -215,6 +233,9 @@ boolean SkillCommand() {
         } else if (activeSkill == 2) {
             printf("S.H.I.E.L.D. activated.\n");
             SHIELD1(GameStatus) = 2;
+        } else if (activeSkill == 3) {
+            printf("UNO SKIP CARD activated.\n");
+            EXTRA_TURN1(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -235,6 +256,9 @@ boolean SkillCommand() {
         } else if (activeSkill == 2) {
             printf("S.H.I.E.L.D. activated.\n");
             SHIELD2(GameStatus) = 2;
+        } else if (activeSkill == 3) {
+            printf("UNO SKIP CARD activated.\n");
+            EXTRA_TURN2(GameStatus) = 1;
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
@@ -266,17 +290,39 @@ boolean EndTurnCommand() {
     // Kamus lokal
     int i;
     // Algoritma
-    printf("Player change!\n");
-    // reset status bangunan
-    for (i = 1; i <= NBangunan(GameStatus); i++) {
-        SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+
+    // check extra turn
+    boolean extra = false;
+    if (ActivePlayer(GameStatus) == 1 && EXTRA_TURN1(GameStatus) == 1) {
+        EXTRA_TURN1(GameStatus) = 0;
+        extra = true;
     }
-    // mengubah 1 -> 2, 2 -> 1
-    ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
-    // menambah turn number
-    if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
-    // membersihkan stack
-    MakeEmptyStack(&(StatusPemain(GameStatus)));
+    if (ActivePlayer(GameStatus) == 2 && EXTRA_TURN2(GameStatus) == 1) {
+        EXTRA_TURN2(GameStatus) = 0;
+        extra = true;
+    }
+
+    if (extra) {
+        printf("Cie keskip :p\n");
+        // reset status bangunan
+        for (i = 1; i <= NBangunan(GameStatus); i++) {
+            SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+        }
+        // membersihkan stack
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+    } else {
+        printf("Player change!\n");
+        // reset status bangunan
+        for (i = 1; i <= NBangunan(GameStatus); i++) {
+            SudahSerang(ElmtTab(T(GameStatus), i)) = false;
+        }
+        // mengubah 1 -> 2, 2 -> 1
+        ActivePlayer(GameStatus) = 3 - ActivePlayer(GameStatus);
+        // menambah turn number
+        if (ActivePlayer(GameStatus) == 1) Turn(GameStatus)++;
+        // membersihkan stack
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+    }
     return true;
 }
 
