@@ -127,7 +127,7 @@ int main() {
                 berhasil = LevelUpCommand();
             } else if (EQKata(command, MakeKata("SKILL\n")) || EQKata(command, MakeKata("S\n"))) {
                 berhasil = SkillCommand();
-            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("W\n"))) {
+            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("U\n"))) {
                 Pop(&StatusPemain(GameStatus), &tmp);
                 berhasil = UndoCommand();
             } else if (EQKata(command, MakeKata("END_TURN\n")) || EQKata(command, MakeKata("E\n"))) {

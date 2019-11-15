@@ -584,7 +584,7 @@ void HelpCommand() {
     printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
     printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
     printf("| 3. SKILL (S)      : Gunakan skill yang tersedia.                    |\n");
-    printf("| 4. UNDO (W)       : Batalkan pergerakan terakhir.                   |\n");
+    printf("| 4. UNDO (U)       : Batalkan pergerakan terakhir.                   |\n");
     printf("| 5. END_TURN (E)   : Giliran selesai.                                |\n");
     printf("| 6. SAVE (V)       : Simpan status game.                             |\n");
     printf("| 7. LOAD (L)       : Mengembalikan status game.                      |\n");
