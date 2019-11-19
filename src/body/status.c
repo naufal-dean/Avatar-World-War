@@ -246,11 +246,13 @@ Memanfaatkan prosedur SetupConfigGameStatus */
     ReadNextLine();
     // Reset skill default lalu assign skill hasil load
     MakeEmptyQueue(&Q1(GameStatus), 10);
-    for (i = 1; i < N ; i++) {
+    if (N > 0) {
+        for (i = 1; i < N ; i++) {
+            AddElQueue(&Q1(GameStatus), KataToInt(CKata));
+            ADVKATA();
+        }
         AddElQueue(&Q1(GameStatus), KataToInt(CKata));
-        ADVKATA();
     }
-    AddElQueue(&Q1(GameStatus), KataToInt(CKata));
     ReadNextLine();
 
     // Queue list 2
@@ -259,11 +261,13 @@ Memanfaatkan prosedur SetupConfigGameStatus */
     ReadNextLine();
     // Reset skill default lalu assign skill hasil load
     MakeEmptyQueue(&Q2(GameStatus), 10);
-    for (i = 1; i < N ; i++) {
+    if (N > 0) {
+        for (i = 1; i < N ; i++) {
+            AddElQueue(&Q2(GameStatus), KataToInt(CKata));
+            ADVKATA();
+        }
         AddElQueue(&Q2(GameStatus), KataToInt(CKata));
-        ADVKATA();
     }
-    AddElQueue(&Q2(GameStatus), KataToInt(CKata));
     ReadNextLine();
 
     // Tab skill 1
