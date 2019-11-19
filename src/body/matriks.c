@@ -80,7 +80,7 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
                 } else if (Pemilik(ElmtTab(T, ElmtMatriks(M, i, j))) == 2) {
                     print_red(Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
                 } else {
-                    printf("%c", Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
+                    print_yellow(Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
                 }
             } else {
                 printf(" ");
