@@ -6,7 +6,7 @@ boolean AttackCommand() {
 /* Melaksanakan command ATTACK */
 /* Mengembalikan true jika attack berhasil, dan sebaliknya */
     // Kamus lokal
-    int counter, i, attackBuilding, defendBuilding, usedTroops, startingBuilding1, startingBuilding2, remainingBuilding;
+    int counter, i, attackBuilding, defendBuilding, usedTroops, startingBuilding1 = 0, startingBuilding2 = 0, remainingBuilding = 0;
     // Algoritma
     for (i = 1; i <= NBangunan(GameStatus); i++) {
         if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) startingBuilding1++;
