@@ -161,7 +161,7 @@ void SaveGameStatus(char * SavePath) {
 
     fprintf(file, "%d\n", NBElmtQueue(Q1(GameStatus)));
     if (NBElmtQueue(Q1(GameStatus)) == 0) {
-        fprintf(file, "0");
+        fprintf(file, "0\n");
     } else {
         for (i = 1; i < NBElmtQueue(Q1(GameStatus)); i++) {
             DelElQueue(&Q, &QX);
@@ -175,8 +175,8 @@ void SaveGameStatus(char * SavePath) {
     CopyQueue(&Q, Q2(GameStatus));
 
     fprintf(file, "%d\n", NBElmtQueue(Q2(GameStatus)));
-    if (NBElmtQueue(Q1(GameStatus)) == 0) {
-        fprintf(file, "0");
+    if (NBElmtQueue(Q2(GameStatus)) == 0) {
+        fprintf(file, "0\n");
     } else {
         for (i = 1; i < NBElmtQueue(Q2(GameStatus)); i++) {
             DelElQueue(&Q, &QX);
