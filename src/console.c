@@ -114,6 +114,7 @@ boolean AttackCommand() {
                 usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
                 printf("Critical Hit! This building is now yours!\n");
+                Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
                 break;
             }
         }
@@ -132,6 +133,7 @@ boolean AttackCommand() {
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+                Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
                 printf("Overcoming the defenses, this building is now yours!\n");
                 break;
             }
@@ -146,6 +148,7 @@ boolean AttackCommand() {
         if (Pasukan(ElmtTab(T(GameStatus), defendBuilding)) <= 0) /* Success */ {
             Pasukan(ElmtTab(T(GameStatus), defendBuilding)) *= -1;
             Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
+            Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
             printf("This building is now yours!\n");
         } else {
             printf("F. Their deaths are in vain.\n");
