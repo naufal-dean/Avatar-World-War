@@ -160,23 +160,31 @@ void SaveGameStatus(char * SavePath) {
     CopyQueue(&Q, Q1(GameStatus));
 
     fprintf(file, "%d\n", NBElmtQueue(Q1(GameStatus)));
-    for (i = 1; i < NBElmtQueue(Q1(GameStatus)); i++) {
+    if (NBElmtQueue(Q1(GameStatus)) == 0) {
+        fprintf(file, "0");
+    } else {
+        for (i = 1; i < NBElmtQueue(Q1(GameStatus)); i++) {
+            DelElQueue(&Q, &QX);
+            fprintf(file, "%d ", QX);
+        }
         DelElQueue(&Q, &QX);
-        fprintf(file, "%d ", QX);
+        fprintf(file, "%d\n", QX);
     }
-    DelElQueue(&Q, &QX);
-    fprintf(file, "%d\n", QX);
 
     // Print jumlah queue dan list skill 2
     CopyQueue(&Q, Q2(GameStatus));
 
     fprintf(file, "%d\n", NBElmtQueue(Q2(GameStatus)));
-    for (i = 1; i < NBElmtQueue(Q2(GameStatus)); i++) {
+    if (NBElmtQueue(Q1(GameStatus)) == 0) {
+        fprintf(file, "0");
+    } else {
+        for (i = 1; i < NBElmtQueue(Q2(GameStatus)); i++) {
+            DelElQueue(&Q, &QX);
+            fprintf(file, "%d ", QX);
+        }
         DelElQueue(&Q, &QX);
-        fprintf(file, "%d ", QX);
+        fprintf(file, "%d\n", QX);
     }
-    DelElQueue(&Q, &QX);
-    fprintf(file, "%d\n", QX);
 
     // Print tab skill 1
     for (i = 1; i < MaxElTabSkill; i++) {
