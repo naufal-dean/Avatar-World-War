@@ -89,7 +89,7 @@ void PrintTabSkill(TabSkill S) {
     // Kamus lokal
     int i;
     // Algoritma
-    for (i = 1; i < MaxElTabSkill; i++) {
+    for (i = 1; i <= MaxElTabSkill; i++) {
         printf("%d ", (S)[i]);
     }
     printf("\n");
