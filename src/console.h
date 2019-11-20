@@ -51,5 +51,10 @@ void BuildingsCommand();
 /* Melaksanakan command BUILDINGS */
 /* I.S. GameStatus terdefinisi */
 /* F.S. Menampilkan list Bangunan ke layar */
+boolean TroopHack();
+/* Menambahkan/mengurangkan jumlah pasukan pada building apapun */
+boolean OwnerHack();
+/* Mengganti kepemilikan building apapun, semua atribut dari building tersebut (selain pemilik) tetap sama */
+
 
 #endif // CONSOLE_H

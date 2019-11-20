@@ -75,6 +75,16 @@ int main() {
                 }
             }
 
+            // Check win condition
+            if (buildings1 == 0) {
+                printf("DIRE VICTORY");
+                exit(0);
+            }
+            if (buildings2 == 0) {
+                printf("RADIANT VICTORY");
+                exit(0);
+            }
+
             printf("===================================================================\n");
             Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
             printf("Current forces: %d - %d - %d\n", troops1, troops0, troops2);
@@ -146,6 +156,10 @@ int main() {
                 HelpCommand();
             } else if (EQKata(command, MakeKata("BUILDINGS\n")) || EQKata(command, MakeKata("B\n"))) {
                 BuildingsCommand();
+            } else if (EQKata(command, MakeKata("THAXX\n"))) {
+                berhasil = TroopHack();
+            } else if (EQKata(command, MakeKata("OHAXX\n"))) {
+                berhasil = OwnerHack();
             } else {
                 printf("Wrong Command! Type HELP for help.\n");
             }

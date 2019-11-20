@@ -625,3 +625,43 @@ void BuildingsCommand() {
         printf("\n");
     }
 }
+
+boolean TroopHack() {
+/* Menambahkan/mengurangkan jumlah pasukan pada building apapun */
+    // Kamus lokal
+    int i, chosenBuilding, troopChange;
+    // Algoritma
+    // Daftar bangunan
+    printf("Daftar bangunan:\n");
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        printf("%d. ", i);
+        TulisBangunan(ElmtTab(T(GameStatus), i));
+        printf("\n");
+    }
+    printf("Nomor bangunan yang akan dimanipulasi: ");
+    scanf("%d", &chosenBuilding);
+    printf("Jumlah penambahan/pengurangan pasukan: ");
+    scanf("%d", &troopChange);
+    Pasukan(ElmtTab(T(GameStatus), chosenBuilding)) += troopChange;
+    return true;
+}
+
+boolean OwnerHack() {
+/* Mengganti kepemilikan building apapun, semua atribut dari building tersebut (selain pemilik) tetap sama */
+    // Kamus lokal
+    int i, chosenBuilding, chosenForce;
+    // Algoritma
+    // Daftar bangunan
+    printf("Daftar bangunan:\n");
+    for (i = 1; i <= NBangunan(GameStatus); i++) {
+        printf("%d. ", i);
+        TulisBangunan(ElmtTab(T(GameStatus), i));
+        printf("\n");
+    }
+    printf("Nomor bangunan yang akan dimanipulasi: ");
+    scanf("%d", &chosenBuilding);
+    printf("Masukkan pemilik baru bangunan tersebut.\n1. Neutral\n2. Radiant\n3. Dire\nPilihan: ");
+    scanf("%d", &chosenForce);
+    Pemilik(ElmtTab(T(GameStatus), chosenBuilding)) = chosenForce - 1;
+    return true;
+}
