@@ -110,11 +110,11 @@ boolean AttackCommand() {
         for (i = 1; i <= usedTroops; i++) {
             if (i*2 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
                 usedTroops -= i;
-                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
-                usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
                 printf("Critical Hit! This building is now yours!\n");
                 Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
+                AssignProperti(&ElmtTab(T(GameStatus), defendBuilding));
+                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 break;
             }
         }
@@ -130,10 +130,10 @@ boolean AttackCommand() {
         for (i = 1; i <= usedTroops; i++) {
             if (i*3/4 >= Pasukan(ElmtTab(T(GameStatus), defendBuilding))) {
                 usedTroops -= i;
-                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
-                usedTroops = 0;
                 Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
                 Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
+                AssignProperti(&ElmtTab(T(GameStatus), defendBuilding));
+                Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 printf("Overcoming the defenses, this building is now yours!\n");
                 break;
             }
@@ -144,11 +144,13 @@ boolean AttackCommand() {
         usedTroops = 0;
     } else /* No modifier or defense ignored by attack up skill */ {
         Pasukan(ElmtTab(T(GameStatus), defendBuilding)) -= usedTroops;
-        usedTroops = 0;
         if (Pasukan(ElmtTab(T(GameStatus), defendBuilding)) <= 0) /* Success */ {
             Pasukan(ElmtTab(T(GameStatus), defendBuilding)) *= -1;
+            usedTroops = Pasukan(ElmtTab(T(GameStatus), defendBuilding));
             Pemilik(ElmtTab(T(GameStatus), defendBuilding)) = ActivePlayer(GameStatus);
             Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
+            AssignProperti(&ElmtTab(T(GameStatus), defendBuilding));
+            Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
             printf("This building is now yours!\n");
         } else {
             printf("F. Their deaths are in vain.\n");
@@ -298,6 +300,7 @@ boolean SkillCommand() {
             for (int i = 1; i <= NBangunan(GameStatus); i++) {
                 if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
                     Level(ElmtTab(T(GameStatus), i))++;
+                    AssignProperti(&ElmtTab(T(GameStatus), i));
                 }
             }
         } else if (activeSkill == 2) {
@@ -346,6 +349,7 @@ boolean SkillCommand() {
             for (int i = 1; i <= NBangunan(GameStatus); i++) {
                 if (Pemilik(ElmtTab(T(GameStatus), i)) == ActivePlayer(GameStatus) && Level(ElmtTab(T(GameStatus), i)) < 4) {
                     Level(ElmtTab(T(GameStatus), i))++;
+                    AssignProperti(&ElmtTab(T(GameStatus), i));
                 }
             }
         } else if (activeSkill == 2) {
