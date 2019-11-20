@@ -115,6 +115,7 @@ boolean AttackCommand() {
                 Level(ElmtTab(T(GameStatus), defendBuilding)) = 1;
                 AssignProperti(&ElmtTab(T(GameStatus), defendBuilding));
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
+                usedTroops = 0;
                 break;
             }
         }
@@ -135,6 +136,7 @@ boolean AttackCommand() {
                 AssignProperti(&ElmtTab(T(GameStatus), defendBuilding));
                 Pasukan(ElmtTab(T(GameStatus), defendBuilding)) = usedTroops;
                 printf("Overcoming the defenses, this building is now yours!\n");
+                usedTroops = 0;
                 break;
             }
         }
