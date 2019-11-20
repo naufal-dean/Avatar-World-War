@@ -25,7 +25,7 @@ int main() {
 
     InitGameStatus(105, 105, 35);
     printf("Initializing GameStatus...\n");
-    SetupConfigGameStatus("../data/config.txt", &error);
+    SetupConfigGameStatus("../data/5x5.txt", &error);
     if (error != 0) {
         printf("Config file not found. Exiting game...\n");
         return 0;

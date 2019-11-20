@@ -189,7 +189,11 @@ void TambahPasukan(Bangunan * B, int Pemain) {
     if (Pemilik(*B) == Pemain) {
         Pasukan(*B) += Penambahan(*B);
         if (Pasukan(*B) > Maksimum(*B)) {
-            Pasukan(*B) = Maksimum(*B);
+            if (Pasukan(*B) - Penambahan(*B) >= Maksimum(*B)) {
+                Pasukan(*B) -= Penambahan(*B);
+            } else {
+                Pasukan(*B) = Maksimum(*B);
+            }
         }
     }
 }

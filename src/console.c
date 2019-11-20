@@ -307,7 +307,7 @@ boolean SkillCommand() {
             }
         } else if (activeSkill == 2) {
             printf("S.H.I.E.L.D. activated.\n");
-            SHIELD1(GameStatus) = 2;
+            SHIELD1(GameStatus) = 3;    // kenapa 3? karena dia berkurang di awal turn musuh, kalo 2 di turn ke 2 dia udah 0.
         } else if (activeSkill == 3) {
             printf("UNO SKIP CARD activated. You gained an extra turn.\n");
             EXTRA_TURN1(GameStatus) = 1;
@@ -356,7 +356,7 @@ boolean SkillCommand() {
             }
         } else if (activeSkill == 2) {
             printf("S.H.I.E.L.D. activated.\n");
-            SHIELD2(GameStatus) = 2;
+            SHIELD2(GameStatus) = 3;
         } else if (activeSkill == 3) {
             printf("UNO SKIP CARD activated. You gained an extra turn.\n");
             EXTRA_TURN2(GameStatus) = 1;
