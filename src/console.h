@@ -1,20 +1,22 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include "header/array.h"
-#include "header/bangunan.h"
-#include "header/boolean.h"
-#include "header/graph.h"
-#include "header/kata.h"
-#include "header/listlinier.h"
-#include "header/matriks.h"
-#include "header/mesinkar.h"
-#include "header/mesinkata.h"
-#include "header/pcolor.h"
-#include "header/point.h"
-#include "header/queue.h"
-#include "header/stack.h"
-#include "header/status.h"
+#include "boolean.h"
+#include "ADT/array/array.h"
+#include "ADT/bangunan/bangunan.h"
+#include "ADT/graph/graph.h"
+#include "ADT/kata/kata.h"
+#include "ADT/listlinier/listlinier.h"
+#include "ADT/matriks/matriks.h"
+#include "ADT/mesinkar/mesinkar.h"
+#include "ADT/mesinkata/mesinkata.h"
+#include "ADT/point/point.h"
+#include "ADT/queue/queue.h"
+#include "ADT/stack/stack.h"
+#include "ADT/status/status.h"
+
+#include "pcolor.h"
+#include "console.h"
 
 /*** Kelompok Fungsi Command ***/
 boolean AttackCommand();
