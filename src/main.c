@@ -130,7 +130,11 @@ int main() {
             Kata command;
             boolean berhasil = false;
             ElTypeStack tmp;
-            printf("Your command: ");
+            if (ActivePlayer(GameStatus) == 1) {
+                printf("%sYour command: %s", GREEN, NORMAL);    
+            } else {
+                printf("%sYour command: %s", RED, NORMAL);
+            }
             ScanKata(&command);
 
             if (EQKata(command, MakeKata("ATTACK\n")) || EQKata(command, MakeKata("A\n"))) {
