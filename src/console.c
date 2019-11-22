@@ -12,43 +12,30 @@ void AppExecute() {
     Kata K;
 
     // Algoritma
-    printf("%s", MAGENTA);
-    printf("══════════════════════════════ %sLOADING%s ══════════════════════════════\n", NORMAL, MAGENTA);
-    printf("%s                      Initializing GameStatus...                     %s\n\n", YELLOW, NORMAL);
-
-    InitGameStatus(105, 105, 35);
-    SetupConfigGameStatus("../data/config.txt", &error); printf("\n");
-
+    InitGame("../data/config.txt", &error);
     if (error != 0) {
-        printf("%s                Config file not found. Exiting game...               %s\n", RED, MAGENTA);
-        printf("══════════════════════════════ %sFAILED%s ═══════════════════════════════\n", NORMAL, MAGENTA);
-        printf("%s", NORMAL);
         return;
     }
-    printf("%s                        Initialization done...                       %s\n", GREEN, MAGENTA);
-    printf("══════════════════════════════ %sSUCCEED%s ══════════════════════════════\n\n\n", NORMAL, MAGENTA);
-    printf("═══════════════════════════ %sGAME  STARTED%s ═══════════════════════════\n\n", NORMAL, MAGENTA);
-    printf("%s", NORMAL);
 
     boolean finishGame = false;
     while (!finishGame) {
         // autosave
         if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 5) {
-            Kata K = MakeKata("autosave-1\n");  
+            Kata K = MakeKata("autosave-1\n");
             SaveGameStatus(TabKata(K) + sizeof(char));
         } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 10) {
-            Kata K = MakeKata("autosave-2\n");  
+            Kata K = MakeKata("autosave-2\n");
             SaveGameStatus(TabKata(K) + sizeof(char));
         } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 15) {
-            Kata K = MakeKata("autosave-3\n");  
+            Kata K = MakeKata("autosave-3\n");
             SaveGameStatus(TabKata(K) + sizeof(char));
         } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 20) {
-            Kata K = MakeKata("autosave-4\n");  
+            Kata K = MakeKata("autosave-4\n");
             SaveGameStatus(TabKata(K) + sizeof(char));
         } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 0) {
-            Kata K = MakeKata("autosave-5\n");  
+            Kata K = MakeKata("autosave-5\n");
             SaveGameStatus(TabKata(K) + sizeof(char));
-        } 
+        }
 
         // add troops to owned buildings
         for (int i=1;i<=NBangunan(GameStatus);i++) {
@@ -126,47 +113,9 @@ void AppExecute() {
             printf("                    Current forces: %s%d%s - %s%d%s - %s%d%s                         \n", GREEN, troops1, NORMAL, YELLOW, troops0, NORMAL, RED, troops2, NORMAL);
             printf("                    Current buildings: %s%d%s - %s%d%s - %s%d%s                      \n", GREEN, buildings1, NORMAL, YELLOW, buildings0, NORMAL, RED, buildings2, NORMAL);
 
-            if (ActivePlayer(GameStatus) == 1) {
-                printf("%s                          Player 1's Turn                             %s\n\n", GREEN, NORMAL);
-                if (IsQueueEmpty(Q1(GameStatus))) {
-                    printf("You currently have no skills available.\n");
-                } else {
-                    printf("Current skill: ");
-                    if (InfoHead(Q1(GameStatus)) == 1) printf("IU\n");
-                    else if (InfoHead(Q1(GameStatus)) == 2) printf("S\n");
-                    else if (InfoHead(Q1(GameStatus)) == 3) printf("ET\n");
-                    else if (InfoHead(Q1(GameStatus)) == 4) printf("AU\n");
-                    else if (InfoHead(Q1(GameStatus)) == 5) printf("CH\n");
-                    else if (InfoHead(Q1(GameStatus)) == 6) printf("IR\n");
-                    else if (InfoHead(Q1(GameStatus)) == 7) printf("B\n");
-                }
-            }
-            else {
-                printf("%s                          Player 2's Turn                             %s\n\n", RED, NORMAL);
-                if (IsQueueEmpty(Q2(GameStatus))) {
-                    printf("You currently have no skills available.\n");
-                } else {
-                    printf("Current skill: ");
-                    if (InfoHead(Q2(GameStatus)) == 1) printf("IU\n");
-                    else if (InfoHead(Q2(GameStatus)) == 2) printf("S\n");
-                    else if (InfoHead(Q2(GameStatus)) == 3) printf("ET\n");
-                    else if (InfoHead(Q2(GameStatus)) == 4) printf("AU\n");
-                    else if (InfoHead(Q2(GameStatus)) == 5) printf("CH\n");
-                    else if (InfoHead(Q2(GameStatus)) == 6) printf("IR\n");
-                    else if (InfoHead(Q2(GameStatus)) == 7) printf("B\n");
-                }
-            }
-
+            PrintCurrentSkill();
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
-
-            /* Skill information */
-            if (ElmtS1(GameStatus, 2) > 0) printf("Radiant currently has %d shield(s).\n", ElmtS1(GameStatus, 2));
-            if (ElmtS1(GameStatus, 4) > 0) printf("Radiant currently has attack up.\n");
-            if (ElmtS1(GameStatus, 5) > 0) printf("Radiant currently has critical hit.\n");
-            if (ElmtS2(GameStatus, 2) > 0) printf("Dire currently has %d shield(s).\n", ElmtS2(GameStatus, 2));
-            if (ElmtS2(GameStatus, 4) > 0) printf("Dire currently has attack up.\n");
-            if (ElmtS2(GameStatus, 5) > 0) printf("Dire currently has critical hit.\n");
-            
+            PrintActiveSkills();
 
             Kata command;
             boolean berhasil = false;
@@ -222,6 +171,82 @@ void AppExecute() {
         }
     }
     return;
+}
+
+void InitGame(char * configPath, int * error) {
+/* I.S. Sembarang */
+/* F.S. Jika SetupConfigGameStatus berhasil, GameStatus diinisiasi sesuai file di configPath dan nilai error = 0
+        Jika gagal, GameStatus tidak diinisiasi nilai error != 0 */
+    // Algoritma
+    printf("%s", MAGENTA);
+    printf("══════════════════════════════ %sLOADING%s ══════════════════════════════\n", NORMAL, MAGENTA);
+    printf("%s                      Initializing GameStatus...                     %s\n\n", YELLOW, NORMAL);
+
+    InitGameStatus(105, 105, 35);
+    SetupConfigGameStatus(configPath, error); printf("\n");
+
+    if ((*error) != 0) {
+        printf("%s                Config file not found. Exiting game...               %s\n", RED, MAGENTA);
+        printf("══════════════════════════════ %sFAILED%s ═══════════════════════════════\n", NORMAL, MAGENTA);
+        printf("%s", NORMAL);
+    } else {
+        printf("%s                        Initialization done...                       %s\n", GREEN, MAGENTA);
+        printf("══════════════════════════════ %sSUCCEED%s ══════════════════════════════\n\n\n", NORMAL, MAGENTA);
+        printf("═══════════════════════════ %sGAME  STARTED%s ═══════════════════════════\n\n", NORMAL, MAGENTA);
+        printf("%s", NORMAL);
+    }
+}
+
+void PrintCurrentSkill() {
+/* I.S. Sembarang */
+/* F.S. Current Skill untuk player aktif tertulis di layar */
+    // Algoritma
+    if (ActivePlayer(GameStatus) == 1) {
+        printf("%s                           Player 1's Turn                            %s\n\n", GREEN, NORMAL);
+        printf("%s             ╔═════════════ %sCURRENT SKILL%s ════════════╗             \n", CYAN, NORMAL, CYAN);
+        if (IsQueueEmpty(Q1(GameStatus))) {
+            printf("             ║%s You currently have no skills available.%s║\n", NORMAL, CYAN);
+        } else {
+            if (InfoHead(Q1(GameStatus)) == 1) printf("             ║%s          INSTANT UPGRADE (IU)          %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 2) printf("             ║%s               SHIELD (S)               %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 3) printf("             ║%s            EXTRA TURN (ET)             %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 4) printf("             ║%s             ATTACK UP (AU)             %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 5) printf("             ║%s           CRITICAL HIT (CH)            %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 6) printf("             ║%s       INSTANT REINFORCEMENT (IR)       %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q1(GameStatus)) == 7) printf("             ║%s               BARRAGE (B)              %s║\n", NORMAL, CYAN);
+        }
+        printf("%s             ╚════════════════════════════════════════╝             %s\n", CYAN, NORMAL);
+    }
+    else {
+        printf("%s                           Player 2's Turn                            %s\n\n", RED, NORMAL);
+        printf("%s             ╔═════════════ %sCURRENT SKILL%s ════════════╗             \n", CYAN, NORMAL, CYAN);
+        if (IsQueueEmpty(Q2(GameStatus))) {
+            printf("             ║%s You currently have no skills available.%s║\n", NORMAL, CYAN);
+        } else {
+            if (InfoHead(Q2(GameStatus)) == 1) printf("             ║%s          INSTANT UPGRADE (IU)          %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 2) printf("             ║%s               SHIELD (S)               %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 3) printf("             ║%s            EXTRA TURN (ET)             %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 4) printf("             ║%s             ATTACK UP (AU)             %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 5) printf("             ║%s           CRITICAL HIT (CH)            %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 6) printf("             ║%s       INSTANT REINFORCEMENT (IR)       %s║\n", NORMAL, CYAN);
+            else if (InfoHead(Q2(GameStatus)) == 7) printf("             ║%s               BARRAGE (B)              %s║\n", NORMAL, CYAN);
+        }
+        printf("%s             ╚════════════════════════════════════════╝             %s\n", CYAN, NORMAL);
+    }
+}
+
+void PrintActiveSkills() {
+/* I.S. Sembarang */
+/* F.S. Active Skills tertulis di layar */
+    // Algoritma
+    printf("%s             ╔═════════════ %sACTIVE SKILLS%s ════════════╗             \n", CYAN, NORMAL, CYAN);
+    if (ElmtS1(GameStatus, 2) > 0) printf("             ║   %sRadiant%s currently has %d shield(s).   %s║\n", GREEN, NORMAL, ElmtS1(GameStatus, 2), CYAN);
+    if (ElmtS1(GameStatus, 4) > 0) printf("             ║    %sRadiant%s currently has attack up.    %s║\n", GREEN, NORMAL, CYAN);
+    if (ElmtS1(GameStatus, 5) > 0) printf("             ║  %sRadiant%s currently has critical hit.   %s║\n", GREEN, NORMAL, CYAN);
+    if (ElmtS2(GameStatus, 2) > 0) printf("             ║     %sDire%s currently has %d shield(s).    %s║\n", RED, NORMAL, ElmtS2(GameStatus, 2), CYAN);
+    if (ElmtS2(GameStatus, 4) > 0) printf("             ║      %sDire%s currently has attack up.     %s║\n", RED, NORMAL, CYAN);
+    if (ElmtS2(GameStatus, 5) > 0) printf("             ║    %sDire%s currently has critical hit.    %s║\n", RED, NORMAL, CYAN);
+    printf("%s             ╚════════════════════════════════════════╝             %s\n\n", CYAN, NORMAL);
 }
 
 /*** Kelompok Fungsi Command ***/
@@ -675,6 +700,7 @@ boolean EndTurnCommand() {
 
     if (extra) {
         printf("Sini main lagi hehe :p\n");
+        printf("\n%s════════════════════════════%s EXTRA  TURN %s════════════════════════════%s\n\n", MAGENTA, NORMAL, MAGENTA, NORMAL);
         // reset status bangunan
         for (i = 1; i <= NBangunan(GameStatus); i++) {
             SudahSerang(ElmtTab(T(GameStatus), i)) = false;
@@ -682,7 +708,7 @@ boolean EndTurnCommand() {
         // membersihkan stack
         MakeEmptyStack(&(StatusPemain(GameStatus)));
     } else {
-        printf("%s══════════════════════════%s PLAYER  CHANGED %s══════════════════════════%s\n\n", MAGENTA, NORMAL, MAGENTA, NORMAL);
+        printf("\n%s══════════════════════════%s PLAYER  CHANGED %s══════════════════════════%s\n\n", MAGENTA, NORMAL, MAGENTA, NORMAL);
         // reset status bangunan
         for (i = 1; i <= NBangunan(GameStatus); i++) {
             SudahSerang(ElmtTab(T(GameStatus), i)) = false;

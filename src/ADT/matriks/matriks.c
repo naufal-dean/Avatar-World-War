@@ -56,23 +56,35 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
 /* I.S. M terdefinisi */
 /* F.S. Menuliskan matriks sesuai dengan lokasi bangunan  */
 /* Contoh: Menuliskan matriks berukuran 5x5
-    #######
-    #     #
-    #     #
-    #     #
-    #     #
-    #     #
-    #######
+    ╔═════╗
+    ║     ║
+    ║     ║
+    ║     ║
+    ║     ║
+    ║     ║
+    ╚═════╝
 */
     // Kamus lokal
-    int i, j;
+    int i, j, lenPad;
     // Algoritma
+    // Get left pad
+    lenPad = (69 - (GetLastIdxKol(M) - GetFirstIdxKol(M) + 1 + 2)) / 2;
+    // Print left pad
+    for (i = 1; i <= lenPad; i++) {
+        printf(" ");
+    }
+    // Print
     print_cyan_s("╔");
     for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
         print_cyan_s("═");
     }
     print_cyan_s("╗\n");
     for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
+        // Print left pad
+        for (j = 1; j <= lenPad; j++) {
+            printf(" ");
+        }
+        // Print matriks
         print_cyan_s("║");
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
             if (ElmtMatriks(M, i, j) != 0) {
@@ -89,6 +101,11 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
         }
         print_cyan_s("║\n");
     }
+    // Print left pad
+    for (i = 1; i <= lenPad; i++) {
+        printf(" ");
+    }
+    // Print
     print_cyan_s("╚");
     for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
         print_cyan_s("═");

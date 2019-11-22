@@ -59,13 +59,13 @@ void TulisMatriksPeta (Matriks M, TabBangunan T);
 /* I.S. M terdefinisi */
 /* F.S. Menuliskan matriks sesuai dengan kondisi bangunan yang ada */
 /* Contoh: Menuliskan matriks berukuran 5x5
-    * * * * * * *
-    *           *
-    *           *
-    *           *
-    *           *
-    *           *
-    * * * * * * *
+    ╔═════╗
+    ║     ║
+    ║     ║
+    ║     ║
+    ║     ║
+    ║     ║
+    ╚═════╝
 */
 
 #endif // MATRIKS_H

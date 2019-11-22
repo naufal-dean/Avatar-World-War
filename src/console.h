@@ -23,6 +23,16 @@ void AppExecute();
 /* I.S. Kondisi sembarang */
 /* F.S. Game selesai, baik karena ada pemenang, command EXIT, maupun error config */
 /* Proses: Melakukan proses eksekusi game */
+void InitGame(char * configPath, int * error);
+/* I.S. Sembarang */
+/* F.S. Jika SetupConfigGameStatus berhasil, GameStatus diinisiasi sesuai file di configPath dan nilai error = 0
+        Jika gagal, GameStatus tidak diinisiasi nilai error != 0 */
+void PrintCurrentSkill();
+/* I.S. Sembarang */
+/* F.S. Current Skill untuk player aktif tertulis di layar */
+void PrintActiveSkills();
+/* I.S. Sembarang */
+/* F.S. Active Skills tertulis di layar */
 
 /*** Kelompok Fungsi Command ***/
 boolean AttackCommand();
