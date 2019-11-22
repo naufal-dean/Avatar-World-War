@@ -18,6 +18,8 @@
 #include "pcolor.h"
 #include "console.h"
 
+/* Fungsi main */
+void AppExecute();
 /*** Kelompok Fungsi Command ***/
 boolean AttackCommand();
 /* Melaksanakan command ATTACK */

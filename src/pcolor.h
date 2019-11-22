@@ -19,10 +19,21 @@ We only provide 8 colors. Feel free to modify/add colors if you want to.
 #define BLUE "\x1B[34m"
 #define MAGENTA "\x1B[35m"
 #define CYAN "\x1B[36m"
+#define NORMAL_BG "\e[49m"
+#define WHITE_BG "\e[48;5;17m"
 
+/* Char */
 void print_red(char c);
 void print_green(char c);
 void print_yellow(char c);
 void print_blue(char c);
 void print_magenta(char c);
 void print_cyan(char c);
+
+/* String */
+void print_red_s(char * c);
+void print_green_s(char * c);
+void print_yellow_s(char * c);
+void print_blue_s(char * c);
+void print_magenta_s(char * c);
+void print_cyan_s(char * c);

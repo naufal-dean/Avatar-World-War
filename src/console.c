@@ -1,5 +1,182 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "console.h"
+
+/* Fungsi main */
+void AppExecute() {
+    // Kamus Lokal
+    int X, error, counter, troops0, troops1, troops2, buildings0, buildings1, buildings2;
+    Kata K;
+
+    // Algoritma
+    printf("%s", MAGENTA);
+    printf("══════════════════════════════ %sLOADING%s ══════════════════════════════\n", NORMAL, MAGENTA);
+    printf("%s                      Initializing GameStatus...                     %s\n\n", YELLOW, NORMAL);
+
+    InitGameStatus(105, 105, 35);
+    SetupConfigGameStatus("../data/config.txt", &error); printf("\n");
+
+    if (error != 0) {
+        printf("%s                Config file not found. Exiting game...               %s\n", RED, MAGENTA);
+        printf("══════════════════════════════ %sFAILED%s ═══════════════════════════════\n", NORMAL, MAGENTA);
+        printf("%s", NORMAL);
+        return;
+    }
+    printf("%s                        Initialization done...                       %s\n", GREEN, MAGENTA);
+    printf("══════════════════════════════ %sSUCCEED%s ══════════════════════════════\n\n\n", NORMAL, MAGENTA);
+    printf("═══════════════════════════ %sGAME  STARTED%s ═══════════════════════════\n\n", NORMAL, MAGENTA);
+    printf("%s", NORMAL);
+
+    boolean finishGame = false;
+    while (!finishGame) {
+        // add troops to owned buildings
+        for (int i=1;i<=NBangunan(GameStatus);i++) {
+            TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
+        }
+
+        // active skills turn decay
+        if (ActivePlayer(GameStatus) == 1) {
+            SHIELD2(GameStatus)--;
+            if (SHIELD2(GameStatus) < 0) SHIELD2(GameStatus) = 0;
+        } else {
+            SHIELD1(GameStatus)--;
+            if (SHIELD1(GameStatus) < 0) SHIELD1(GameStatus) = 0;
+        }
+
+        boolean finishTurn = false;
+        TabSkill TS;
+        MakeEmptyTabSkill(&TS);
+        printf("                           Current Turn: %d                              \n", Turn(GameStatus));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), TS, TS));
+        while (!finishTurn) {
+
+            // count troops & buildings per player
+            troops0 = 0;
+            troops1 = 0;
+            troops2 = 0;
+            buildings0 = 0;
+            buildings1 = 0;
+            buildings2 = 0;
+            for (int i=1;i<=NBangunan(GameStatus);i++) {
+                if (Pemilik(ElmtTab(T(GameStatus), i)) == 0) {
+                    troops0 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings0++;
+                }
+                else if (Pemilik(ElmtTab(T(GameStatus), i)) == 1) {
+                    troops1 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings1++;
+                }
+                else if (Pemilik(ElmtTab(T(GameStatus), i)) == 2) {
+                    troops2 += Pasukan(ElmtTab(T(GameStatus), i));
+                    buildings2++;
+                }
+            }
+
+            // Check win condition
+            if (buildings1 == 0) {
+                printf("DIRE VICTORY");
+                exit(0);
+            }
+            if (buildings2 == 0) {
+                printf("RADIANT VICTORY");
+                exit(0);
+            }
+
+            if (ActivePlayer(GameStatus) == 1) {
+                printf("\n%s═════════════════════════════%s NEXT MOVE %s═════════════════════════════%s\n", GREEN, NORMAL, GREEN, NORMAL);
+            } else {
+                printf("\n%s═════════════════════════════%s NEXT MOVE %s═════════════════════════════%s\n", RED, NORMAL, RED, NORMAL);
+            }
+
+            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+            printf("                    Current forces: %s%d%s - %s%d%s - %s%d%s                         \n", GREEN, troops1, NORMAL, YELLOW, troops0, NORMAL, RED, troops2, NORMAL);
+            printf("                    Current buildings: %s%d%s - %s%d%s - %s%d%s                      \n", GREEN, buildings1, NORMAL, YELLOW, buildings0, NORMAL, RED, buildings2, NORMAL);
+
+            if (ActivePlayer(GameStatus) == 1) {
+                printf("%s                          Player 1's Turn                             %s\n\n", GREEN, NORMAL);
+                if (IsQueueEmpty(Q1(GameStatus))) {
+                    printf("You currently have no skills available.\n");
+                } else {
+                    printf("Current skill: ");
+                    if (InfoHead(Q1(GameStatus)) == 1) printf("IU\n");
+                    else if (InfoHead(Q1(GameStatus)) == 2) printf("S\n");
+                    else if (InfoHead(Q1(GameStatus)) == 3) printf("ET\n");
+                    else if (InfoHead(Q1(GameStatus)) == 4) printf("AU\n");
+                    else if (InfoHead(Q1(GameStatus)) == 5) printf("CH\n");
+                    else if (InfoHead(Q1(GameStatus)) == 6) printf("IR\n");
+                    else if (InfoHead(Q1(GameStatus)) == 7) printf("B\n");
+                }
+            }
+            else {
+                printf("%s                          Player 2's Turn                             %s\n\n", RED, NORMAL);
+                if (IsQueueEmpty(Q2(GameStatus))) {
+                    printf("You currently have no skills available.\n");
+                } else {
+                    printf("Current skill: ");
+                    if (InfoHead(Q2(GameStatus)) == 1) printf("IU\n");
+                    else if (InfoHead(Q2(GameStatus)) == 2) printf("S\n");
+                    else if (InfoHead(Q2(GameStatus)) == 3) printf("ET\n");
+                    else if (InfoHead(Q2(GameStatus)) == 4) printf("AU\n");
+                    else if (InfoHead(Q2(GameStatus)) == 5) printf("CH\n");
+                    else if (InfoHead(Q2(GameStatus)) == 6) printf("IR\n");
+                    else if (InfoHead(Q2(GameStatus)) == 7) printf("B\n");
+                }
+            }
+
+            TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
+
+            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus)); // debug
+
+            Kata command;
+            boolean berhasil = false;
+            ElTypeStack tmp;
+            if (ActivePlayer(GameStatus) == 1) {
+                printf("%sYour command: %s", GREEN, NORMAL);
+            } else {
+                printf("%sYour command: %s", RED, NORMAL);
+            }
+            ScanKata(&command);
+
+            if (EQKata(command, MakeKata("ATTACK\n")) || EQKata(command, MakeKata("A\n"))) {
+                berhasil = AttackCommand();
+            } else if (EQKata(command, MakeKata("LEVEL_UP\n")) || EQKata(command, MakeKata("Q\n"))) {
+                berhasil = LevelUpCommand();
+            } else if (EQKata(command, MakeKata("SKILL\n")) || EQKata(command, MakeKata("S\n"))) {
+                berhasil = SkillCommand();
+            } else if (EQKata(command, MakeKata("UNDO\n")) || EQKata(command, MakeKata("U\n"))) {
+                Pop(&StatusPemain(GameStatus), &tmp);
+                berhasil = UndoCommand();
+            } else if (EQKata(command, MakeKata("END_TURN\n")) || EQKata(command, MakeKata("E\n"))) {
+                berhasil = EndTurnCommand();
+                finishTurn = true;
+            } else if (EQKata(command, MakeKata("SAVE\n")) || EQKata(command, MakeKata("V\n"))) {
+                SaveCommand();
+            } else if (EQKata(command, MakeKata("LOAD\n")) || EQKata(command, MakeKata("L\n"))) {
+                LoadCommand();
+            } else if (EQKata(command, MakeKata("MOVE\n")) || EQKata(command, MakeKata("M\n"))) {
+                berhasil = MoveCommand();
+            } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("X\n"))) {
+                printf("Babai :)\n");
+                exit(0);
+            } else if (EQKata(command, MakeKata("HELP\n")) || EQKata(command, MakeKata("H\n"))) {
+                HelpCommand();
+            } else if (EQKata(command, MakeKata("BUILDINGS\n")) || EQKata(command, MakeKata("B\n"))) {
+                BuildingsCommand();
+            } else if (EQKata(command, MakeKata("THAXX\n"))) {
+                berhasil = TroopHack();
+            } else if (EQKata(command, MakeKata("OHAXX\n"))) {
+                berhasil = OwnerHack();
+            } else {
+                printf("Wrong Command! Type HELP for help.\n");
+            }
+
+            if (!berhasil) {
+                Pop(&StatusPemain(GameStatus), &tmp);
+            }
+        }
+    }
+    return;
+}
 
 /*** Kelompok Fungsi Command ***/
 boolean AttackCommand() {
@@ -457,7 +634,7 @@ boolean EndTurnCommand() {
         // membersihkan stack
         MakeEmptyStack(&(StatusPemain(GameStatus)));
     } else {
-        printf("Player change!\n");
+        printf("%s══════════════════════════%s PLAYER  CHANGED %s══════════════════════════%s\n\n", MAGENTA, NORMAL, MAGENTA, NORMAL);
         // reset status bangunan
         for (i = 1; i <= NBangunan(GameStatus); i++) {
             SudahSerang(ElmtTab(T(GameStatus), i)) = false;
@@ -589,19 +766,21 @@ void HelpCommand() {
 /* Melaksanakan command HELP */
 /* I.S. Kondisi sembarang */
 /* F.S. Menampilkan panel bantuan ke layar */
-    printf("# ============================== HELP =============================== #\n");
-    printf("| 1. ATTACK (A)     : Serang bangunan musuh.                          |\n");
-    printf("| 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.              |\n");
-    printf("| 3. SKILL (S)      : Gunakan skill yang tersedia.                    |\n");
-    printf("| 4. UNDO (U)       : Batalkan pergerakan terakhir.                   |\n");
-    printf("| 5. END_TURN (E)   : Giliran selesai.                                |\n");
-    printf("| 6. SAVE (V)       : Simpan status game.                             |\n");
-    printf("| 7. LOAD (L)       : Mengembalikan status game.                      |\n");
-    printf("| 8. MOVE (M)       : Pindahkan pasukan dari dan ke bangunan kita.    |\n");
-    printf("| 9. EXIT (X)       : Keluar dari game.                               |\n");
-    printf("| 10. HELP (H)      : Tampilkan bantuan.                              |\n");
-    printf("| 11. BUILDINGS (B) : Tampilkan status seluruh bangunan.              |\n");
-    printf("# ============================== HELP =============================== #\n");
+    printf("%s", CYAN);
+    printf("╔═══════════════════════════════ %sHELP%s ══════════════════════════════╗\n", NORMAL, CYAN);
+    printf("║%s 1. ATTACK (A)     : Serang bangunan musuh.                        %s║\n", NORMAL, CYAN);
+    printf("║%s 2. LEVEL_UP (Q)   : Naikkan level bangunan milik kita.            %s║\n", NORMAL, CYAN);
+    printf("║%s 3. SKILL (S)      : Gunakan skill yang tersedia.                  %s║\n", NORMAL, CYAN);
+    printf("║%s 4. UNDO (U)       : Batalkan pergerakan terakhir.                 %s║\n", NORMAL, CYAN);
+    printf("║%s 5. END_TURN (E)   : Giliran selesai.                              %s║\n", NORMAL, CYAN);
+    printf("║%s 6. SAVE (V)       : Simpan status game.                           %s║\n", NORMAL, CYAN);
+    printf("║%s 7. LOAD (L)       : Mengembalikan status game.                    %s║\n", NORMAL, CYAN);
+    printf("║%s 8. MOVE (M)       : Pindahkan pasukan dari dan ke bangunan kita.  %s║\n", NORMAL, CYAN);
+    printf("║%s 9. EXIT (X)       : Keluar dari game.                             %s║\n", NORMAL, CYAN);
+    printf("║%s 10. HELP (H)      : Tampilkan bantuan.                            %s║\n", NORMAL, CYAN);
+    printf("║%s 11. BUILDINGS (B) : Tampilkan status seluruh bangunan.            %s║\n", NORMAL, CYAN);
+    printf("╚═══════════════════════════════ %sHELP%s ══════════════════════════════╝\n", NORMAL, CYAN);
+    printf("%s", NORMAL);
 }
 
 void BuildingsCommand() {

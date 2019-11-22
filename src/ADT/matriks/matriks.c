@@ -67,12 +67,13 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
     // Kamus lokal
     int i, j;
     // Algoritma
-    for (i = GetFirstIdxKol(M) - 1; i <= GetLastIdxKol(M) + 1; i++) {
-        printf("#");
+    print_cyan_s("╔");
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
+        print_cyan_s("═");
     }
-    printf("\n");
+    print_cyan_s("╗\n");
     for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
-        printf("#");
+        print_cyan_s("║");
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
             if (ElmtMatriks(M, i, j) != 0) {
                 if (Pemilik(ElmtTab(T, ElmtMatriks(M, i, j))) == 1) {
@@ -86,9 +87,11 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
                 printf(" ");
             }
         }
-        printf("#\n");
+        print_cyan_s("║\n");
     }
-    for (i = GetFirstIdxKol(M) - 1; i <= GetLastIdxKol(M) + 1; i++) {
-        printf("#");
+    print_cyan_s("╚");
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
+        print_cyan_s("═");
     }
+    print_cyan_s("╝");
 }
