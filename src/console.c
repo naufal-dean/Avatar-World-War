@@ -74,11 +74,27 @@ void AppExecute() {
 
             // Check win condition
             if (buildings1 == 0) {
-                printf("DIRE VICTORY");
+                printf("%s", RED);
+                printf("            ___ _                  _      _                           \n");
+                printf("           /   (_)_ __ ___  /\\   /(_) ___| |_ ___  _ __ _   _         \n");
+                printf("          / /\\ / | '__/ _ \\ \\ \\ / / |/ __| __/ _ \\| '__| | | |        \n");
+                printf("         / /_//| | | |  __/  \\ V /| | (__| || (_) | |  | |_| |        \n");
+                printf("        /___,' |_|_|  \\___|   \\_/ |_|\\___|\\__\\___/|_|   \\__, |        \n");
+                printf("                                                        |___/         \n");
+                printf("\n%s════════════════════════════ %sGAME  ENDED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+                printf("%s", NORMAL);
                 exit(0);
             }
             if (buildings2 == 0) {
-                printf("RADIANT VICTORY");
+                printf("%s", GREEN);
+                printf("   __           _ _             _          _      _                   \n");
+                printf("  /__\\ __ _  __| (_) __ _ _ __ | |_ /\\   /(_) ___| |_ ___  _ __ _   _ \n");
+                printf(" / \\/// _` |/ _` | |/ _` | '_ \\| __|\\ \\ / / |/ __| __/ _ \\| '__| | | |\n");
+                printf("/ _  \\ (_| | (_| | | (_| | | | | |_  \\ V /| | (__| || (_) | |  | |_| |\n");
+                printf("\\/ \\_/\\__,_|\\__,_|_|\\__,_|_| |_|\\__|  \\_/ |_|\\___|\\__\\___/|_|   \\__, |\n");
+                printf("                                                                |___/ \n");
+                printf("\n%s════════════════════════════ %sGAME  ENDED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+                printf("%s", NORMAL);
                 exit(0);
             }
 
