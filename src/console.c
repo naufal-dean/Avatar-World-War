@@ -32,6 +32,24 @@ void AppExecute() {
 
     boolean finishGame = false;
     while (!finishGame) {
+        // autosave
+        if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 5) {
+            Kata K = MakeKata("autosave-1\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 10) {
+            Kata K = MakeKata("autosave-2\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 15) {
+            Kata K = MakeKata("autosave-3\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 20) {
+            Kata K = MakeKata("autosave-4\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 0) {
+            Kata K = MakeKata("autosave-5\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } 
+
         // add troops to owned buildings
         for (int i=1;i<=NBangunan(GameStatus);i++) {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
@@ -52,7 +70,6 @@ void AppExecute() {
         printf("                           Current Turn: %d                              \n", Turn(GameStatus));
         Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), TS, TS));
         while (!finishTurn) {
-
             // count troops & buildings per player
             troops0 = 0;
             troops1 = 0;
