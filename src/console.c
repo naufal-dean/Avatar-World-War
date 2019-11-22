@@ -65,10 +65,8 @@ void AppExecute() {
         }
 
         boolean finishTurn = false;
-        TabSkill TS;
-        MakeEmptyTabSkill(&TS);
         printf("                           Current Turn: %d                              \n", Turn(GameStatus));
-        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), TS, TS));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         while (!finishTurn) {
             // count troops & buildings per player
             troops0 = 0;
@@ -124,7 +122,7 @@ void AppExecute() {
                 printf("\n%s═════════════════════════════%s NEXT MOVE %s═════════════════════════════%s\n", RED, NORMAL, RED, NORMAL);
             }
 
-            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+            Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus), Q1(GameStatus), Q2(GameStatus)));
             printf("                    Current forces: %s%d%s - %s%d%s - %s%d%s                         \n", GREEN, troops1, NORMAL, YELLOW, troops0, NORMAL, RED, troops2, NORMAL);
             printf("                    Current buildings: %s%d%s - %s%d%s - %s%d%s                      \n", GREEN, buildings1, NORMAL, YELLOW, buildings0, NORMAL, RED, buildings2, NORMAL);
 
@@ -563,7 +561,7 @@ boolean SkillCommand() {
             }
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
-        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         return true;
     } else {
         if (IsQueueEmpty(Q2(GameStatus))) {
@@ -612,7 +610,7 @@ boolean SkillCommand() {
             }
         }
         MakeEmptyStack(&(StatusPemain(GameStatus)));
-        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         return true;
     }
 }
@@ -630,6 +628,8 @@ boolean UndoCommand() {
         CopyTabBangunan(&(T(GameStatus)), TB(tmp));
         CopyTabSkill(&S1(GameStatus), TS1(tmp));
         CopyTabSkill(&S2(GameStatus), TS2(tmp));
+        CopyQueue(&Q1(GameStatus), QS1(tmp));
+        CopyQueue(&Q2(GameStatus), QS2(tmp));
         printf("Berhasil undo!\n");
     }
     return true;
