@@ -74,8 +74,10 @@ int main(){
             break;
         }
         break;
+      default:
+        goto exit;
     }
   }
-
+ exit:
   return 0;
 }
