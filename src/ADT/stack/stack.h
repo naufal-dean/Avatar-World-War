@@ -21,6 +21,8 @@ typedef struct {
     TabBangunan ListBangunan;   // List Bangunan
     TabSkill SkillActive1;      // List Skill aktif P1
     TabSkill SkillActive2;      // List Skill aktif P2
+    Queue QueueSkill1;          // Queue Skill tersedia P1
+    Queue QueueSkill2;          // Queue Skill tersedia P2
 } ElTypeStack;
 typedef struct {
     ElTypeStack T[MaxElStack + 1]; // tabel penyimpan elemen
@@ -38,6 +40,8 @@ typedef struct {
 #define ElmtTS1(E, i) ((E).SkillActive1)[(i)]
 #define TS2(E) (E).SkillActive2
 #define ElmtTS2(E, i) ((E).SkillActive2)[(i)]
+#define QS1(E) (E).QueueSkill1
+#define QS2(E) (E).QueueSkill2
 
 /* DEFINISI PROTOTIPE PRIMITIF */
 /*** Konstruktor ***/
@@ -63,7 +67,7 @@ void Pop (Stack * S, ElTypeStack * X);
 /* F.S. X adalah nilai elemen Top terakhir sebelum dihapus, Top berkurang 1 */
 
 /*** Kelompok fungsi pembantu eltypestack ***/
-ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[]);
+ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[], Queue Q1, Queue Q2);
 /* Membentuk ElTypeStack dari komponen-komponennya */
 
 void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein);

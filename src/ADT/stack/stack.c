@@ -38,7 +38,7 @@ void Pop (Stack * S, ElTypeStack * X) {
 }
 
 /*** Kelompok fungsi pembantu ***/
-ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[]) {
+ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[], Queue Q1, Queue Q2) {
 /* Membentuk ElTypeStack dari komponen-komponennya */
     // Kamus lokal
     ElTypeStack E;
@@ -46,6 +46,8 @@ ElTypeStack MakeElTypeStack (TabBangunan T, int S1[], int S2[]) {
     CopyTabBangunan(&TB(E), T);
     CopyTabSkill(&TS1(E), S1);
     CopyTabSkill(&TS2(E), S2);
+    CopyQueue(&QS1(E), Q1);
+    CopyQueue(&QS2(E), Q2);
     return (E);
 }
 
@@ -57,6 +59,8 @@ void CopyElTypeStack (ElTypeStack * Eout, ElTypeStack Ein) {
     CopyTabBangunan(&TB(*Eout), TB(Ein));
     CopyTabSkill(&TS1(*Eout), TS1(Ein));
     CopyTabSkill(&TS2(*Eout), TS2(Ein));
+    CopyQueue(&QS1(*Eout), QS1(Ein));
+    CopyQueue(&QS2(*Eout), QS2(Ein));
 }
 
 /*** Kelompok fungsi pembantu tab skill ***/
