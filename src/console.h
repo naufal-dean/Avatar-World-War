@@ -18,8 +18,12 @@
 #include "pcolor.h"
 #include "console.h"
 
-/* Fungsi main */
+/*** Fungsi main ***/
 void AppExecute();
+/* I.S. Kondisi sembarang */
+/* F.S. Game selesai, baik karena ada pemenang, command EXIT, maupun error config */
+/* Proses: Melakukan proses eksekusi game */
+
 /*** Kelompok Fungsi Command ***/
 boolean AttackCommand();
 /* Melaksanakan command ATTACK */
@@ -32,7 +36,7 @@ boolean SkillCommand();
 /* Mengembalikan true jika pemakaian skill berhasil, dan sebaliknya */
 boolean UndoCommand();
 /* Melaksanakan command UNDO */
-/* Selalu mengembalikan true, karena undo selalu berhasil */
+/* Selalu mengembalikan true, baik saat terjadi undo maupun undo tidak tersedia */
 boolean EndTurnCommand();
 /* Melaksanakan command END_TURN */
 /* Selalu mengembalikan true, karena end turn selalu berhasil */
@@ -40,10 +44,9 @@ void SaveCommand();
 /* Melaksanakan command SAVE */
 /* I.S. GameStatus terdefinisi */
 /* F.S. Melakukan proses penyimpanan GameStatus ke path file yang diberikan */
-void LoadCommand();
+boolean LoadCommand();
 /* Melaksanakan command LOAD */
-/* I.S. GameStatus sembarang, file load terdefinisi dan valid */
-/* F.S. Melakukan proses loading data pada file load yang diberikan ke GameStatus */
+/* Mengembalikan true saat load berhasil dan false saat gagal */
 boolean MoveCommand();
 /* Melaksanakan command MOVE */
 /* Mengembalikan true jika move berhasil, dan sebaliknya */

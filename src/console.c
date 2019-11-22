@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include "console.h"
 
-/* Fungsi main */
+/*** Fungsi main ***/
 void AppExecute() {
+    /* I.S. Kondisi sembarang */
+    /* F.S. Game selesai, baik karena ada pemenang, command EXIT, maupun error config */
+    /* Proses: Melakukan proses eksekusi game */
     // Kamus Lokal
     int X, error, counter, troops0, troops1, troops2, buildings0, buildings1, buildings2;
     Kata K;
@@ -168,11 +171,16 @@ void AppExecute() {
             } else if (EQKata(command, MakeKata("SAVE\n")) || EQKata(command, MakeKata("V\n"))) {
                 SaveCommand();
             } else if (EQKata(command, MakeKata("LOAD\n")) || EQKata(command, MakeKata("L\n"))) {
-                LoadCommand();
+                berhasil = LoadCommand();
+                if (berhasil) {
+                    finishTurn = true;
+                }
             } else if (EQKata(command, MakeKata("MOVE\n")) || EQKata(command, MakeKata("M\n"))) {
                 berhasil = MoveCommand();
             } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("X\n"))) {
                 printf("Babai :)\n");
+                printf("\n%s════════════════════════════ %sGAME  ENDED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+                printf("%s", NORMAL);
                 exit(0);
             } else if (EQKata(command, MakeKata("HELP\n")) || EQKata(command, MakeKata("H\n"))) {
                 HelpCommand();
@@ -587,7 +595,7 @@ boolean SkillCommand() {
 
 boolean UndoCommand() {
 /* Melaksanakan command UNDO */
-/* Selalu mengembalikan true, karena undo selalu berhasil */
+/* Selalu mengembalikan true, baik saat terjadi undo maupun undo tidak tersedia */
     // Kamus lokal
     ElTypeStack tmp;
     // Algoritma
@@ -676,12 +684,13 @@ void SaveCommand() {
     ScanKata(&K);
     Char(K, (Length(K) + 1)) = '\x00';
     SaveGameStatus(TabKata(K) + sizeof(char));
+    printf("\n%s════════════════════════════ %sGAME  SAVED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+    printf("%s", NORMAL);
 }
 
-void LoadCommand() {
+boolean LoadCommand() {
 /* Melaksanakan command LOAD */
-/* I.S. GameStatus sembarang, file load terdefinisi dan valid */
-/* F.S. Melakukan proses loading data pada file load yang diberikan ke GameStatus */
+/* Mengembalikan true saat load berhasil dan false saat gagal */
     // Kamus lokal
     Kata K;
     int error;
@@ -690,6 +699,15 @@ void LoadCommand() {
     ScanKata(&K);
     Char(K, (Length(K) + 1)) = '\x00';
     LoadGameStatus(TabKata(K) + sizeof(char), &error);
+    if (error != 0) {
+        printf("\n%s════════════════════════════ %sLOAD FAILED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+        printf("%s", NORMAL);
+        return false;
+    } else {
+        printf("\n%s════════════════════════════ %sGAME LOADED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
+        printf("%s", NORMAL);
+        return true;
+    }
 }
 
 boolean MoveCommand() {

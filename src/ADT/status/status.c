@@ -218,6 +218,9 @@ Memanfaatkan prosedur SetupConfigGameStatus */
     // Algoritma
     // Setup awal (dari ukuran peta sampai matriks adjacency)
     SetupConfigGameStatus(LoadPath, error);
+    if ((*error) != 0) {
+        return;
+    }
     // Setup tambahan
     // Bangunan
     // Jumlah bangunan
