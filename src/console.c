@@ -32,6 +32,24 @@ void AppExecute() {
 
     boolean finishGame = false;
     while (!finishGame) {
+        // autosave
+        if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 5) {
+            Kata K = MakeKata("autosave-1\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 10) {
+            Kata K = MakeKata("autosave-2\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 15) {
+            Kata K = MakeKata("autosave-3\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 20) {
+            Kata K = MakeKata("autosave-4\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } else if (ActivePlayer(GameStatus) == 1 && Turn(GameStatus) % 25 == 0) {
+            Kata K = MakeKata("autosave-5\n");  
+            SaveGameStatus(TabKata(K) + sizeof(char));
+        } 
+
         // add troops to owned buildings
         for (int i=1;i<=NBangunan(GameStatus);i++) {
             TambahPasukan(&ElmtTab(T(GameStatus), i), ActivePlayer(GameStatus));
@@ -141,7 +159,14 @@ void AppExecute() {
 
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
 
-            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus)); // debug
+            /* Skill information */
+            if (ElmtS1(GameStatus, 2) > 0) printf("Radiant currently has %d shield(s).\n", ElmtS1(GameStatus, 2));
+            if (ElmtS1(GameStatus, 4) > 0) printf("Radiant currently has attack up.\n");
+            if (ElmtS1(GameStatus, 5) > 0) printf("Radiant currently has critical hit.\n");
+            if (ElmtS2(GameStatus, 2) > 0) printf("Dire currently has %d shield(s).\n", ElmtS2(GameStatus, 2));
+            if (ElmtS2(GameStatus, 4) > 0) printf("Dire currently has attack up.\n");
+            if (ElmtS2(GameStatus, 5) > 0) printf("Dire currently has critical hit.\n");
+            
 
             Kata command;
             boolean berhasil = false;
