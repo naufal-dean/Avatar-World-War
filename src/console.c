@@ -160,13 +160,20 @@ void AppExecute() {
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
 
             /* Skill information */
-            if (ElmtS1(GameStatus, 2) > 0) printf("Radiant currently has %d shield(s).\n", ElmtS1(GameStatus, 2));
-            if (ElmtS1(GameStatus, 4) > 0) printf("Radiant currently has attack up.\n");
-            if (ElmtS1(GameStatus, 5) > 0) printf("Radiant currently has critical hit.\n");
-            if (ElmtS2(GameStatus, 2) > 0) printf("Dire currently has %d shield(s).\n", ElmtS2(GameStatus, 2));
-            if (ElmtS2(GameStatus, 4) > 0) printf("Dire currently has attack up.\n");
-            if (ElmtS2(GameStatus, 5) > 0) printf("Dire currently has critical hit.\n");
-            
+            printf("\nActive skills:\n");
+            printf("%s", GREEN);
+            if (ElmtS1(GameStatus, 2) > 0) printf("⛨"); else printf("　"); printf(" ");
+            if (ElmtS1(GameStatus, 3) > 0) printf("＋"); else printf("　"); printf(" ");
+            if (ElmtS1(GameStatus, 4) > 0) printf("⚔"); else printf("　"); printf(" ");
+            if (ElmtS1(GameStatus, 5) > 0) printf("⮿"); else printf("　"); printf(" ");
+            printf("%s        ", NORMAL);
+            printf("%s", RED);
+            if (ElmtS2(GameStatus, 2) > 0) printf("⛨"); else printf("　"); printf(" ");
+            if (ElmtS2(GameStatus, 3) > 0) printf("＋"); else printf("　"); printf(" ");
+            if (ElmtS2(GameStatus, 4) > 0) printf("⚔"); else printf("　"); printf(" ");
+            if (ElmtS2(GameStatus, 5) > 0) printf("⮿"); else printf("　"); printf(" ");
+            printf("%s\n", NORMAL);
+            printf("\n");
 
             Kata command;
             boolean berhasil = false;
@@ -194,9 +201,6 @@ void AppExecute() {
                 SaveCommand();
             } else if (EQKata(command, MakeKata("LOAD\n")) || EQKata(command, MakeKata("L\n"))) {
                 berhasil = LoadCommand();
-                if (berhasil) {
-                    finishTurn = true;
-                }
             } else if (EQKata(command, MakeKata("MOVE\n")) || EQKata(command, MakeKata("M\n"))) {
                 berhasil = MoveCommand();
             } else if (EQKata(command, MakeKata("EXIT\n")) || EQKata(command, MakeKata("X\n"))) {
@@ -730,6 +734,8 @@ boolean LoadCommand() {
     } else {
         printf("\n%s════════════════════════════ %sGAME LOADED%s ════════════════════════════\n\n", MAGENTA, NORMAL, MAGENTA);
         printf("%s", NORMAL);
+        MakeEmptyStack(&(StatusPemain(GameStatus)));
+        Push(&(StatusPemain(GameStatus)), MakeElTypeStack(T(GameStatus), S1(GameStatus), S2(GameStatus), Q1(GameStatus), Q2(GameStatus)));
         return true;
     }
 }
