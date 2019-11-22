@@ -144,7 +144,14 @@ void AppExecute() {
 
             TulisMatriksPeta(Peta(GameStatus), T(GameStatus)); printf("\n");
 
-            PrintTabSkill(S1(GameStatus)); PrintTabSkill(S2(GameStatus)); // debug
+            /* Skill information */
+            if (ElmtS1(GameStatus, 2) > 0) printf("Player 1 currently has %d shield(s).\n", ElmtS1(GameStatus, 2));
+            if (ElmtS1(GameStatus, 4) > 0) printf("Player 1 currently has attack up.\n");
+            if (ElmtS1(GameStatus, 5) > 0) printf("Player 1 currently has critical hit.\n");
+            if (ElmtS2(GameStatus, 2) > 0) printf("Player 2 currently has %d shield(s).\n", ElmtS2(GameStatus, 2));
+            if (ElmtS2(GameStatus, 4) > 0) printf("Player 2 currently has attack up.\n");
+            if (ElmtS2(GameStatus, 5) > 0) printf("Player 2 currently has critical hit.\n");
+            
 
             Kata command;
             boolean berhasil = false;
