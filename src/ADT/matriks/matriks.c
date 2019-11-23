@@ -68,14 +68,14 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
     int i, j, lenPad;
     // Algoritma
     // Get left pad
-    lenPad = (69 - (GetLastIdxKol(M) - GetFirstIdxKol(M) + 1 + 2)) / 2;
+    lenPad = (69 - (GetLastIdxKol(M)*2+1 - GetFirstIdxKol(M) + 1 + 2)) / 2;
     // Print left pad
     for (i = 1; i <= lenPad; i++) {
         printf(" ");
     }
     // Print
     print_cyan_s("╔");
-    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M)*2 + 1; i++) {
         print_cyan_s("═");
     }
     print_cyan_s("╗\n");
@@ -85,7 +85,7 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
             printf(" ");
         }
         // Print matriks
-        print_cyan_s("║");
+        print_cyan_s("║ ");
         for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
             if (ElmtMatriks(M, i, j) != 0) {
                 if (Pemilik(ElmtTab(T, ElmtMatriks(M, i, j))) == 1) {
@@ -95,8 +95,9 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
                 } else {
                     print_yellow(Tipe(ElmtTab(T, ElmtMatriks(M, i, j))));
                 }
-            } else {
                 printf(" ");
+            } else {
+                printf("  ");
             }
         }
         print_cyan_s("║\n");
@@ -107,7 +108,7 @@ void TulisMatriksPeta (Matriks M, TabBangunan T){
     }
     // Print
     print_cyan_s("╚");
-    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M) * 2 + 1; i++) {
         print_cyan_s("═");
     }
     print_cyan_s("╝");
