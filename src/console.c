@@ -241,14 +241,14 @@ void PrintActiveSkills() {
 /* I.S. Sembarang */
 /* F.S. Active Skills tertulis di layar */
     // Algoritma
-    printf("%s         ══════════════════ %sACTIVE SKILLS%s ═════════════════             \n", CYAN, NORMAL, CYAN);
-    printf("          %s", GREEN);
+    printf("%s             ══════════════ %sACTIVE SKILLS%s ═════════════             \n", CYAN, NORMAL, CYAN);
+    printf("                       %s", GREEN);
     if (ElmtS1(GameStatus, 2) > 0) printf("⛨"); else printf("　"); printf(" ");
     if (ElmtS1(GameStatus, 3) > 0) printf("＋"); else printf("　"); printf(" ");
     if (ElmtS1(GameStatus, 4) > 0) printf("⚔"); else printf("　"); printf(" ");
     if (ElmtS1(GameStatus, 5) > 0) printf("⮿"); else printf("　"); printf(" ");
-    printf("%s              ", NORMAL);
-    printf("                 %s", RED);
+    printf("%s ", NORMAL);
+    printf(" %s", RED);
     if (ElmtS2(GameStatus, 2) > 0) printf("⛨"); else printf("　"); printf(" ");
     if (ElmtS2(GameStatus, 3) > 0) printf("＋"); else printf("　"); printf(" ");
     if (ElmtS2(GameStatus, 4) > 0) printf("⚔"); else printf("　"); printf(" ");
@@ -262,7 +262,7 @@ void PrintActiveSkills() {
     // if (ElmtS2(GameStatus, 3) > 0) printf("             ║     %sDire%s currently has  Extra Turn.    %s║\n", RED, NORMAL, CYAN);
     // if (ElmtS2(GameStatus, 4) > 0) printf("             ║      %sDire%s currently has Attack Up.     %s║\n", RED, NORMAL, CYAN);
     // if (ElmtS2(GameStatus, 5) > 0) printf("             ║    %sDire%s currently has  Critical Hit.   %s║\n", RED, NORMAL, CYAN);
-    printf("%s         ══════════════════════════════════════════════════             %s\n\n", CYAN, NORMAL);
+    printf("%s             ══════════════════════════════════════════             %s\n\n", CYAN, NORMAL);
 }
 
 /*** Kelompok Fungsi Command ***/
