@@ -18,7 +18,7 @@ Kelompok 4 / K03 :
     ```
     This will create an executable file named "main.exe" (windows) or an ELF file named "main" (linux).
 3. Move the main file into the bin folder.
-    
+
 ## How to run?
 1. Change the current directory to bin.
 2. Run the main file.
@@ -27,7 +27,7 @@ Kelompok 4 / K03 :
 ```
 .
 ├── bin
-│   ├── main.exe          # Our main.exe if you are too lazy to compile
+│   ├── main              # Our main if you are too lazy to compile
 │   └── sample_savedata   # Just an example save data
 ├── data
 │   ├── 5x5.txt
@@ -46,7 +46,7 @@ Kelompok 4 / K03 :
 │   ├── main.c            # Simply calls the AppExecute function
 │   ├── pcolor.c          # Colour module
 │   ├── pcolor.h
-│   ├── ADT               # Location of all the data structures used by this game. 
+│   ├── ADT               # Location of all the data structures used by this game.
 │   │                     # Every subfolder will have a header, a c implementation and a driver.
 │   │   ├── array         # Contains all building information
 │   │   ├── bangunan     
