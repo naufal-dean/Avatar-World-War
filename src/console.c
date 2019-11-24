@@ -254,14 +254,6 @@ void PrintActiveSkills() {
     if (ElmtS2(GameStatus, 4) > 0) printf("⚔"); else printf("　"); printf(" ");
     if (ElmtS2(GameStatus, 5) > 0) printf("⮿"); else printf("　"); printf(" ");
     printf("%s\n", CYAN);
-    // if (ElmtS1(GameStatus, 2) > 0) printf("             ║   %sRadiant%s currently has %d Shield(s).   %s║\n", GREEN, NORMAL, ElmtS1(GameStatus, 2), CYAN);
-    // if (ElmtS1(GameStatus, 3) > 0) printf("             ║   %sRadiant%s currently has  Extra Turn.   %s║\n", GREEN, NORMAL, CYAN);
-    // if (ElmtS1(GameStatus, 4) > 0) printf("             ║    %sRadiant%s currently has Attack Up.    %s║\n", GREEN, NORMAL, CYAN);
-    // if (ElmtS1(GameStatus, 5) > 0) printf("             ║  %sRadiant%s currently has  Critical Hit.  %s║\n", GREEN, NORMAL, CYAN);
-    // if (ElmtS2(GameStatus, 2) > 0) printf("             ║     %sDire%s currently has %d Shield(s).    %s║\n", RED, NORMAL, ElmtS2(GameStatus, 2), CYAN);
-    // if (ElmtS2(GameStatus, 3) > 0) printf("             ║     %sDire%s currently has  Extra Turn.    %s║\n", RED, NORMAL, CYAN);
-    // if (ElmtS2(GameStatus, 4) > 0) printf("             ║      %sDire%s currently has Attack Up.     %s║\n", RED, NORMAL, CYAN);
-    // if (ElmtS2(GameStatus, 5) > 0) printf("             ║    %sDire%s currently has  Critical Hit.   %s║\n", RED, NORMAL, CYAN);
     printf("%s             ══════════════════════════════════════════             %s\n\n", CYAN, NORMAL);
 }
 
