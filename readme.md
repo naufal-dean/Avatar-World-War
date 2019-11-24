@@ -35,7 +35,7 @@ Kelompok 4 / K03 :
 │   │                     # All the codes are self explanatory.
 │   ├── Spesifikasi...2019).pdf
 │   ├── IF2110_Form..._03.xlsx
-│   └── IF2110_TB..._03.xlsx  <-- Our report.
+│   └── IF2110_TB..._03.pdf  <-- Our report.
 ├── src
 │   ├── ADT               # Location of all the data structures used by this game. 
 │   │                     # Every subfolder will have a header, a c implementation and a driver.
