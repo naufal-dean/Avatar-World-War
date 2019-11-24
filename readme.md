@@ -16,7 +16,7 @@ Kelompok 4 / K03 :
     ```
     gcc -o main src/*.c src/ADT/array/array.c src/ADT/bangunan/bangunan.c src/ADT/graph/graph.c src/ADT/kata/kata.c src/ADT/listlinier/listlinier.c src/ADT/matriks/matriks.c src/ADT/mesinkar/mesinkar.c src/ADT/mesinkata/mesinkata.c src/ADT/point/point.c src/ADT/queue/queue.c src/ADT/stack/stack.c src/ADT/status/status.c
     ```
-    This will create an executable file named "main.exe" (windows) or "main" (linux).
+    This will create an executable file named "main.exe" (windows) or an ELF file named "main" (linux).
 3. Move the main file into the bin folder.
     
 ## How to run?
