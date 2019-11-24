@@ -30,6 +30,9 @@ Kelompok 4 / K03 :
 │   ├── main.exe          # Our main.exe if you are too lazy to compile
 │   └── sample_savedata   # Just an example save data
 ├── data
+│   ├── 5x5.txt
+│   ├── 10x10.txt
+│   ├── savedataformat.txt
 │   └── config.txt        # Configuration file
 ├── docs                  # For the formalities. FYI we are not providing any form of documentation.
 │   │                     # All the codes are self explanatory.
@@ -37,6 +40,12 @@ Kelompok 4 / K03 :
 │   ├── IF2110_Form..._03.xlsx
 │   └── IF2110_TB..._03.pdf  <-- Our report.
 ├── src
+│   ├── boolean.h
+│   ├── console.c         # Implementation of all commands
+│   ├── console.h
+│   ├── main.c            # Simply calls the AppExecute function
+│   ├── pcolor.c          # Colour module
+│   ├── pcolor.h
 │   ├── ADT               # Location of all the data structures used by this game. 
 │   │                     # Every subfolder will have a header, a c implementation and a driver.
 │   │   ├── array         # Contains all building information
