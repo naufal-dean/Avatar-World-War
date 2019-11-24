@@ -57,7 +57,7 @@ Kelompok 4 / K03 :
 ### Why are some characters in the game is not displayed properly?
 Make sure your terminal supports unicode (UTF-8).
 ### Can I change the game's initial configuration?
-Sure! Just change the config.txt file inside the data folder.
+Sure! Just change the config.txt file inside the data folder. We also provide you with another 2 sample config files, just copy the data into config.txt.
 ### I want to write my own save file. Where should I put it?
 All saved files are inside the bin folder. Try to save the game once and see its format.
 ### Your game sucks! How can I make this better?
