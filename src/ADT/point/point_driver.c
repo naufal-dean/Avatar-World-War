@@ -39,17 +39,17 @@ int main()
             break;
         default:
             goto exit;
-            puts("P1:");
-            TulisPoint(P1);
-            puts("");
-            puts("P2:");
-            TulisPoint(P2);
-            puts("");
             break;
         }
     }
     
     exit:
+    puts("P1:");
+    TulisPoint(P1);
+    puts("");
+    puts("P2:");
+    TulisPoint(P2);
+    puts("");
 
     return 0;
 }
